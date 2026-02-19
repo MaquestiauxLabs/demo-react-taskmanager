@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import { errorHandler } from "./middlewares";
+import { usersRouter } from "./routes";
 import { logMessage } from "./utils";
 
 const PORT = process.env.PORT || 3000;
@@ -20,6 +21,8 @@ app.get("/health", (req, res) => {
 app.get("/api", (req, res) => {
   res.json({ status: "ok" });
 });
+
+app.use("/api/users", usersRouter);
 
 // The error handler MUST be the last middleware added
 app.use(errorHandler);

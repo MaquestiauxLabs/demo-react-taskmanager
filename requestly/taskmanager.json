@@ -1,0 +1,374 @@
+{
+  "schema_version": "1.0.0",
+  "records": [
+    {
+      "name": "TaskManager",
+      "type": "collection",
+      "data": {
+        "variables": {
+          "BASE_URL": {
+            "id": "9863bc64-3085-4e51-bd1e-8b3db8a8d16a",
+            "type": "string",
+            "syncValue": "http://localhost:3000/api",
+            "localValue": "",
+            "isPersisted": true,
+            "key": "BASE_URL"
+          }
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "variablesOrder": [
+          "BASE_URL"
+        ]
+      },
+      "deleted": false,
+      "collectionId": "",
+      "id": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "description": ""
+    },
+    {
+      "name": "USERS",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "id": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
+      "description": ""
+    },
+    {
+      "name": "USERS::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/users",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
+      "rank": "auntit17715094831351",
+      "id": "dfcca3fc-8a3d-414b-aa19-80103122e89f",
+      "description": ""
+    },
+    {
+      "name": "USERS::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/users",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"email\":\"user1.users@example.com\",\n  \"givenName\":\"user1\",\n  \"familyName\":\"users\"\n}",
+          "contentType": "application/json"
+        },
+        "response": {
+          "body": "{\"message\":\"Create a user\"}",
+          "time": 27.270865000784397,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "27"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"1b-L9kcPk1r7g0KVt2C1jCChAh46Ug\""
+            },
+            {
+              "key": "date",
+              "value": "Thu, 19 Feb 2026 14:00:58 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
+      "rank": "auu",
+      "description": "",
+      "id": "6f53d500-c601-4612-9d10-c6c31ff99dd0"
+    },
+    {
+      "name": "USER::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/users/cmltid5ap000062khle5t5weh",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": {
+          "body": "{\"message\":\"Get user by ID: 1\"}",
+          "time": 6.848519999533892,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "31"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"1f-7oO9VhK6biV+Gt/fjp2ZBkjhY6E\""
+            },
+            {
+              "key": "date",
+              "value": "Thu, 19 Feb 2026 13:59:34 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
+      "rank": "av",
+      "description": "",
+      "id": "78d711fa-a0d3-43e2-8d2f-4214395a7e76"
+    },
+    {
+      "name": "USER::PUT",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/users/cmltk1u430000q5khaw4gp5pf",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"email\":\"user1.users@example.com\",\n  \"givenName\":\"user1.2\",\n  \"familyName\":\"users\"\n}",
+          "contentType": "application/json"
+        },
+        "response": {
+          "body": "{\"message\":\"Update user with ID: cmltk1u430000q5khaw4gp5pf\",\"httpStatus\":200,\"data\":{\"id\":\"cmltk1u430000q5khaw4gp5pf\",\"email\":\"user1.users@example.com\",\"givenName\":\"user1.2\",\"familyName\":\"users\",\"avatarUrl\":null,\"createdAt\":\"2026-02-19T14:27:16.274Z\",\"updatedAt\":\"2026-02-19T14:27:36.934Z\"}}",
+          "time": 43.227202996611595,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "291"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"123-1aMgGngOEU9yqWe4RoX2M1DAPh4\""
+            },
+            {
+              "key": "date",
+              "value": "Thu, 19 Feb 2026 14:27:36 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
+      "rank": "avG",
+      "description": "",
+      "id": "9f30e4c1-793d-46fa-9112-1356aeb7b2b6"
+    },
+    {
+      "name": "USER::DELETE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/users/cmltk1u430000q5khaw4gp5pf",
+          "method": "DELETE",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
+      "rank": "avV",
+      "description": "",
+      "id": "ce8414d2-1599-4c72-98cd-f24b98d832ab"
+    },
+    {
+      "name": "ROOT",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": {
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api</pre>\n</body>\n</html>\n",
+          "time": 16.99084599968046,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-security-policy",
+              "value": "default-src 'none'"
+            },
+            {
+              "key": "x-content-type-options",
+              "value": "nosniff"
+            },
+            {
+              "key": "content-type",
+              "value": "text/html; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "142"
+            },
+            {
+              "key": "date",
+              "value": "Thu, 19 Feb 2026 09:14:56 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 404,
+          "statusText": "Not Found",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "rank": "au",
+      "id": "88a79abc-55a8-4b82-9be8-6fa1fb51f6e0",
+      "description": ""
+    }
+  ]
+}
