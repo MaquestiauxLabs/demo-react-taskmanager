@@ -21,7 +21,7 @@
   "type": "module",
   "main": "dist/server.js",
   "prisma": {
-    "seed": "ts-node prisma/seed.ts",
+    "seed": "tsx prisma/seed/index.ts",
     "schema": "./server/prisma"
   },
   "scripts": {
@@ -31,8 +31,15 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.ts\"",
+    "prisma:format": "prisma format",
+    "prisma:validate": "prisma validate",
     "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:pull": "prisma db pull",
+    "prisma:status": "prisma migrate status",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:seed": "prisma db seed",
     "prisma:reset": "prisma migrate reset",
     "prisma:studio": "prisma studio"
   },
