@@ -48,7 +48,7 @@ jobs:
                   }
                 }
               }
-            }' -f owner="${GITHUB_REPOSITORY%/*}" -f repo="${GITHUB_REPOSITORY#*/}" -f issue="$ISSUE_NUMBER" \
+            }' -f owner="${GITHUB_REPOSITORY%/*}" -f repo="${GITHUB_REPOSITORY#*/}" -F issue="$ISSUE_NUMBER" \
             --jq ".data.repository.issue.projectItems.nodes[] | select(.project.id == \"$PROJECT_ID\") | .id" | head -n1 || true)
 
           if [ -z "${ITEM_ID:-}" ]; then
