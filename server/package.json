@@ -30,7 +30,7 @@
     "start": "node dist/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write \"**/*.ts\"",
     "prisma:format": "prisma format",
     "prisma:validate": "prisma validate",
     "prisma:generate": "prisma generate",
@@ -54,6 +54,7 @@
     "pg": "^8.18.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.2.3",
@@ -61,10 +62,12 @@
     "dotenv": "^17.3.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^16.4.0",
     "prettier": "^3.8.1",
     "prisma": "^7.4.0",
     "prisma-zod-generator": "^2.1.4",
     "tsx": "^4.21.0",
+    "typescript-eslint": "^8.44.1",
     "typescript": "^5.9.3"
   }
 }
