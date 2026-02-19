@@ -13,7 +13,6 @@ jobs:
       contents: read
       issues: read
       repository-projects: write
-      projects: read
 
     steps:
       - name: Extract issue number from branch name
