@@ -1,5 +1,10 @@
 name: Move Issue to In Progress When Work Starts
 
+permissions:
+  contents: read
+  issues: read
+  repository-projects: read
+
 on:
   create:
   push:
