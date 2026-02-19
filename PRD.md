@@ -6,7 +6,7 @@ A collaborative task management application that allows users to create tasks, a
 
 ## 2. Data Models
 
-### 2.1 User
+### 2.1 User (DONE)
 
 Represents a user in the system.
 

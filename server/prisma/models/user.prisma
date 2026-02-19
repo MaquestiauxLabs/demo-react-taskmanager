@@ -1,9 +1,9 @@
 model User {
-    id         String   @id @unique @default(cuid())
-    email      String   @unique
-    givenName  String
-    familyName String
-    avatarUrl  String?
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
+  id         String   @id @unique @default(cuid())
+  email      String   @unique /// @zod.email("Invalid email address")
+  givenName  String   @db.VarChar(255) /// @zod.string().min(1, "Given name is required").max(255, "Given name must be at most 255 characters")
+  familyName String   @db.VarChar(255) /// @zod.string().min(1, "Family name is required").max(255, "Family name must be at most 255 characters")
+  avatarUrl  String? /// @zod.url("Invalid avatar URL").nullish()
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
