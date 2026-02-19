@@ -42,25 +42,29 @@ jobs:
 
           PROJECT_ID="PVT_kwDOD2nfkc4BPmHI"
 
-          # 1) Find this issue's project item in the target project
+          # 1) Find this issue's project item by querying the project directly
           GH_RESULT=$(gh api graphql -f query='
-            query($owner:String!, $repo:String!, $issue:Int!) {
-              repository(owner:$owner, name:$repo) {
-                issue(number:$issue) {
-                  projectItems(first:20) {
+            query($project:ID!) {
+              node(id:$project) {
+                ... on ProjectV2 {
+                  items(first:100) {
                     nodes {
                       id
-                      project { id }
+                      content {
+                        ... on Issue {
+                          number
+                        }
+                      }
                     }
                   }
                 }
               }
-            }' -f owner="${GITHUB_REPOSITORY%/*}" -f repo="${GITHUB_REPOSITORY#*/}" -F issue="$ISSUE_NUMBER")
+            }' -f project="$PROJECT_ID")
 
           echo "DEBUG: GraphQL result: $GH_RESULT"
 
           ITEM_ID=$(echo "$GH_RESULT" | \
-            jq -r ".data.repository.issue.projectItems.nodes[] | select(.project.id == \"$PROJECT_ID\") | .id" | head -n1 || true)
+            jq -r ".data.node.items.nodes[] | select(.content != null and .content.number == $ISSUE_NUMBER) | .id" | head -n1 || true)
 
           echo "DEBUG: ITEM_ID=$ITEM_ID"
 
