@@ -35,7 +35,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          PROJECT_ID="R_kgDORTxeFQ"
+          PROJECT_ID="PVT_kwDOD2nfkc4BPmHI"
 
           # 1) Find this issue's project item in the target project
           ITEM_ID=$(gh api graphql -f query='
