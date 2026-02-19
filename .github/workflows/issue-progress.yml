@@ -31,34 +31,80 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_NUMBER: ${{ steps.extract.outputs.issue_number }}
         run: |
-          # 1. Get the project item ID for this issue
+          set -euo pipefail
+
+          PROJECT_ID="R_kgDORTxeFQ"
+
+          # 1) Find this issue's project item in the target project
           ITEM_ID=$(gh api graphql -f query='
             query($owner:String!, $repo:String!, $issue:Int!) {
               repository(owner:$owner, name:$repo) {
                 issue(number:$issue) {
-                  projectItems(first:10) {
-                    nodes { id }
+                  projectItems(first:20) {
+                    nodes {
+                      id
+                      project { id }
+                    }
                   }
                 }
               }
             }' -f owner="${GITHUB_REPOSITORY%/*}" -f repo="${GITHUB_REPOSITORY#*/}" -f issue="$ISSUE_NUMBER" \
-            --jq '.data.repository.issue.projectItems.nodes[0].id')
+            --jq ".data.repository.issue.projectItems.nodes[] | select(.project.id == \"$PROJECT_ID\") | .id" | head -n1 || true)
 
-          echo "Project item ID: $ITEM_ID"
+          if [ -z "${ITEM_ID:-}" ]; then
+            echo "Issue #$ISSUE_NUMBER is not in project $PROJECT_ID. Skipping update."
+            exit 0
+          fi
 
-          # 2. Update the Status field to "In Progress"
+          # 2) Resolve field/option IDs for Status -> In Progress
+          PROJECT_FIELDS=$(gh api graphql -f query='
+            query($project:ID!) {
+              node(id:$project) {
+                ... on ProjectV2 {
+                  fields(first:50) {
+                    nodes {
+                      ... on ProjectV2SingleSelectField {
+                        id
+                        name
+                        options {
+                          id
+                          name
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }' -f project="$PROJECT_ID")
+
+          STATUS_FIELD_ID=$(echo "$PROJECT_FIELDS" | jq -r '.data.node.fields.nodes[] | select(.name == "Status") | .id' | head -n1)
+          IN_PROGRESS_OPTION_ID=$(echo "$PROJECT_FIELDS" | jq -r '.data.node.fields.nodes[] | select(.name == "Status") | .options[] | select(.name == "In Progress") | .id' | head -n1)
+
+          if [ -z "${STATUS_FIELD_ID:-}" ] || [ "$STATUS_FIELD_ID" = "null" ]; then
+            echo "Status field not found in project $PROJECT_ID. Skipping update."
+            exit 0
+          fi
+
+          if [ -z "${IN_PROGRESS_OPTION_ID:-}" ] || [ "$IN_PROGRESS_OPTION_ID" = "null" ]; then
+            echo "In Progress option not found in Status field. Skipping update."
+            exit 0
+          fi
+
+          # 3) Update the project's Status field to In Progress
           gh api graphql -f query='
-            mutation($item:String!, $project:String!) {
+            mutation($item:ID!, $project:ID!, $field:ID!, $option:String!) {
               updateProjectV2ItemFieldValue(
                 input: {
                   projectId: $project,
                   itemId: $item,
-                  fieldId: "Status",
-                  value: { singleSelectOptionId: "In Progress" }
+                  fieldId: $field,
+                  value: { singleSelectOptionId: $option }
                 }
               ) {
                 projectV2Item { id }
               }
             }' \
             -f item="$ITEM_ID" \
-            -f project="R_kgDORTxeFQ"
+            -f project="$PROJECT_ID" \
+            -f field="$STATUS_FIELD_ID" \
+            -f option="$IN_PROGRESS_OPTION_ID"
