@@ -38,7 +38,7 @@ jobs:
           github-token: ${{ secrets.GTHB_TOKEN_PAT }}
           script: |
             const issueNumber = ${{ steps.extract.outputs.issue_number }};
-            const projectId = 'PVT_kwDOD2nfkc4BPmHI';
+            const projectId = '${{ vars.PROJECT_V2_ID}}';
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
