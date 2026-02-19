@@ -4,6 +4,7 @@ model User {
   givenName  String   @db.VarChar(255) /// @zod.string().min(1, "Given name is required").max(255, "Given name must be at most 255 characters")
   familyName String   @db.VarChar(255) /// @zod.string().min(1, "Family name is required").max(255, "Family name must be at most 255 characters")
   avatarUrl  String? /// @zod.url("Invalid avatar URL").nullish()
+  tasks      Task[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }

@@ -1,0 +1,15 @@
+model Task {
+  id             String    @id @unique @default(cuid())
+  title          String    @db.VarChar(255) /// @zod.string().min(1, "Title is required").max(255, "Title must be at most 255 characters")
+  description    String?   @db.VarChar(1000) /// @zod.string().max(1000, "Description must be at most 1000 characters").nullish()
+  parentId       String?
+  parent         Task?     @relation("TaskHierarchy", fields: [parentId], references: [id])
+  subtasks       Task[]    @relation("TaskHierarchy")
+  creatorId      String
+  creator        User      @relation(fields: [creatorId], references: [id])
+  startDate      DateTime?
+  dueDate        DateTime?
+  estimatedHours Float?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
