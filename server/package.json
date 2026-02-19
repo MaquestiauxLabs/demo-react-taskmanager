@@ -1,0 +1,54 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "description": "The api for the task manager",
+  "keywords": [
+    "api",
+    "expressjs",
+    "prisma",
+    "typescript"
+  ],
+  "homepage": "https://github.com/MaquestiauxLabs/demo-react-taskmanager#readme",
+  "bugs": {
+    "url": "https://github.com/MaquestiauxLabs/demo-react-taskmanager/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaquestiauxLabs/demo-react-taskmanager.git"
+  },
+  "license": "MIT",
+  "author": "Jean-Philippe Maquestiaux",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch server.ts",
+    "build": "tsc --noEmit false",
+    "start": "node dist/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.4.0",
+    "@prisma/client": "^7.4.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "pg": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.2.3",
+    "@types/pg": "^8.16.0",
+    "dotenv": "^17.3.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "^3.8.1",
+    "prisma": "^7.4.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}

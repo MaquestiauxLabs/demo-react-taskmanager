@@ -1,0 +1,12 @@
+/// <reference path="./models/user.prisma" />
+/// <reference path="./models/task.prisma" />
+/// <reference path="./models/project.prisma" />
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}

@@ -1,0 +1,5 @@
+model Project {
+    id          String  @id @unique @default(cuid())
+    title       String
+    description String?
+}
