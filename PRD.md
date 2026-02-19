@@ -57,7 +57,7 @@ A container for organizing related tasks. A project can be standalone or contain
 
 ---
 
-### 2.3 Task
+### 2.3 Task (DONE)
 
 The core entity representing a work item. Tasks can be standalone or attached to a project. Tasks can be nested recursively (unlimited depth).
 
