@@ -13,6 +13,7 @@ jobs:
       contents: read
       issues: read
       repository-projects: write
+      projects: read
 
     steps:
       - name: Extract issue number from branch name
@@ -90,15 +91,14 @@ jobs:
               issue: issueNumber
             });
 
+            if (response.errors) {
+              console.error('GraphQL Errors:', response.errors);
+              throw new Error(`GraphQL error: ${JSON.stringify(response.errors)}`);
+            }
+
             console.log('Query response:', JSON.stringify(response, null, 2));
 
-            const projectItems = response.repository.issue.projectItems.nodes;
-            console.log(`Found ${projectItems.length} project items`);
-            projectItems.forEach((item, i) => {
-              console.log(`Item ${i}: projectId=${item.project.id}`);
-            });
-
-            // Find the project item for the target project
+            const projectItems = response.repository?.issue?.projectItems?.nodes || [];
             const projectItem = projectItems.find(item => item.project.id === projectId);
 
             if (!projectItem) {
