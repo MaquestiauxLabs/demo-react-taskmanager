@@ -41,7 +41,10 @@
     "prisma:deploy": "prisma migrate deploy",
     "prisma:seed": "prisma db seed",
     "prisma:reset": "prisma migrate reset",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "prisma:sync": "prisma format && prisma validate && prisma generate && prisma db push",
+    "prisma:migrate:sync": "prisma format && prisma validate && prisma migrate dev",
+    "prisma:maintenance": "prisma format && prisma validate && prisma generate && prisma migrate deploy"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.4.0",
