@@ -35,7 +35,7 @@ jobs:
         if: steps.extract.outputs.issue_number
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GTHB_TOKEN_PAT }}
           script: |
             const issueNumber = ${{ steps.extract.outputs.issue_number }};
             const projectId = 'PVT_kwDOD2nfkc4BPmHI';
