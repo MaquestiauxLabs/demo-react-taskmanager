@@ -1,10 +1,11 @@
-/// <reference path="./models/user.prisma" />
-/// <reference path="./models/task.prisma" />
-/// <reference path="./models/project.prisma" />
-
 generator client {
   provider = "prisma-client"
   output   = "./generated"
+}
+
+generator zod {
+  provider = "prisma-zod-generator"
+  output   = "./generated/zod"
 }
 
 datasource db {

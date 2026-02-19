@@ -20,6 +20,10 @@
   "author": "Jean-Philippe Maquestiaux",
   "type": "module",
   "main": "dist/server.js",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts",
+    "schema": "./server/prisma"
+  },
   "scripts": {
     "dev": "tsx watch server.ts",
     "build": "tsc --noEmit false",
@@ -29,6 +33,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:reset": "prisma migrate reset",
     "prisma:studio": "prisma studio"
   },
   "dependencies": {
@@ -48,6 +53,7 @@
     "eslint-plugin-prettier": "^5.5.5",
     "prettier": "^3.8.1",
     "prisma": "^7.4.0",
+    "prisma-zod-generator": "^2.1.4",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }
