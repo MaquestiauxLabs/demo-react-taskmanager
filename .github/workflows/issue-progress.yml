@@ -38,7 +38,7 @@ jobs:
           PROJECT_ID="PVT_kwDOD2nfkc4BPmHI"
 
           # 1) Find this issue's project item in the target project
-          ITEM_ID=$(gh api graphql -f query='
+          GH_RESULT=$(gh api graphql -f query='
             query($owner:String!, $repo:String!, $issue:Int!) {
               repository(owner:$owner, name:$repo) {
                 issue(number:$issue) {
@@ -50,8 +50,14 @@ jobs:
                   }
                 }
               }
-            }' -f owner="${GITHUB_REPOSITORY%/*}" -f repo="${GITHUB_REPOSITORY#*/}" -F issue="$ISSUE_NUMBER" | \
+            }' -f owner="${GITHUB_REPOSITORY%/*}" -f repo="${GITHUB_REPOSITORY#*/}" -F issue="$ISSUE_NUMBER")
+
+          echo "DEBUG: GraphQL result: $GH_RESULT"
+
+          ITEM_ID=$(echo "$GH_RESULT" | \
             jq -r ".data.repository.issue.projectItems.nodes[] | select(.project.id == \"$PROJECT_ID\") | .id" | head -n1 || true)
+
+          echo "DEBUG: ITEM_ID=$ITEM_ID"
 
           if [ -z "${ITEM_ID:-}" ]; then
             echo "Issue #$ISSUE_NUMBER is not in project $PROJECT_ID. Skipping update."
