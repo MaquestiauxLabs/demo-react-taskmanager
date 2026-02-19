@@ -1,0 +1,64 @@
+name: Move Issue to In Progress When Work Starts
+
+on:
+  create:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  set-in-progress:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract issue number from branch name
+        id: extract
+        run: |
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          # Expecting branch names like: username/issue2
+          ISSUE_NUMBER=$(echo "$BRANCH" | grep -oE 'issue[0-9]+' | grep -oE '[0-9]+')
+          echo "branch=$BRANCH"
+          echo "issue=$ISSUE_NUMBER"
+          echo "issue_number=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
+
+      - name: Stop if no issue number found
+        if: steps.extract.outputs.issue_number == ''
+        run: echo "No issue number found in branch name. Skipping."
+
+      - name: Update project status to In Progress
+        if: steps.extract.outputs.issue_number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ steps.extract.outputs.issue_number }}
+        run: |
+          # 1. Get the project item ID for this issue
+          ITEM_ID=$(gh api graphql -f query='
+            query($owner:String!, $repo:String!, $issue:Int!) {
+              repository(owner:$owner, name:$repo) {
+                issue(number:$issue) {
+                  projectItems(first:10) {
+                    nodes { id }
+                  }
+                }
+              }
+            }' -f owner="${GITHUB_REPOSITORY%/*}" -f repo="${GITHUB_REPOSITORY#*/}" -f issue="$ISSUE_NUMBER" \
+            --jq '.data.repository.issue.projectItems.nodes[0].id')
+
+          echo "Project item ID: $ITEM_ID"
+
+          # 2. Update the Status field to "In Progress"
+          gh api graphql -f query='
+            mutation($item:String!, $project:String!) {
+              updateProjectV2ItemFieldValue(
+                input: {
+                  projectId: $project,
+                  itemId: $item,
+                  fieldId: "Status",
+                  value: { singleSelectOptionId: "In Progress" }
+                }
+              ) {
+                projectV2Item { id }
+              }
+            }' \
+            -f item="$ITEM_ID" \
+            -f project="R_kgDORTxeFQ"
