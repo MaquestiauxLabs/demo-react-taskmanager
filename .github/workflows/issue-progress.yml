@@ -1,127 +1,169 @@
-name: Move Issue to In Progress When Work Starts
-
-permissions:
-  contents: read
-  issues: read
-  repository-projects: read
+name: Move Issue to In Progress
 
 on:
   create:
   push:
     branches:
-      - "**"
-  pull_request:
-    types: [opened, synchronize, reopened]
+      - "*/issue*"
 
 jobs:
-  set-in-progress:
+  move-to-in-progress:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      repository-projects: write
 
     steps:
       - name: Extract issue number from branch name
         id: extract
         run: |
-          BRANCH="${GITHUB_REF#refs/heads/}"
-          # Expecting branch names like: username/issue2
-          ISSUE_NUMBER=$(echo "$BRANCH" | grep -oE 'issue[0-9]+' | grep -oE '[0-9]+')
-          echo "branch=$BRANCH"
-          echo "issue=$ISSUE_NUMBER"
-          echo "issue_number=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
+          BRANCH_NAME=${{ github.ref_name }}
+          echo "Branch: $BRANCH_NAME"
 
-      - name: Stop if no issue number found
-        if: steps.extract.outputs.issue_number == ''
-        run: echo "No issue number found in branch name. Skipping."
-
-      - name: Update project status to In Progress
-        if: steps.extract.outputs.issue_number != ''
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE_NUMBER: ${{ steps.extract.outputs.issue_number }}
-        run: |
-          set -euo pipefail
-
-          PROJECT_ID="PVT_kwDOD2nfkc4BPmHI"
-
-          # 1) Find this issue's project item by querying the project directly
-          GH_RESULT=$(gh api graphql -f query='
-            query($project:ID!) {
-              node(id:$project) {
-                ... on ProjectV2 {
-                  items(first:100) {
-                    nodes {
-                      id
-                      content {
-                        ... on Issue {
-                          number
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }' -f project="$PROJECT_ID")
-
-          echo "DEBUG: GraphQL result: $GH_RESULT"
-
-          ITEM_ID=$(echo "$GH_RESULT" | \
-            jq -r ".data.node.items.nodes[] | select(.content != null and .content.number == $ISSUE_NUMBER) | .id" | head -n1 || true)
-
-          echo "DEBUG: ITEM_ID=$ITEM_ID"
-
-          if [ -z "${ITEM_ID:-}" ]; then
-            echo "Issue #$ISSUE_NUMBER is not in project $PROJECT_ID. Skipping update."
+          # Extract issue number from pattern like "username/issue123" or "user/issue#123"
+          if [[ $BRANCH_NAME =~ ^[^/]+/issue#?([0-9]+)$ ]]; then
+            ISSUE_NUMBER="${BASH_REMATCH[1]}"
+            echo "issue_number=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
+            echo "Issue number extracted: $ISSUE_NUMBER"
+          else
+            echo "Branch name does not match expected pattern"
             exit 0
           fi
 
-          # 2) Resolve field/option IDs for Status -> In Progress
-          PROJECT_FIELDS=$(gh api graphql -f query='
-            query($project:ID!) {
-              node(id:$project) {
-                ... on ProjectV2 {
-                  fields(first:50) {
-                    nodes {
-                      ... on ProjectV2SingleSelectField {
+      - name: Move issue to In Progress
+        if: steps.extract.outputs.issue_number
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueNumber = ${{ steps.extract.outputs.issue_number }};
+            const projectId = 'PVT_kwDOD2nfkc4BPmHI';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            console.log(`Moving issue #${issueNumber} to "In Progress"`);
+
+            // Get the issue to ensure it exists
+            const issue = await github.rest.issues.get({
+              owner,
+              repo,
+              issue_number: issueNumber,
+            });
+
+            console.log(`Issue found: ${issue.data.title}`);
+
+            // Query to find the project item for this issue
+            const query = `
+              query($owner: String!, $repo: String!, $issue: Int!) {
+                repository(owner: $owner, name: $repo) {
+                  issue(number: $issue) {
+                    projectItems(first: 10) {
+                      nodes {
                         id
-                        name
-                        options {
+                        project {
                           id
-                          name
+                        }
+                        fieldValues(first: 20) {
+                          nodes {
+                            ... on ProjectV2ItemFieldSingleSelectValue {
+                              field {
+                                ... on ProjectV2SingleSelectField {
+                                  id
+                                  name
+                                }
+                              }
+                              name
+                            }
+                          }
                         }
                       }
                     }
                   }
                 }
               }
-            }' -f project="$PROJECT_ID")
+            `;
 
-          STATUS_FIELD_ID=$(echo "$PROJECT_FIELDS" | jq -r '.data.node.fields.nodes[] | select(.name == "Status") | .id' | head -n1)
-          IN_PROGRESS_OPTION_ID=$(echo "$PROJECT_FIELDS" | jq -r '.data.node.fields.nodes[] | select(.name == "Status") | .options[] | select(.name == "In Progress") | .id' | head -n1)
+            const response = await github.graphql(query, {
+              owner,
+              repo,
+              issue: issueNumber
+            });
+            const projectItems = response.repository.issue.projectItems.nodes;
 
-          if [ -z "${STATUS_FIELD_ID:-}" ] || [ "$STATUS_FIELD_ID" = "null" ]; then
-            echo "Status field not found in project $PROJECT_ID. Skipping update."
-            exit 0
-          fi
+            // Find the project item for the target project
+            const projectItem = projectItems.find(item => item.project.id === projectId);
 
-          if [ -z "${IN_PROGRESS_OPTION_ID:-}" ] || [ "$IN_PROGRESS_OPTION_ID" = "null" ]; then
-            echo "In Progress option not found in Status field. Skipping update."
-            exit 0
-          fi
+            if (!projectItem) {
+              console.log(`Issue #${issueNumber} is not in the project ${projectId}`);
+              return;
+            }
 
-          # 3) Update the project's Status field to In Progress
-          gh api graphql -f query='
-            mutation($item:ID!, $project:ID!, $field:ID!, $option:String!) {
-              updateProjectV2ItemFieldValue(
-                input: {
-                  projectId: $project,
-                  itemId: $item,
-                  fieldId: $field,
-                  value: { singleSelectOptionId: $option }
+            console.log(`Found project item: ${projectItem.id}`);
+
+            // Find the Status field
+            const statusField = projectItem.fieldValues.nodes.find(
+              field => field.field?.name === 'Status'
+            );
+
+            if (!statusField || !statusField.field) {
+              console.log('Status field not found in project item');
+              return;
+            }
+
+            const statusFieldId = statusField.field.id;
+            console.log(`Status field ID: ${statusFieldId}`);
+
+            // Get the field options to find the "In Progress" option ID
+            const fieldQuery = `
+              query($fieldId: ID!) {
+                node(id: $fieldId) {
+                  ... on ProjectV2SingleSelectField {
+                    options {
+                      id
+                      name
+                    }
+                  }
                 }
-              ) {
-                projectV2Item { id }
               }
-            }' \
-            -f item="$ITEM_ID" \
-            -f project="$PROJECT_ID" \
-            -f field="$STATUS_FIELD_ID" \
-            -f option="$IN_PROGRESS_OPTION_ID"
+            `;
+
+            const fieldResponse = await github.graphql(fieldQuery, {
+              fieldId: statusFieldId
+            });
+            const inProgressOption = fieldResponse.node.options.find(
+              option => option.name === 'In Progress'
+            );
+
+            if (!inProgressOption) {
+              console.log('In Progress option not found');
+              return;
+            }
+
+            console.log(`In Progress option ID: ${inProgressOption.id}`);
+
+            // Update the project item status
+            const updateMutation = `
+              mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
+                updateProjectV2ItemFieldValue(
+                  input: {
+                    projectId: $projectId
+                    itemId: $itemId
+                    fieldId: $fieldId
+                    value: { singleSelectOptionId: $optionId }
+                  }
+                ) {
+                  projectV2Item {
+                    id
+                  }
+                }
+              }
+            `;
+
+            const updateResponse = await github.graphql(updateMutation, {
+              projectId,
+              itemId: projectItem.id,
+              fieldId: statusFieldId,
+              optionId: inProgressOption.id
+            });
+            console.log(`✅ Issue #${issueNumber} moved to "In Progress"`);
