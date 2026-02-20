@@ -1,0 +1,23 @@
+// A container for organizing related tasks.
+// | Field       | Type          | Description                  |
+// | ----------- | ------------- | ---------------------------- |
+// | id          | String (cuid) | Unique identifier            |
+// | title       | String        | Project name                 |
+// | description | String?       | Optional project description |
+// | creatorId   | String        | User who owns the project    |
+// | startDate   | DateTime?     | Optional project start date  |
+// | endDate     | DateTime?     | Optional project end date    |
+// | createdAt   | DateTime      | Creation timestamp           |
+// | updatedAt   | DateTime      | Last update timestamp        |
+
+model Project {
+  id          String    @id @default(cuid())
+  title       String    @db.VarChar(255) /// @zod.string().min(1, "Title is required").max(255, "Title must be at most 255 characters")
+  description String?   @db.VarChar(1000) /// @zod.string().max(1000, "Description must be at most 1000 characters").nullish()
+  creatorId   String    @map("ownerId")
+  creator     User      @relation(fields: [creatorId], references: [id])
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
