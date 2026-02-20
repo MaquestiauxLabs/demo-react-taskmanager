@@ -29,6 +29,240 @@
       "description": ""
     },
     {
+      "name": "PROJECTS",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "id": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "description": ""
+    },
+    {
+      "name": "PROJECTS::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/projects",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "rank": "auntit17715912436261",
+      "id": "9a5611be-30f9-46c2-8489-95d9fb64dafb",
+      "description": ""
+    },
+    {
+      "name": "PROJECTS::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/projects",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"title\":\"Project Test\",\n  \"creatorId\":\"cmltid5c0000162khlkkb4nn6\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "rank": "av",
+      "id": "a02347ca-39b3-45da-b96e-a45fc78382bc",
+      "description": ""
+    },
+    {
+      "name": "PROJECT::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/projects/cmluvtkqs0000h4kha60dco03",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": {
+          "body": "{\"message\":\"Get project by ID: cmluvtkqs0000h4kha60dco03\",\"httpStatus\":200,\"data\":{\"id\":\"cmluvtkqs0000h4kha60dco03\",\"title\":\"Project Test\",\"description\":null,\"creatorId\":\"cmltid5c0000162khlkkb4nn6\",\"startDate\":null,\"endDate\":null,\"createdAt\":\"2026-02-20T12:44:32.452Z\",\"updatedAt\":\"2026-02-20T12:44:32.452Z\"}}",
+          "time": 6.252541001886129,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "309"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"135-IujrxTdUKL1TC71H1/yYdrEuQVc\""
+            },
+            {
+              "key": "date",
+              "value": "Fri, 20 Feb 2026 12:44:37 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "rank": "aw",
+      "id": "2131905b-392b-406f-b1c0-d4e13e001ee6",
+      "description": ""
+    },
+    {
+      "name": "PROJECT::PUT",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/projects/cmluvtkqs0000h4kha60dco03",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"title\":\"Project Test UPD\",\n  \"creatorId\":\"cmltid5c0000162khlkkb4nn6\"\n}",
+          "contentType": "application/json"
+        },
+        "response": {
+          "body": "{\"message\":\"Update project with ID: cmluvtkqs0000h4kha60dco03\",\"httpStatus\":200,\"data\":{\"id\":\"cmluvtkqs0000h4kha60dco03\",\"title\":\"Project Test UPD\",\"description\":null,\"creatorId\":\"cmltid5c0000162khlkkb4nn6\",\"startDate\":null,\"endDate\":null,\"createdAt\":\"2026-02-20T12:44:32.452Z\",\"updatedAt\":\"2026-02-20T12:44:55.679Z\"}}",
+          "time": 26.400574002414942,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "318"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"13e-KYArVH5iShL+g4F3ATU2ILh5IQM\""
+            },
+            {
+              "key": "date",
+              "value": "Fri, 20 Feb 2026 12:44:55 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "rank": "ax",
+      "id": "d9fad3a8-e338-4b66-af79-1920cf1a265f",
+      "description": ""
+    },
+    {
+      "name": "PROJECT::DELETE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/projects/cmluvtkqs0000h4kha60dco03",
+          "method": "DELETE",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "rank": "ay",
+      "id": "5ae53f43-f1cc-4d47-bb89-d748852786e5",
+      "description": ""
+    },
+    {
       "name": "TASKS",
       "type": "collection",
       "data": {

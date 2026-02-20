@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
 import { errorHandler } from "./middlewares";
-import { tasksRouter, usersRouter } from "./routes";
+import { projectsRouter, tasksRouter, usersRouter } from "./routes";
 import { logMessage } from "./utils";
 
 const PORT = process.env.PORT || 3000;
@@ -24,6 +24,7 @@ app.get("/api", (req, res) => {
 
 app.use("/api/users", usersRouter);
 app.use("/api/tasks", tasksRouter);
+app.use("/api/projects", projectsRouter);
 
 // The error handler MUST be the last middleware added
 app.use(errorHandler);
