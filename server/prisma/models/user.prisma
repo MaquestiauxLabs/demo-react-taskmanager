@@ -1,3 +1,14 @@
+// Represents a user in the system.
+// | Field      | Type          | Description                |
+// | ---------- | ------------- | -------------------------- |
+// | id         | String (cuid) | Unique identifier          |
+// | email      | String        | User's email (unique)      |
+// | givenName  | String        | First name                 |
+// | familyName | String        | Last name                  |
+// | avatarUrl  | String?       | Optional avatar image URL  |
+// | createdAt  | DateTime      | Account creation timestamp |
+// | updatedAt  | DateTime      | Last update timestamp      |
+
 model User {
   id         String   @id @unique @default(cuid())
   email      String   @unique /// @zod.email("Invalid email address")

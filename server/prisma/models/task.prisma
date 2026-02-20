@@ -1,3 +1,22 @@
+// The core entity representing a work item. 
+// Tasks can be nested recursively (unlimited depth).
+// | Field          | Type          | Description                                    |
+// | -------------- | ------------- | ---------------------------------------------- |
+// | id             | String (cuid) | Unique identifier                              |
+// | title          | String        | Task title                                     |
+// | description    | String?       | Detailed task description                      |
+// | projectId      | String?       | Associated project (null = standalone)         |
+// | parentId       | String?       | Parent task for subtasks (null = root)         |
+// | creatorId      | String        | User who created the task                      |
+// | startDate      | DateTime?     | Optional task start date                       |
+// | dueDate        | DateTime?     | Optional due date                              |
+// | estimatedHours | Float?        | Estimated effort in hours                      |
+// | isRecurring    | Boolean       | Whether task repeats                           |
+// | recurrenceRule | String?       | RRule string (RFC 5545) for recurrence pattern |
+// | recurrenceEnd  | DateTime?     | End date for recurring tasks                   |
+// | createdAt      | DateTime      | Creation timestamp                             |
+// | updatedAt      | DateTime      | Last update timestamp                          |
+
 model Task {
   id             String    @id @unique @default(cuid())
   title          String    @db.VarChar(255) /// @zod.string().min(1, "Title is required").max(255, "Title must be at most 255 characters")
