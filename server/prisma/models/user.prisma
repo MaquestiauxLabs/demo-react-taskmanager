@@ -17,6 +17,7 @@ model User {
   avatarUrl  String? /// @zod.url("Invalid avatar URL").nullish()
   tasks      Task[]
   projects   Project[]
+  labels     Label[]
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
