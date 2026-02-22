@@ -15,3 +15,7 @@ services:
 
 volumes:
   postgres_data:
+
+networks:
+  default:
+    name: taskmanager_db_default

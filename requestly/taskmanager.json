@@ -10,9 +10,9 @@
             "id": "9863bc64-3085-4e51-bd1e-8b3db8a8d16a",
             "type": "string",
             "syncValue": "http://localhost:3000/api",
-            "localValue": "",
             "isPersisted": true,
-            "key": "BASE_URL"
+            "key": "BASE_URL",
+            "localValue": ""
           }
         },
         "auth": {
@@ -25,11 +25,11 @@
       },
       "deleted": false,
       "collectionId": "",
-      "id": "1445e82b-c841-4b98-a932-8a418f3570d1",
-      "description": ""
+      "description": "",
+      "id": "cd7dc868-aa4a-4d0c-b4ae-d86f61675f2c"
     },
     {
-      "name": "PROJECTS",
+      "name": "LABELS",
       "type": "collection",
       "data": {
         "variables": {},
@@ -39,9 +39,359 @@
         }
       },
       "deleted": false,
-      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
-      "id": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "collectionId": "cd7dc868-aa4a-4d0c-b4ae-d86f61675f2c",
+      "id": "d49672e8-f14d-4690-ae69-d276b3aaa06f",
       "description": ""
+    },
+    {
+      "name": "LABELS::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/labels",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": {
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/labels</pre>\n</body>\n</html>\n",
+          "time": 9.646542072296143,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-security-policy",
+              "value": "default-src 'none'"
+            },
+            {
+              "key": "x-content-type-options",
+              "value": "nosniff"
+            },
+            {
+              "key": "content-type",
+              "value": "text/html; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "149"
+            },
+            {
+              "key": "date",
+              "value": "Sun, 22 Feb 2026 08:41:32 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 404,
+          "statusText": "Not Found",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "d49672e8-f14d-4690-ae69-d276b3aaa06f",
+      "rank": "auntit17717496827271",
+      "id": "82121bb2-b568-45b4-a61c-435ac1b6d0c9",
+      "description": ""
+    },
+    {
+      "name": "LABELS::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/labels",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"name\":\"TEST\",\n  \"color\":\"#c0c0c0\",\n  \"creatorId\":\"cmlxhm3f90000stetwqjpvrhh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": {
+          "body": "{\"message\":\"Create a label\",\"httpStatus\":201,\"data\":{\"id\":\"cmlxi333u00000fetfancdb7g\",\"name\":\"TEST\",\"color\":\"#c0c0c0\",\"creatorId\":\"cmlxhm3f90000stetwqjpvrhh\",\"createdAt\":\"2026-02-22T08:43:20.058Z\",\"updatedAt\":\"2026-02-22T08:43:20.058Z\"}}",
+          "time": 63.96716594696045,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "237"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"ed-VR9pf246RAqFHACk6l6Tyxii/OY\""
+            },
+            {
+              "key": "date",
+              "value": "Sun, 22 Feb 2026 08:43:20 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "d49672e8-f14d-4690-ae69-d276b3aaa06f",
+      "rank": "av",
+      "description": "",
+      "id": "1376a963-d955-4233-8b13-e4afb5db8108"
+    },
+    {
+      "name": "LABEL::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/labels/cmlxi5t9f00010fetygr3xg5u",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": {
+          "body": "{\"message\":\"Get label by ID: cmlxi5t9f00010fetygr3xg5u\",\"httpStatus\":200,\"data\":{\"id\":\"cmlxi5t9f00010fetygr3xg5u\",\"name\":\"TEST\",\"color\":\"#c0c0c0\",\"creatorId\":\"cmlxhm3f90000stetwqjpvrhh\",\"createdAt\":\"2026-02-22T08:45:27.267Z\",\"updatedAt\":\"2026-02-22T08:45:27.267Z\"}}",
+          "time": 5.420415997505188,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "265"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"109-QaVmWdXLRSwdaM7ntHfmZ0wbOMI\""
+            },
+            {
+              "key": "date",
+              "value": "Sun, 22 Feb 2026 08:45:33 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "d49672e8-f14d-4690-ae69-d276b3aaa06f",
+      "rank": "aw",
+      "description": "",
+      "id": "738c5b08-e931-40ea-b7c3-aa2c12147389"
+    },
+    {
+      "name": "LABEL::PUT",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/labels/cmlxi5t9f00010fetygr3xg5u",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"name\":\"TEST\",\n  \"color\":\"#cfcfcf\",\n  \"creatorId\":\"cmlxhm3f90000stetwqjpvrhh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": {
+          "body": "{\"message\":\"Error updating label with ID cmlxi333u00000fetfancdb7g\",\"httpStatus\":500,\"error\":{\"code\":\"P2025\",\"meta\":{\"modelName\":\"Label\",\"operation\":\"an update\"},\"clientVersion\":\"7.4.0\",\"name\":\"PrismaClientKnownRequestError\"}}",
+          "time": 30.100000023841858,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "226"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"e2-Dw0AWSCuis4pCmQXQhDKVvIZl6Y\""
+            },
+            {
+              "key": "date",
+              "value": "Sun, 22 Feb 2026 08:45:09 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "d49672e8-f14d-4690-ae69-d276b3aaa06f",
+      "rank": "ax",
+      "description": "",
+      "id": "bb7f8fc9-069c-4847-b8a9-a24bdc01e851"
+    },
+    {
+      "name": "LABEL::DELETE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/labels/cmlxi5t9f00010fetygr3xg5u",
+          "method": "DELETE",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": {
+          "body": "{\"message\":\"Delete label with ID: cmlxi333u00000fetfancdb7g\",\"httpStatus\":200}",
+          "time": 19.330415964126587,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "78"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"4e-JvrBX0sDCqWY90csHsEiNkYlcZg\""
+            },
+            {
+              "key": "date",
+              "value": "Sun, 22 Feb 2026 08:45:03 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "d49672e8-f14d-4690-ae69-d276b3aaa06f",
+      "rank": "ay",
+      "description": "",
+      "id": "2d87a264-fca3-4758-aa11-d73def5caa0d"
+    },
+    {
+      "name": "PROJECTS",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "variablesOrder": []
+      },
+      "deleted": false,
+      "description": "",
+      "id": "13b134ae-8711-44e5-8d25-85ae811e7925",
+      "collectionId": "cd7dc868-aa4a-4d0c-b4ae-d86f61675f2c"
     },
     {
       "name": "PROJECTS::GET",
@@ -67,10 +417,10 @@
         }
       },
       "deleted": false,
-      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "collectionId": "13b134ae-8711-44e5-8d25-85ae811e7925",
       "rank": "auntit17715912436261",
-      "id": "9a5611be-30f9-46c2-8489-95d9fb64dafb",
-      "description": ""
+      "description": "",
+      "id": "515dd27a-714e-4e43-8d99-728f4989fb5a"
     },
     {
       "name": "PROJECTS::POST",
@@ -96,10 +446,10 @@
         }
       },
       "deleted": false,
-      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "collectionId": "13b134ae-8711-44e5-8d25-85ae811e7925",
       "rank": "av",
-      "id": "a02347ca-39b3-45da-b96e-a45fc78382bc",
-      "description": ""
+      "description": "",
+      "id": "cd1e20b4-896b-4ffc-b339-1004a4787d49"
     },
     {
       "name": "PROJECT::GET",
@@ -114,43 +464,7 @@
           "body": "",
           "contentType": "text/plain"
         },
-        "response": {
-          "body": "{\"message\":\"Get project by ID: cmluvtkqs0000h4kha60dco03\",\"httpStatus\":200,\"data\":{\"id\":\"cmluvtkqs0000h4kha60dco03\",\"title\":\"Project Test\",\"description\":null,\"creatorId\":\"cmltid5c0000162khlkkb4nn6\",\"startDate\":null,\"endDate\":null,\"createdAt\":\"2026-02-20T12:44:32.452Z\",\"updatedAt\":\"2026-02-20T12:44:32.452Z\"}}",
-          "time": 6.252541001886129,
-          "headers": [
-            {
-              "key": "x-powered-by",
-              "value": "Express"
-            },
-            {
-              "key": "access-control-allow-origin",
-              "value": "*"
-            },
-            {
-              "key": "content-type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "content-length",
-              "value": "309"
-            },
-            {
-              "key": "etag",
-              "value": "W/\"135-IujrxTdUKL1TC71H1/yYdrEuQVc\""
-            },
-            {
-              "key": "date",
-              "value": "Fri, 20 Feb 2026 12:44:37 GMT"
-            },
-            {
-              "key": "connection",
-              "value": "close"
-            }
-          ],
-          "status": 200,
-          "statusText": "OK",
-          "redirectedUrl": ""
-        },
+        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -158,14 +472,13 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        },
-        "testResults": []
+        }
       },
       "deleted": false,
-      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "collectionId": "13b134ae-8711-44e5-8d25-85ae811e7925",
       "rank": "aw",
-      "id": "2131905b-392b-406f-b1c0-d4e13e001ee6",
-      "description": ""
+      "description": "",
+      "id": "b56ad3f1-e42f-41cd-acef-280962af7f25"
     },
     {
       "name": "PROJECT::PUT",
@@ -180,43 +493,7 @@
           "body": "{\n  \"title\":\"Project Test UPD\",\n  \"creatorId\":\"cmltid5c0000162khlkkb4nn6\"\n}",
           "contentType": "application/json"
         },
-        "response": {
-          "body": "{\"message\":\"Update project with ID: cmluvtkqs0000h4kha60dco03\",\"httpStatus\":200,\"data\":{\"id\":\"cmluvtkqs0000h4kha60dco03\",\"title\":\"Project Test UPD\",\"description\":null,\"creatorId\":\"cmltid5c0000162khlkkb4nn6\",\"startDate\":null,\"endDate\":null,\"createdAt\":\"2026-02-20T12:44:32.452Z\",\"updatedAt\":\"2026-02-20T12:44:55.679Z\"}}",
-          "time": 26.400574002414942,
-          "headers": [
-            {
-              "key": "x-powered-by",
-              "value": "Express"
-            },
-            {
-              "key": "access-control-allow-origin",
-              "value": "*"
-            },
-            {
-              "key": "content-type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "content-length",
-              "value": "318"
-            },
-            {
-              "key": "etag",
-              "value": "W/\"13e-KYArVH5iShL+g4F3ATU2ILh5IQM\""
-            },
-            {
-              "key": "date",
-              "value": "Fri, 20 Feb 2026 12:44:55 GMT"
-            },
-            {
-              "key": "connection",
-              "value": "close"
-            }
-          ],
-          "status": 200,
-          "statusText": "OK",
-          "redirectedUrl": ""
-        },
+        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -224,14 +501,13 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        },
-        "testResults": []
+        }
       },
       "deleted": false,
-      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "collectionId": "13b134ae-8711-44e5-8d25-85ae811e7925",
       "rank": "ax",
-      "id": "d9fad3a8-e338-4b66-af79-1920cf1a265f",
-      "description": ""
+      "description": "",
+      "id": "c5c40f06-705b-4a79-bcca-5f7a854878e2"
     },
     {
       "name": "PROJECT::DELETE",
@@ -257,10 +533,10 @@
         }
       },
       "deleted": false,
-      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "collectionId": "13b134ae-8711-44e5-8d25-85ae811e7925",
       "rank": "ay",
-      "id": "5ae53f43-f1cc-4d47-bb89-d748852786e5",
-      "description": ""
+      "description": "",
+      "id": "3150bade-c827-4688-a40e-82e08155f704"
     },
     {
       "name": "TASKS",
@@ -270,12 +546,13 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        }
+        },
+        "variablesOrder": []
       },
       "deleted": false,
-      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
-      "id": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
-      "description": ""
+      "description": "",
+      "id": "31130229-0c81-4c42-ab7e-5917b126f1b3",
+      "collectionId": "cd7dc868-aa4a-4d0c-b4ae-d86f61675f2c"
     },
     {
       "name": "TASKS::GET",
@@ -301,10 +578,10 @@
         }
       },
       "deleted": false,
-      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "collectionId": "31130229-0c81-4c42-ab7e-5917b126f1b3",
       "rank": "auntit17715731897111",
-      "id": "f29ca587-38ff-442d-a9ad-d4b19fe0738b",
-      "description": ""
+      "description": "",
+      "id": "8299de59-022f-4131-8220-5b77895d1cfb"
     },
     {
       "name": "TASKS:POST",
@@ -319,43 +596,7 @@
           "body": "{\n  \"title\":\"API CREATION\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\"\n}",
           "contentType": "application/json"
         },
-        "response": {
-          "body": "{\"message\":\"Create a task\",\"httpStatus\":201,\"data\":{\"id\":\"cmluowwp30000tqkhk2xbmd9j\",\"title\":\"API CREATION\",\"description\":null,\"parentId\":null,\"creatorId\":\"cmltid5ap000062khle5t5weh\",\"startDate\":null,\"dueDate\":null,\"estimatedHours\":null,\"createdAt\":\"2026-02-20T09:31:10.598Z\",\"updatedAt\":\"2026-02-20T09:31:10.598Z\"}}",
-          "time": 107.88128000032157,
-          "headers": [
-            {
-              "key": "x-powered-by",
-              "value": "Express"
-            },
-            {
-              "key": "access-control-allow-origin",
-              "value": "*"
-            },
-            {
-              "key": "content-type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "content-length",
-              "value": "316"
-            },
-            {
-              "key": "etag",
-              "value": "W/\"13c-3eMbcQqz0QlUGz75r7jH+L3pEsI\""
-            },
-            {
-              "key": "date",
-              "value": "Fri, 20 Feb 2026 09:31:10 GMT"
-            },
-            {
-              "key": "connection",
-              "value": "close"
-            }
-          ],
-          "status": 200,
-          "statusText": "OK",
-          "redirectedUrl": ""
-        },
+        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -363,14 +604,13 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        },
-        "testResults": []
+        }
       },
       "deleted": false,
-      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "collectionId": "31130229-0c81-4c42-ab7e-5917b126f1b3",
       "rank": "av",
-      "id": "7ee0338c-1f37-4422-a0be-eb1d98f7d4b9",
-      "description": ""
+      "description": "",
+      "id": "8c4e8ff6-5199-41a8-b52b-8cf9a370e0ba"
     },
     {
       "name": "TASK::GET",
@@ -396,10 +636,10 @@
         }
       },
       "deleted": false,
-      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "collectionId": "31130229-0c81-4c42-ab7e-5917b126f1b3",
       "rank": "aw",
-      "id": "6d045c34-55c3-4801-b5ed-c4e32337a315",
-      "description": ""
+      "description": "",
+      "id": "3f04eb3c-99c3-41eb-87c2-286927c74b1d"
     },
     {
       "name": "TASK::PUT",
@@ -425,10 +665,10 @@
         }
       },
       "deleted": false,
-      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "collectionId": "31130229-0c81-4c42-ab7e-5917b126f1b3",
       "rank": "ax",
-      "id": "29e38032-02fb-4bf3-bf66-bed886d7cdea",
-      "description": ""
+      "description": "",
+      "id": "3c067813-fc04-45d0-96a0-b1fddbf09bd5"
     },
     {
       "name": "TASK::DELETE",
@@ -454,10 +694,10 @@
         }
       },
       "deleted": false,
-      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "collectionId": "31130229-0c81-4c42-ab7e-5917b126f1b3",
       "rank": "ay",
-      "id": "923aa5cf-4fd3-4d28-af54-b2e642db4efc",
-      "description": ""
+      "description": "",
+      "id": "a1913ebd-b53e-4c03-bfe1-52bda53d2f97"
     },
     {
       "name": "USERS",
@@ -471,9 +711,9 @@
         "variablesOrder": []
       },
       "deleted": false,
-      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
-      "id": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
-      "description": ""
+      "description": "",
+      "id": "44584125-2a0c-4453-af73-5cb6747f1f65",
+      "collectionId": "cd7dc868-aa4a-4d0c-b4ae-d86f61675f2c"
     },
     {
       "name": "USERS::GET",
@@ -498,10 +738,10 @@
         "response": null
       },
       "deleted": false,
-      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
+      "collectionId": "44584125-2a0c-4453-af73-5cb6747f1f65",
       "rank": "auntit17715094831351",
-      "id": "dfcca3fc-8a3d-414b-aa19-80103122e89f",
-      "description": ""
+      "description": "",
+      "id": "5c3ee513-d31d-4bd5-a4c6-f1ff7d8ba05b"
     },
     {
       "name": "USERS::POST",
@@ -527,10 +767,10 @@
         "response": null
       },
       "deleted": false,
-      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
+      "collectionId": "44584125-2a0c-4453-af73-5cb6747f1f65",
       "rank": "auu",
       "description": "",
-      "id": "6f53d500-c601-4612-9d10-c6c31ff99dd0"
+      "id": "3e99a040-0563-4260-9a17-62c7e283d65a"
     },
     {
       "name": "USER::GET",
@@ -555,10 +795,10 @@
         "response": null
       },
       "deleted": false,
-      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
+      "collectionId": "44584125-2a0c-4453-af73-5cb6747f1f65",
       "rank": "av",
       "description": "",
-      "id": "78d711fa-a0d3-43e2-8d2f-4214395a7e76"
+      "id": "4bb60a7f-7d19-404a-a767-b1457f0af4b6"
     },
     {
       "name": "USER::PUT",
@@ -584,10 +824,10 @@
         "response": null
       },
       "deleted": false,
-      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
+      "collectionId": "44584125-2a0c-4453-af73-5cb6747f1f65",
       "rank": "avG",
       "description": "",
-      "id": "9f30e4c1-793d-46fa-9112-1356aeb7b2b6"
+      "id": "3a084f2e-6a8c-4eb7-93e5-487499900daa"
     },
     {
       "name": "USER::DELETE",
@@ -613,10 +853,10 @@
         "response": null
       },
       "deleted": false,
-      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
+      "collectionId": "44584125-2a0c-4453-af73-5cb6747f1f65",
       "rank": "avV",
       "description": "",
-      "id": "ce8414d2-1599-4c72-98cd-f24b98d832ab"
+      "id": "6fd6f9ed-c890-445a-b344-e4b4c0be3c0f"
     },
     {
       "name": "ROOT",
@@ -641,10 +881,10 @@
         "response": null
       },
       "deleted": false,
-      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "collectionId": "cd7dc868-aa4a-4d0c-b4ae-d86f61675f2c",
       "rank": "au",
-      "id": "88a79abc-55a8-4b82-9be8-6fa1fb51f6e0",
-      "description": ""
+      "description": "",
+      "id": "0439bf95-8c99-4a16-8df8-ada0c6db1532"
     }
   ]
 }
