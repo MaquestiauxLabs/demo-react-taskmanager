@@ -4,6 +4,7 @@ import { errorHandler } from "./middlewares";
 import {
   labelsRouter,
   projectsRouter,
+  statusesRouter,
   tasksRouter,
   usersRouter,
 } from "./routes";
@@ -31,6 +32,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/tasks", tasksRouter);
 app.use("/api/projects", projectsRouter);
 app.use("/api/labels", labelsRouter);
+app.use("/api/statuses", statusesRouter);
 
 // The error handler MUST be the last middleware added
 app.use(errorHandler);
