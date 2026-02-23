@@ -626,6 +626,244 @@
       "description": ""
     },
     {
+      "name": "ROLES",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "id": "4d6cc75c-ce2f-49cb-8344-c66526369c6c",
+      "description": ""
+    },
+    {
+      "name": "ROLES::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/roles",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": {
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/roles</pre>\n</body>\n</html>\n",
+          "time": 13.630199000239372,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-security-policy",
+              "value": "default-src 'none'"
+            },
+            {
+              "key": "x-content-type-options",
+              "value": "nosniff"
+            },
+            {
+              "key": "content-type",
+              "value": "text/html; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "148"
+            },
+            {
+              "key": "date",
+              "value": "Mon, 23 Feb 2026 12:45:20 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 404,
+          "statusText": "Not Found",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "4d6cc75c-ce2f-49cb-8344-c66526369c6c",
+      "rank": "auntit17718507063761",
+      "id": "11033083-947f-481f-8ada-df24d2c04a47",
+      "description": ""
+    },
+    {
+      "name": "ROLES::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/roles",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"name\":\"TEST\",\n  \"color\":\"#c0c0c0\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "4d6cc75c-ce2f-49cb-8344-c66526369c6c",
+      "rank": "auu",
+      "description": "",
+      "id": "e4ac29e1-ea47-474e-b977-f2d4f5c38896"
+    },
+    {
+      "name": "ROLE::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/roles/cmlz6ebjt0000zukh0c2q3s2v",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "4d6cc75c-ce2f-49cb-8344-c66526369c6c",
+      "rank": "av",
+      "description": "",
+      "id": "2b3553fa-e3c8-4e82-b6f5-7bcc377b9ae4"
+    },
+    {
+      "name": "ROLE::PUT",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/roles/cmlz6ebjt0000zukh0c2q3s2v",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"name\":\"TEST\",\n  \"color\":\"#d0d0d0\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "4d6cc75c-ce2f-49cb-8344-c66526369c6c",
+      "rank": "aw",
+      "description": "",
+      "id": "e530fa37-818d-4d7d-a508-99c93ca45558"
+    },
+    {
+      "name": "ROLE::DELETE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/roles/cmlz6ebjt0000zukh0c2q3s2v",
+          "method": "DELETE",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "application/json"
+        },
+        "response": {
+          "body": "{\"message\":\"Delete role with ID: cmlz6ebjt0000zukh0c2q3s2v\",\"httpStatus\":200}",
+          "time": 17.27946799993515,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "77"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"4d-LHM2N9ppoKmYeJ4ffWcGegJKr00\""
+            },
+            {
+              "key": "date",
+              "value": "Mon, 23 Feb 2026 12:52:01 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "4d6cc75c-ce2f-49cb-8344-c66526369c6c",
+      "rank": "ax",
+      "description": "",
+      "id": "3c617830-5eb6-4f24-ae6b-db37189df4ae"
+    },
+    {
       "name": "STATUSES",
       "type": "collection",
       "data": {
