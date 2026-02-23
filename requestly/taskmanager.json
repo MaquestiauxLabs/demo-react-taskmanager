@@ -1192,6 +1192,167 @@
       "description": ""
     },
     {
+      "name": "LABELS",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "id": "bad2003f-b521-455a-a0f6-1597d22215db",
+      "description": ""
+    },
+    {
+      "name": "TASK_LABELS::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/1/labels",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"labelIds\":\"\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "bad2003f-b521-455a-a0f6-1597d22215db",
+      "rank": "auntit17718531428691",
+      "id": "1f4e1b77-3300-4901-a397-a92c1079acd8",
+      "description": ""
+    },
+    {
+      "name": "TASK_LABELS::DELETE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/1/labels/2",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "bad2003f-b521-455a-a0f6-1597d22215db",
+      "rank": "av",
+      "description": "",
+      "id": "be1dd35f-6329-4495-a9e8-e83d88af96d7"
+    },
+    {
+      "name": "PRIORITY",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "id": "9762ad60-8524-45c1-a8cc-e2695e683445",
+      "description": ""
+    },
+    {
+      "name": "TASK_PRIORITY",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/1/priority",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n\"priorityId\":\"9999999\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "9762ad60-8524-45c1-a8cc-e2695e683445",
+      "rank": "auntit17718532725131",
+      "id": "f001a752-9488-42c3-bcf4-c221eb93aec7",
+      "description": ""
+    },
+    {
+      "name": "STATUS",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "id": "a2a0a49f-5550-459d-93f4-b018b31dac71",
+      "description": ""
+    },
+    {
+      "name": "Untitled request",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/1/status",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n\"statusId\":\"9999999\"\n}",
+          "contentType": "application/xml"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "a2a0a49f-5550-459d-93f4-b018b31dac71",
+      "rank": "auntit17718533288081",
+      "id": "1037cc34-1b0e-4f50-84ae-e1d6eefbe831",
+      "description": ""
+    },
+    {
       "name": "TASKS::GET",
       "type": "api",
       "data": {

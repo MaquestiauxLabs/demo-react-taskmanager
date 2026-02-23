@@ -9,6 +9,9 @@ type TaskSeed = {
   dueDate?: Date;
   estimatedHours?: number;
   parentKey?: string;
+  labelNames?: string[];
+  priorityName?: string;
+  statusName?: string;
 };
 
 const now = new Date();
@@ -22,6 +25,9 @@ const TASKS: TaskSeed[] = [
     startDate: now,
     dueDate: new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000),
     estimatedHours: 24,
+    labelNames: ["Improvement"],
+    priorityName: "High",
+    statusName: "In Progress",
   },
   {
     key: "api-checklist",
@@ -32,6 +38,9 @@ const TASKS: TaskSeed[] = [
     startDate: now,
     dueDate: new Date(now.getTime() + 6 * 24 * 60 * 60 * 1000),
     estimatedHours: 8,
+    labelNames: ["Backend", "Urgent"],
+    priorityName: "Critical",
+    statusName: "In Progress",
   },
   {
     key: "api-docs",
@@ -42,6 +51,9 @@ const TASKS: TaskSeed[] = [
     startDate: now,
     dueDate: new Date(now.getTime() + 4 * 24 * 60 * 60 * 1000),
     estimatedHours: 3,
+    labelNames: ["Backend", "Improvement"],
+    priorityName: "Medium",
+    statusName: "Todo",
   },
   {
     key: "frontend-qa",
@@ -52,6 +64,9 @@ const TASKS: TaskSeed[] = [
     startDate: now,
     dueDate: new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000),
     estimatedHours: 10,
+    labelNames: ["Frontend", "Bug"],
+    priorityName: "High",
+    statusName: "Review",
   },
   {
     key: "smoke-tests",
@@ -62,6 +77,44 @@ const TASKS: TaskSeed[] = [
     startDate: now,
     dueDate: new Date(now.getTime() + 8 * 24 * 60 * 60 * 1000),
     estimatedHours: 5,
+    labelNames: ["Backend", "Frontend", "Bug"],
+    priorityName: "Medium",
+    statusName: "Done",
+  },
+  {
+    key: "update-dependencies",
+    title: "Update npm dependencies",
+    description: "Review and update outdated packages.",
+    creatorEmail: "john.smith@taskmanager.local",
+    statusName: "Done",
+  },
+  {
+    key: "design-review",
+    title: "Design review meeting",
+    creatorEmail: "jane.doe@taskmanager.local",
+    priorityName: "Low",
+  },
+  {
+    key: "setup-ci",
+    title: "Setup CI/CD pipeline",
+    description: "Configure GitHub Actions for automated testing.",
+    creatorEmail: "admin@taskmanager.local",
+    labelNames: ["Backend", "Improvement"],
+    statusName: "In Progress",
+  },
+  {
+    key: "fix-login-bug",
+    title: "Fix login redirect bug",
+    creatorEmail: "john.smith@taskmanager.local",
+    labelNames: ["Bug", "Urgent"],
+    priorityName: "Critical",
+    statusName: "Blocked",
+  },
+  {
+    key: "research-offline",
+    title: "Research offline mode",
+    description: "Investigate options for offline task editing.",
+    creatorEmail: "jane.doe@taskmanager.local",
   },
 ];
 
@@ -75,7 +128,35 @@ export async function seedTasks(prisma: PrismaClient) {
     },
   });
 
+  const labels = await prisma.label.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+
+  const priorities = await prisma.priority.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+
+  const statuses = await prisma.status.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+
   const userIdByEmail = new Map(users.map((user) => [user.email, user.id]));
+  const labelIdByName = new Map(labels.map((label) => [label.name, label.id]));
+  const priorityIdByName = new Map(
+    priorities.map((priority) => [priority.name, priority.id]),
+  );
+  const statusIdByName = new Map(
+    statuses.map((status) => [status.name, status.id]),
+  );
   const taskIdByKey = new Map<string, string>();
 
   const pending = [...TASKS];
@@ -109,6 +190,17 @@ export async function seedTasks(prisma: PrismaClient) {
         dueDate: task.dueDate,
         estimatedHours: task.estimatedHours,
         parentId: task.parentKey ? taskIdByKey.get(task.parentKey) : null,
+        priorityId: task.priorityName
+          ? priorityIdByName.get(task.priorityName)
+          : null,
+        statusId: task.statusName ? statusIdByName.get(task.statusName) : null,
+        labels: task.labelNames
+          ? {
+              connect: task.labelNames
+                .filter((name) => labelIdByName.has(name))
+                .map((name) => ({ id: labelIdByName.get(name)! })),
+            }
+          : undefined,
       },
       select: { id: true },
     });

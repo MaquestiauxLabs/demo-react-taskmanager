@@ -8,6 +8,9 @@
 // | projectId      | String?       | Associated project (null = standalone)         |
 // | parentId       | String?       | Parent task for subtasks (null = root)         |
 // | creatorId      | String        | User who created the task                      |
+// | priorityId     | String?       | Associated priority                            |
+// | statusId       | String?       | Associated status                              |
+// | labels         | Label[]       | Labels associated with task                   |
 // | startDate      | DateTime?     | Optional task start date                       |
 // | dueDate        | DateTime?     | Optional due date                              |
 // | estimatedHours | Float?        | Estimated effort in hours                      |
@@ -26,6 +29,11 @@ model Task {
   subtasks       Task[]    @relation("TaskHierarchy")
   creatorId      String
   creator        User      @relation(fields: [creatorId], references: [id])
+  priorityId     String?
+  priority       Priority? @relation(fields: [priorityId], references: [id])
+  statusId       String?
+  status         Status?   @relation(fields: [statusId], references: [id])
+  labels         Label[]   @relation("TaskLabels")
   startDate      DateTime?
   dueDate        DateTime?
   estimatedHours Float?

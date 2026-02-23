@@ -5,8 +5,10 @@
 // | GET    | /api/tasks/:id                     | Get task by ID                                   |
 // | PUT    | /api/tasks/:id                     | Update task                                      |
 // | DELETE | /api/tasks/:id                     | Delete task                                      |
-// | POST   | /api/tasks/:id/assignees           | Assign user(s) to task                           |
-// | DELETE | /api/tasks/:id/assignees/:userId   | Remove assignee from task                        |
+// | POST   | /api/tasks/:id/labels              | Add labels to task                               |
+// | DELETE | /api/tasks/:id/labels              | Remove labels from task                          |
+// | PUT    | /api/tasks/:id/priority            | Set priority for task                            |
+// | PUT    | /api/tasks/:id/status              | Set status for task                              |
 // | GET    | /api/tasks/:id/subtasks            | List sub-tasks                                   |
 // | POST   | /api/tasks/:id/subtasks            | Create sub-task                                  |
 // | PUT    | /api/tasks/:id/subtasks/:subtaskId | Update sub-task                                  |
@@ -27,5 +29,13 @@ router.get("/:id", controller.getById);
 router.put("/:id", controller.update);
 
 router.delete("/:id", controller.delete);
+
+router.post("/:id/labels", controller.addLabels);
+
+router.delete("/:id/labels", controller.removeLabels);
+
+router.put("/:id/priority", controller.setPriority);
+
+router.put("/:id/status", controller.setStatus);
 
 export default router;

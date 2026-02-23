@@ -153,7 +153,7 @@ Tags that can be applied to both Projects and Tasks for categorization.
 
 ---
 
-### 2.7 TaskLabel
+### 2.7 TaskLabel (Done - needs review)
 
 Join table for many-to-many relationship between Tasks and Labels.
 
@@ -265,7 +265,7 @@ Represents task priorities. Can be global (default) or project-specific.
 
 ---
 
-### 2.12 TaskPriority
+### 2.12 TaskPriority (DONE - needs review)
 
 Join table linking a Task to its Priority.
 
@@ -279,7 +279,7 @@ Join table linking a Task to its Priority.
 
 ---
 
-### 2.13 ProjectStatus
+### 2.13 ProjectStatus (DONE - needs review)
 
 Join table linking a Project to its Status.
 
