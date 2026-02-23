@@ -3,9 +3,11 @@
 // | --------- | ------------- | -------------------------------------- |
 // | id        | String (cuid) | Unique identifier                      |
 // | name      | String        | Priority name                          |
-// | color     | String        | Hex color code (e.g., "#FF5733")     |
+// | color     | String        | Hex color code (e.g., "#FF5733")       |
+// | creatorId | String        | User who created the priority          |
+// | tasks     | Task[]        | Tasks associated with the priority     |
 // | createdAt | DateTime      | Creation timestamp                     |
-// | updatedAt | DateTime      | Last update timestamp      |
+// | updatedAt | DateTime      | Last update timestamp                  |
 
 model Priority {
   id        String   @id @default(cuid())

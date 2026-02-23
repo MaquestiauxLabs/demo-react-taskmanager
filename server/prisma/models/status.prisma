@@ -3,9 +3,11 @@
 // | --------- | ------------- | -------------------------------------- |
 // | id        | String (cuid) | Unique identifier                      |
 // | name      | String        | Status name                            |
-// | color     | String        | Hex color code (e.g., "#FF5733")     |
+// | color     | String        | Hex color code (e.g., "#FF5733")       |
+// | creatorId | String        | User who created the status            |
+// | tasks     | Task[]        | Tasks associated with the status       |
 // | createdAt | DateTime      | Creation timestamp                     |
-// | updatedAt  | DateTime     | Last update timestamp                  |
+// | updatedAt | DateTime      | Last update timestamp                  |
 
 model Status {
   id        String   @id @default(cuid())
