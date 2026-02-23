@@ -10,9 +10,9 @@
             "id": "9863bc64-3085-4e51-bd1e-8b3db8a8d16a",
             "type": "string",
             "syncValue": "http://localhost:3000/api",
+            "localValue": "",
             "isPersisted": true,
-            "key": "BASE_URL",
-            "localValue": ""
+            "key": "BASE_URL"
           }
         },
         "auth": {
@@ -25,8 +25,8 @@
       },
       "deleted": false,
       "collectionId": "",
-      "description": "",
-      "id": "cd7dc868-aa4a-4d0c-b4ae-d86f61675f2c"
+      "id": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "description": ""
     },
     {
       "name": "LABELS",
@@ -39,9 +39,9 @@
         }
       },
       "deleted": false,
-      "collectionId": "cd7dc868-aa4a-4d0c-b4ae-d86f61675f2c",
-      "id": "d49672e8-f14d-4690-ae69-d276b3aaa06f",
-      "description": ""
+      "description": "",
+      "id": "cf31427a-8199-4772-ad72-acdb000027c5",
+      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1"
     },
     {
       "name": "LABELS::GET",
@@ -56,9 +56,169 @@
           "body": "",
           "contentType": "text/plain"
         },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "cf31427a-8199-4772-ad72-acdb000027c5",
+      "rank": "auntit17717496827271",
+      "description": "",
+      "id": "272050bd-9a6b-4bfd-aaec-d13198c0febc"
+    },
+    {
+      "name": "LABELS::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/labels",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"name\":\"TEST\",\n  \"color\":\"#c0c0c0\",\n  \"creatorId\":\"cmlxhm3f90000stetwqjpvrhh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "cf31427a-8199-4772-ad72-acdb000027c5",
+      "rank": "av",
+      "description": "",
+      "id": "8662fb35-e4c0-4d59-8024-035707b6b0da"
+    },
+    {
+      "name": "LABEL::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/labels/cmlxi5t9f00010fetygr3xg5u",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "cf31427a-8199-4772-ad72-acdb000027c5",
+      "rank": "aw",
+      "description": "",
+      "id": "718bf4b0-fc49-4eb6-ab43-808e1e57fb26"
+    },
+    {
+      "name": "LABEL::PUT",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/labels/cmlxi5t9f00010fetygr3xg5u",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"name\":\"TEST\",\n  \"color\":\"#cfcfcf\",\n  \"creatorId\":\"cmlxhm3f90000stetwqjpvrhh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "cf31427a-8199-4772-ad72-acdb000027c5",
+      "rank": "ax",
+      "description": "",
+      "id": "500e68c3-7c26-4f9b-96e7-1096bd5bb14c"
+    },
+    {
+      "name": "LABEL::DELETE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/labels/cmlxi5t9f00010fetygr3xg5u",
+          "method": "DELETE",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "cf31427a-8199-4772-ad72-acdb000027c5",
+      "rank": "ay",
+      "description": "",
+      "id": "53ae49d9-9744-4c50-a798-41a16b345b06"
+    },
+    {
+      "name": "PRIORITIES",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "id": "24fe986d-28af-46f3-ab2e-ef193d0ec195",
+      "description": ""
+    },
+    {
+      "name": "PRIORITIES::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/priorities",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
         "response": {
-          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/labels</pre>\n</body>\n</html>\n",
-          "time": 9.646542072296143,
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/priorities</pre>\n</body>\n</html>\n",
+          "time": 27.42220799997449,
           "headers": [
             {
               "key": "x-powered-by",
@@ -82,11 +242,11 @@
             },
             {
               "key": "content-length",
-              "value": "149"
+              "value": "153"
             },
             {
               "key": "date",
-              "value": "Sun, 22 Feb 2026 08:41:32 GMT"
+              "value": "Mon, 23 Feb 2026 12:22:23 GMT"
             },
             {
               "key": "connection",
@@ -108,61 +268,25 @@
         "testResults": []
       },
       "deleted": false,
-      "collectionId": "d49672e8-f14d-4690-ae69-d276b3aaa06f",
-      "rank": "auntit17717496827271",
-      "id": "82121bb2-b568-45b4-a61c-435ac1b6d0c9",
+      "collectionId": "24fe986d-28af-46f3-ab2e-ef193d0ec195",
+      "rank": "auntit17718493239211",
+      "id": "2f28ab78-51f9-4f6a-8f1a-af36cbd13543",
       "description": ""
     },
     {
-      "name": "LABELS::POST",
+      "name": "PRIORITIES::POST",
       "type": "api",
       "data": {
         "type": "http",
         "request": {
-          "url": "{{BASE_URL}}/labels",
+          "url": "{{BASE_URL}}/priorities",
           "method": "POST",
           "headers": [],
           "queryParams": [],
-          "body": "{\n  \"name\":\"TEST\",\n  \"color\":\"#c0c0c0\",\n  \"creatorId\":\"cmlxhm3f90000stetwqjpvrhh\"\n}",
+          "body": "{\n  \"name\":\"TEST\",\n  \"color\":\"#c0c0c0\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\"\n}",
           "contentType": "application/json"
         },
-        "response": {
-          "body": "{\"message\":\"Create a label\",\"httpStatus\":201,\"data\":{\"id\":\"cmlxi333u00000fetfancdb7g\",\"name\":\"TEST\",\"color\":\"#c0c0c0\",\"creatorId\":\"cmlxhm3f90000stetwqjpvrhh\",\"createdAt\":\"2026-02-22T08:43:20.058Z\",\"updatedAt\":\"2026-02-22T08:43:20.058Z\"}}",
-          "time": 63.96716594696045,
-          "headers": [
-            {
-              "key": "x-powered-by",
-              "value": "Express"
-            },
-            {
-              "key": "access-control-allow-origin",
-              "value": "*"
-            },
-            {
-              "key": "content-type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "content-length",
-              "value": "237"
-            },
-            {
-              "key": "etag",
-              "value": "W/\"ed-VR9pf246RAqFHACk6l6Tyxii/OY\""
-            },
-            {
-              "key": "date",
-              "value": "Sun, 22 Feb 2026 08:43:20 GMT"
-            },
-            {
-              "key": "connection",
-              "value": "close"
-            }
-          ],
-          "status": 200,
-          "statusText": "OK",
-          "redirectedUrl": ""
-        },
+        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -170,31 +294,29 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        },
-        "testResults": []
+        }
       },
       "deleted": false,
-      "collectionId": "d49672e8-f14d-4690-ae69-d276b3aaa06f",
+      "collectionId": "24fe986d-28af-46f3-ab2e-ef193d0ec195",
       "rank": "av",
       "description": "",
-      "id": "1376a963-d955-4233-8b13-e4afb5db8108"
+      "id": "1131cc1c-ec09-47b8-8550-bbfdd94ce82d"
     },
     {
-      "name": "LABEL::GET",
+      "name": "PRIORITY::GET",
       "type": "api",
       "data": {
         "type": "http",
         "request": {
-          "url": "{{BASE_URL}}/labels/cmlxi5t9f00010fetygr3xg5u",
+          "url": "{{BASE_URL}}/priorities/cmlz5nfcp0000krkht35gdzlw",
           "method": "GET",
           "headers": [],
           "queryParams": [],
-          "body": "",
           "contentType": "text/plain"
         },
         "response": {
-          "body": "{\"message\":\"Get label by ID: cmlxi5t9f00010fetygr3xg5u\",\"httpStatus\":200,\"data\":{\"id\":\"cmlxi5t9f00010fetygr3xg5u\",\"name\":\"TEST\",\"color\":\"#c0c0c0\",\"creatorId\":\"cmlxhm3f90000stetwqjpvrhh\",\"createdAt\":\"2026-02-22T08:45:27.267Z\",\"updatedAt\":\"2026-02-22T08:45:27.267Z\"}}",
-          "time": 5.420415997505188,
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/priorities/1</pre>\n</body>\n</html>\n",
+          "time": 2.6435090005397797,
           "headers": [
             {
               "key": "x-powered-by",
@@ -205,28 +327,32 @@
               "value": "*"
             },
             {
+              "key": "content-security-policy",
+              "value": "default-src 'none'"
+            },
+            {
+              "key": "x-content-type-options",
+              "value": "nosniff"
+            },
+            {
               "key": "content-type",
-              "value": "application/json; charset=utf-8"
+              "value": "text/html; charset=utf-8"
             },
             {
               "key": "content-length",
-              "value": "265"
-            },
-            {
-              "key": "etag",
-              "value": "W/\"109-QaVmWdXLRSwdaM7ntHfmZ0wbOMI\""
+              "value": "155"
             },
             {
               "key": "date",
-              "value": "Sun, 22 Feb 2026 08:45:33 GMT"
+              "value": "Mon, 23 Feb 2026 12:30:18 GMT"
             },
             {
               "key": "connection",
               "value": "close"
             }
           ],
-          "status": 200,
-          "statusText": "OK",
+          "status": 404,
+          "statusText": "Not Found",
           "redirectedUrl": ""
         },
         "scripts": {
@@ -240,27 +366,27 @@
         "testResults": []
       },
       "deleted": false,
-      "collectionId": "d49672e8-f14d-4690-ae69-d276b3aaa06f",
+      "collectionId": "24fe986d-28af-46f3-ab2e-ef193d0ec195",
       "rank": "aw",
       "description": "",
-      "id": "738c5b08-e931-40ea-b7c3-aa2c12147389"
+      "id": "46247740-64e7-4a51-bf9d-36e5812c30c8"
     },
     {
-      "name": "LABEL::PUT",
+      "name": "PRIORITY::PUT",
       "type": "api",
       "data": {
         "type": "http",
         "request": {
-          "url": "{{BASE_URL}}/labels/cmlxi5t9f00010fetygr3xg5u",
+          "url": "{{BASE_URL}}/priorities/cmlz5nfcp0000krkht35gdzlw",
           "method": "PUT",
           "headers": [],
           "queryParams": [],
-          "body": "{\n  \"name\":\"TEST\",\n  \"color\":\"#cfcfcf\",\n  \"creatorId\":\"cmlxhm3f90000stetwqjpvrhh\"\n}",
-          "contentType": "application/json"
+          "contentType": "application/json",
+          "body": "{\n  \"name\":\"TEST\",\n  \"color\":\"#d0d0d0\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\"\n}"
         },
         "response": {
-          "body": "{\"message\":\"Error updating label with ID cmlxi333u00000fetfancdb7g\",\"httpStatus\":500,\"error\":{\"code\":\"P2025\",\"meta\":{\"modelName\":\"Label\",\"operation\":\"an update\"},\"clientVersion\":\"7.4.0\",\"name\":\"PrismaClientKnownRequestError\"}}",
-          "time": 30.100000023841858,
+          "body": "{\"message\":\"Update priority with ID: cmlz5nfcp0000krkht35gdzlw\",\"httpStatus\":200,\"data\":{\"id\":\"cmlz5nfcp0000krkht35gdzlw\",\"name\":\"TEST\",\"color\":\"#d0d0d0\",\"creatorId\":\"cmltid5ap000062khle5t5weh\",\"createdAt\":\"2026-02-23T12:30:46.393Z\",\"updatedAt\":\"2026-02-23T12:31:00.365Z\"}}",
+          "time": 43.86381499841809,
           "headers": [
             {
               "key": "x-powered-by",
@@ -276,15 +402,15 @@
             },
             {
               "key": "content-length",
-              "value": "226"
+              "value": "273"
             },
             {
               "key": "etag",
-              "value": "W/\"e2-Dw0AWSCuis4pCmQXQhDKVvIZl6Y\""
+              "value": "W/\"111-NIrjSY+fbvyCK/eTHRtHCnCdlB0\""
             },
             {
               "key": "date",
-              "value": "Sun, 22 Feb 2026 08:45:09 GMT"
+              "value": "Mon, 23 Feb 2026 12:31:00 GMT"
             },
             {
               "key": "connection",
@@ -306,61 +432,25 @@
         "testResults": []
       },
       "deleted": false,
-      "collectionId": "d49672e8-f14d-4690-ae69-d276b3aaa06f",
+      "collectionId": "24fe986d-28af-46f3-ab2e-ef193d0ec195",
       "rank": "ax",
       "description": "",
-      "id": "bb7f8fc9-069c-4847-b8a9-a24bdc01e851"
+      "id": "c496ff53-b0b0-4e18-976b-e986b605c46e"
     },
     {
-      "name": "LABEL::DELETE",
+      "name": "PRIORITY::DELETE",
       "type": "api",
       "data": {
         "type": "http",
         "request": {
-          "url": "{{BASE_URL}}/labels/cmlxi5t9f00010fetygr3xg5u",
+          "url": "{{BASE_URL}}/priorities/cmlz5nfcp0000krkht35gdzlw",
           "method": "DELETE",
           "headers": [],
           "queryParams": [],
-          "body": "",
-          "contentType": "text/plain"
+          "contentType": "application/json",
+          "body": ""
         },
-        "response": {
-          "body": "{\"message\":\"Delete label with ID: cmlxi333u00000fetfancdb7g\",\"httpStatus\":200}",
-          "time": 19.330415964126587,
-          "headers": [
-            {
-              "key": "x-powered-by",
-              "value": "Express"
-            },
-            {
-              "key": "access-control-allow-origin",
-              "value": "*"
-            },
-            {
-              "key": "content-type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "content-length",
-              "value": "78"
-            },
-            {
-              "key": "etag",
-              "value": "W/\"4e-JvrBX0sDCqWY90csHsEiNkYlcZg\""
-            },
-            {
-              "key": "date",
-              "value": "Sun, 22 Feb 2026 08:45:03 GMT"
-            },
-            {
-              "key": "connection",
-              "value": "close"
-            }
-          ],
-          "status": 200,
-          "statusText": "OK",
-          "redirectedUrl": ""
-        },
+        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -368,14 +458,13 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        },
-        "testResults": []
+        }
       },
       "deleted": false,
-      "collectionId": "d49672e8-f14d-4690-ae69-d276b3aaa06f",
+      "collectionId": "24fe986d-28af-46f3-ab2e-ef193d0ec195",
       "rank": "ay",
       "description": "",
-      "id": "2d87a264-fca3-4758-aa11-d73def5caa0d"
+      "id": "d14600cd-db12-48cf-881c-fcf311390de6"
     },
     {
       "name": "PROJECTS",
@@ -389,9 +478,9 @@
         "variablesOrder": []
       },
       "deleted": false,
-      "description": "",
-      "id": "13b134ae-8711-44e5-8d25-85ae811e7925",
-      "collectionId": "cd7dc868-aa4a-4d0c-b4ae-d86f61675f2c"
+      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "id": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "description": ""
     },
     {
       "name": "PROJECTS::GET",
@@ -403,10 +492,8 @@
           "method": "GET",
           "headers": [],
           "queryParams": [],
-          "body": "",
           "contentType": "text/plain"
         },
-        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -414,13 +501,14 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        }
+        },
+        "response": null
       },
       "deleted": false,
-      "collectionId": "13b134ae-8711-44e5-8d25-85ae811e7925",
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
       "rank": "auntit17715912436261",
-      "description": "",
-      "id": "515dd27a-714e-4e43-8d99-728f4989fb5a"
+      "id": "9a5611be-30f9-46c2-8489-95d9fb64dafb",
+      "description": ""
     },
     {
       "name": "PROJECTS::POST",
@@ -435,7 +523,6 @@
           "body": "{\n  \"title\":\"Project Test\",\n  \"creatorId\":\"cmltid5c0000162khlkkb4nn6\"\n}",
           "contentType": "application/json"
         },
-        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -443,13 +530,14 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        }
+        },
+        "response": null
       },
       "deleted": false,
-      "collectionId": "13b134ae-8711-44e5-8d25-85ae811e7925",
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
       "rank": "av",
-      "description": "",
-      "id": "cd1e20b4-896b-4ffc-b339-1004a4787d49"
+      "id": "a02347ca-39b3-45da-b96e-a45fc78382bc",
+      "description": ""
     },
     {
       "name": "PROJECT::GET",
@@ -461,10 +549,8 @@
           "method": "GET",
           "headers": [],
           "queryParams": [],
-          "body": "",
           "contentType": "text/plain"
         },
-        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -472,13 +558,14 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        }
+        },
+        "response": null
       },
       "deleted": false,
-      "collectionId": "13b134ae-8711-44e5-8d25-85ae811e7925",
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
       "rank": "aw",
-      "description": "",
-      "id": "b56ad3f1-e42f-41cd-acef-280962af7f25"
+      "id": "2131905b-392b-406f-b1c0-d4e13e001ee6",
+      "description": ""
     },
     {
       "name": "PROJECT::PUT",
@@ -493,7 +580,6 @@
           "body": "{\n  \"title\":\"Project Test UPD\",\n  \"creatorId\":\"cmltid5c0000162khlkkb4nn6\"\n}",
           "contentType": "application/json"
         },
-        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -501,13 +587,14 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        }
+        },
+        "response": null
       },
       "deleted": false,
-      "collectionId": "13b134ae-8711-44e5-8d25-85ae811e7925",
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
       "rank": "ax",
-      "description": "",
-      "id": "c5c40f06-705b-4a79-bcca-5f7a854878e2"
+      "id": "d9fad3a8-e338-4b66-af79-1920cf1a265f",
+      "description": ""
     },
     {
       "name": "PROJECT::DELETE",
@@ -522,6 +609,252 @@
           "body": "",
           "contentType": "text/plain"
         },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "rank": "ay",
+      "id": "5ae53f43-f1cc-4d47-bb89-d748852786e5",
+      "description": ""
+    },
+    {
+      "name": "STATUSES",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "id": "b46cabeb-5ef6-47d6-8f01-9a6adce88468",
+      "description": ""
+    },
+    {
+      "name": "STATUSES::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/statuses",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": {
+          "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/statuses</pre>\n</body>\n</html>\n",
+          "time": 6.936076000332832,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-security-policy",
+              "value": "default-src 'none'"
+            },
+            {
+              "key": "x-content-type-options",
+              "value": "nosniff"
+            },
+            {
+              "key": "content-type",
+              "value": "text/html; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "151"
+            },
+            {
+              "key": "date",
+              "value": "Mon, 23 Feb 2026 10:58:51 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 404,
+          "statusText": "Not Found",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "b46cabeb-5ef6-47d6-8f01-9a6adce88468",
+      "rank": "auntit17718443129441",
+      "id": "5e41788b-3963-4ff8-a2f2-adb8153cef2f",
+      "description": ""
+    },
+    {
+      "name": "STATUSES::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/statuses",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"name\":\"TEST\",\n  \"color\":\"#c0c0c0\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": {
+          "body": "{\"message\":\"Create a status\",\"httpStatus\":201,\"data\":{\"id\":\"cmlz4qy4h00022vkhcl1anh4g\",\"name\":\"TEST\",\"color\":\"#c0c0c0\",\"creatorId\":\"cmltid5ap000062khle5t5weh\",\"createdAt\":\"2026-02-23T12:05:31.073Z\",\"updatedAt\":\"2026-02-23T12:05:31.073Z\"}}",
+          "time": 33.85591099783778,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "238"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"ee-VD+/6UHRHmBXawi1E8cCKveQlSg\""
+            },
+            {
+              "key": "date",
+              "value": "Mon, 23 Feb 2026 12:05:31 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "b46cabeb-5ef6-47d6-8f01-9a6adce88468",
+      "rank": "av",
+      "description": "",
+      "id": "6b27dd44-0712-47e9-b183-9b79c6cb4e42"
+    },
+    {
+      "name": "STATUS::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/statuses/cmlz4qy4h00022vkhcl1anh4g",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "response": {
+          "body": "{\"message\":\"Get status by ID: cmlz4qy4h00022vkhcl1anh4g\",\"httpStatus\":200,\"data\":{\"id\":\"cmlz4qy4h00022vkhcl1anh4g\",\"name\":\"TEST\",\"color\":\"#c0c0c0\",\"creatorId\":\"cmltid5ap000062khle5t5weh\",\"createdAt\":\"2026-02-23T12:05:31.073Z\",\"updatedAt\":\"2026-02-23T12:05:31.073Z\"}}",
+          "time": 15.455821000039577,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "266"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"10a-Np4Nx/Ksp2pfOf9R32Qx2i5Kf8g\""
+            },
+            {
+              "key": "date",
+              "value": "Mon, 23 Feb 2026 12:05:40 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "b46cabeb-5ef6-47d6-8f01-9a6adce88468",
+      "rank": "aw",
+      "description": "",
+      "id": "0406a518-0054-4d38-9048-025f25fb1532"
+    },
+    {
+      "name": "STATUS::PUT",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/statuses/cmlz4qy4h00022vkhcl1anh4g",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"name\":\"TEST\",\n  \"color\":\"#d0d0d0\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\"\n}",
+          "contentType": "application/json"
+        },
         "response": null,
         "scripts": {
           "preRequest": "",
@@ -533,10 +866,76 @@
         }
       },
       "deleted": false,
-      "collectionId": "13b134ae-8711-44e5-8d25-85ae811e7925",
+      "collectionId": "b46cabeb-5ef6-47d6-8f01-9a6adce88468",
+      "rank": "ax",
+      "description": "",
+      "id": "3a39fcb3-dc05-4e08-bc9f-262710ccb0c6"
+    },
+    {
+      "name": "STATUS::DELETE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/statuses/cmlz4qy4h00022vkhcl1anh4g",
+          "method": "DELETE",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "application/json"
+        },
+        "response": {
+          "body": "{\"message\":\"Delete status with ID: cmlz4qy4h00022vkhcl1anh4g\",\"httpStatus\":200}",
+          "time": 20.185936998575926,
+          "headers": [
+            {
+              "key": "x-powered-by",
+              "value": "Express"
+            },
+            {
+              "key": "access-control-allow-origin",
+              "value": "*"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "content-length",
+              "value": "79"
+            },
+            {
+              "key": "etag",
+              "value": "W/\"4f-1oWQcis4HGo61WgJ4O+/t5vfSSQ\""
+            },
+            {
+              "key": "date",
+              "value": "Mon, 23 Feb 2026 12:06:12 GMT"
+            },
+            {
+              "key": "connection",
+              "value": "close"
+            }
+          ],
+          "status": 200,
+          "statusText": "OK",
+          "redirectedUrl": ""
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "testResults": []
+      },
+      "deleted": false,
+      "collectionId": "b46cabeb-5ef6-47d6-8f01-9a6adce88468",
       "rank": "ay",
       "description": "",
-      "id": "3150bade-c827-4688-a40e-82e08155f704"
+      "id": "790ed4b3-46eb-4501-92e5-ec078018655b"
     },
     {
       "name": "TASKS",
@@ -550,9 +949,9 @@
         "variablesOrder": []
       },
       "deleted": false,
-      "description": "",
-      "id": "31130229-0c81-4c42-ab7e-5917b126f1b3",
-      "collectionId": "cd7dc868-aa4a-4d0c-b4ae-d86f61675f2c"
+      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "id": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "description": ""
     },
     {
       "name": "TASKS::GET",
@@ -564,10 +963,8 @@
           "method": "GET",
           "headers": [],
           "queryParams": [],
-          "body": "",
           "contentType": "text/plain"
         },
-        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -575,13 +972,14 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        }
+        },
+        "response": null
       },
       "deleted": false,
-      "collectionId": "31130229-0c81-4c42-ab7e-5917b126f1b3",
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
       "rank": "auntit17715731897111",
-      "description": "",
-      "id": "8299de59-022f-4131-8220-5b77895d1cfb"
+      "id": "f29ca587-38ff-442d-a9ad-d4b19fe0738b",
+      "description": ""
     },
     {
       "name": "TASKS:POST",
@@ -596,7 +994,6 @@
           "body": "{\n  \"title\":\"API CREATION\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\"\n}",
           "contentType": "application/json"
         },
-        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -604,13 +1001,14 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        }
+        },
+        "response": null
       },
       "deleted": false,
-      "collectionId": "31130229-0c81-4c42-ab7e-5917b126f1b3",
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
       "rank": "av",
-      "description": "",
-      "id": "8c4e8ff6-5199-41a8-b52b-8cf9a370e0ba"
+      "id": "7ee0338c-1f37-4422-a0be-eb1d98f7d4b9",
+      "description": ""
     },
     {
       "name": "TASK::GET",
@@ -622,10 +1020,8 @@
           "method": "GET",
           "headers": [],
           "queryParams": [],
-          "body": "",
           "contentType": "text/plain"
         },
-        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -633,13 +1029,14 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        }
+        },
+        "response": null
       },
       "deleted": false,
-      "collectionId": "31130229-0c81-4c42-ab7e-5917b126f1b3",
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
       "rank": "aw",
-      "description": "",
-      "id": "3f04eb3c-99c3-41eb-87c2-286927c74b1d"
+      "id": "6d045c34-55c3-4801-b5ed-c4e32337a315",
+      "description": ""
     },
     {
       "name": "TASK::PUT",
@@ -654,7 +1051,6 @@
           "body": "{\n  \"title\":\"API CREATION\",\n  \"description\":\"Updated\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\"\n}",
           "contentType": "application/json"
         },
-        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -662,13 +1058,14 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        }
+        },
+        "response": null
       },
       "deleted": false,
-      "collectionId": "31130229-0c81-4c42-ab7e-5917b126f1b3",
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
       "rank": "ax",
-      "description": "",
-      "id": "3c067813-fc04-45d0-96a0-b1fddbf09bd5"
+      "id": "29e38032-02fb-4bf3-bf66-bed886d7cdea",
+      "description": ""
     },
     {
       "name": "TASK::DELETE",
@@ -683,7 +1080,6 @@
           "body": "",
           "contentType": "text/plain"
         },
-        "response": null,
         "scripts": {
           "preRequest": "",
           "postResponse": ""
@@ -691,13 +1087,14 @@
         "auth": {
           "currentAuthType": "INHERIT",
           "authConfigStore": {}
-        }
+        },
+        "response": null
       },
       "deleted": false,
-      "collectionId": "31130229-0c81-4c42-ab7e-5917b126f1b3",
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
       "rank": "ay",
-      "description": "",
-      "id": "a1913ebd-b53e-4c03-bfe1-52bda53d2f97"
+      "id": "923aa5cf-4fd3-4d28-af54-b2e642db4efc",
+      "description": ""
     },
     {
       "name": "USERS",
@@ -711,9 +1108,9 @@
         "variablesOrder": []
       },
       "deleted": false,
-      "description": "",
-      "id": "44584125-2a0c-4453-af73-5cb6747f1f65",
-      "collectionId": "cd7dc868-aa4a-4d0c-b4ae-d86f61675f2c"
+      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "id": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
+      "description": ""
     },
     {
       "name": "USERS::GET",
@@ -738,10 +1135,10 @@
         "response": null
       },
       "deleted": false,
-      "collectionId": "44584125-2a0c-4453-af73-5cb6747f1f65",
+      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
       "rank": "auntit17715094831351",
-      "description": "",
-      "id": "5c3ee513-d31d-4bd5-a4c6-f1ff7d8ba05b"
+      "id": "dfcca3fc-8a3d-414b-aa19-80103122e89f",
+      "description": ""
     },
     {
       "name": "USERS::POST",
@@ -767,10 +1164,10 @@
         "response": null
       },
       "deleted": false,
-      "collectionId": "44584125-2a0c-4453-af73-5cb6747f1f65",
+      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
       "rank": "auu",
       "description": "",
-      "id": "3e99a040-0563-4260-9a17-62c7e283d65a"
+      "id": "6f53d500-c601-4612-9d10-c6c31ff99dd0"
     },
     {
       "name": "USER::GET",
@@ -795,10 +1192,10 @@
         "response": null
       },
       "deleted": false,
-      "collectionId": "44584125-2a0c-4453-af73-5cb6747f1f65",
+      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
       "rank": "av",
       "description": "",
-      "id": "4bb60a7f-7d19-404a-a767-b1457f0af4b6"
+      "id": "78d711fa-a0d3-43e2-8d2f-4214395a7e76"
     },
     {
       "name": "USER::PUT",
@@ -824,10 +1221,10 @@
         "response": null
       },
       "deleted": false,
-      "collectionId": "44584125-2a0c-4453-af73-5cb6747f1f65",
+      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
       "rank": "avG",
       "description": "",
-      "id": "3a084f2e-6a8c-4eb7-93e5-487499900daa"
+      "id": "9f30e4c1-793d-46fa-9112-1356aeb7b2b6"
     },
     {
       "name": "USER::DELETE",
@@ -853,10 +1250,10 @@
         "response": null
       },
       "deleted": false,
-      "collectionId": "44584125-2a0c-4453-af73-5cb6747f1f65",
+      "collectionId": "8a16b0f4-056c-4110-8dbb-57691ce2d7ce",
       "rank": "avV",
       "description": "",
-      "id": "6fd6f9ed-c890-445a-b344-e4b4c0be3c0f"
+      "id": "ce8414d2-1599-4c72-98cd-f24b98d832ab"
     },
     {
       "name": "ROOT",
@@ -881,10 +1278,10 @@
         "response": null
       },
       "deleted": false,
-      "collectionId": "cd7dc868-aa4a-4d0c-b4ae-d86f61675f2c",
+      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
       "rank": "au",
-      "description": "",
-      "id": "0439bf95-8c99-4a16-8df8-ada0c6db1532"
+      "id": "88a79abc-55a8-4b82-9be8-6fa1fb51f6e0",
+      "description": ""
     }
   ]
 }

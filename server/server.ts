@@ -3,6 +3,7 @@ import express from "express";
 import { errorHandler } from "./middlewares";
 import {
   labelsRouter,
+  prioritiesRouter,
   projectsRouter,
   statusesRouter,
   tasksRouter,
@@ -33,6 +34,7 @@ app.use("/api/tasks", tasksRouter);
 app.use("/api/projects", projectsRouter);
 app.use("/api/labels", labelsRouter);
 app.use("/api/statuses", statusesRouter);
+app.use("/api/priorities", prioritiesRouter);
 
 // The error handler MUST be the last middleware added
 app.use(errorHandler);
