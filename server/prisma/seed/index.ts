@@ -4,6 +4,7 @@ import { PrismaClient } from "../generated/client";
 import { seedLabels } from "./labels.seed";
 import { seedPriorities } from "./priorities.seed";
 import { seedProjects } from "./projects.seed";
+import { seedRoles } from "./roles.seed";
 import { seedStatuses } from "./statuses.seed";
 import { seedTasks } from "./tasks.seed";
 import { seedUsers } from "./users.seed";
@@ -21,6 +22,7 @@ async function main() {
   await seedUsers(prisma);
   await seedLabels(prisma);
   await seedPriorities(prisma);
+  await seedRoles(prisma);
   await seedStatuses(prisma);
   await seedProjects(prisma);
   await seedTasks(prisma);

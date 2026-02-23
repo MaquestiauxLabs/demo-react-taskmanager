@@ -20,6 +20,7 @@ model User {
   labels     Label[]
   statuses   Status[]
   priorities Priority[]
+  roles      Role[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 }
