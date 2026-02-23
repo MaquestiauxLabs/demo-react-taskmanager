@@ -6,7 +6,7 @@ A collaborative task management application that allows users to create tasks, a
 
 ## 2. Data Models
 
-### 2.1 User (DONE)
+### 2.1 User (DONE - needs review)
 
 Represents a user in the system.
 
@@ -30,7 +30,7 @@ Represents a user in the system.
 
 ---
 
-### 2.2 Project
+### 2.2 Project (DONE - needs review)
 
 A container for organizing related tasks. A project can be standalone or contain multiple tasks.
 
@@ -134,7 +134,7 @@ User comments on tasks.
 
 ---
 
-### 2.6 Label
+### 2.6 Label (DONE - needs review)
 
 Tags that can be applied to both Projects and Tasks for categorization.
 
@@ -221,7 +221,7 @@ Represents project membership roles. Can be global (default) or project-specific
 
 ---
 
-### 2.10 Status
+### 2.10 Status (DONE - needs review)
 
 Join table linking a Task to its Status.
 
@@ -235,7 +235,7 @@ Join table linking a Task to its Status.
 
 ---
 
-### 2.11 Priority
+### 2.11 Priority (DONE - needs review)
 
 Represents task priorities. Can be global (default) or project-specific.
 
