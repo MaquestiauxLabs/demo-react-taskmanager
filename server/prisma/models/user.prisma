@@ -10,15 +10,16 @@
 // | updatedAt  | DateTime      | Last update timestamp      |
 
 model User {
-  id         String    @id @unique @default(cuid())
-  email      String    @unique /// @zod.email("Invalid email address")
-  givenName  String    @db.VarChar(255) /// @zod.string().min(1, "Given name is required").max(255, "Given name must be at most 255 characters")
-  familyName String    @db.VarChar(255) /// @zod.string().min(1, "Family name is required").max(255, "Family name must be at most 255 characters")
+  id         String     @id @unique @default(cuid())
+  email      String     @unique /// @zod.email("Invalid email address")
+  givenName  String     @db.VarChar(255) /// @zod.string().min(1, "Given name is required").max(255, "Given name must be at most 255 characters")
+  familyName String     @db.VarChar(255) /// @zod.string().min(1, "Family name is required").max(255, "Family name must be at most 255 characters")
   avatarUrl  String? /// @zod.url("Invalid avatar URL").nullish()
   tasks      Task[]
   projects   Project[]
   labels     Label[]
   statuses   Status[]
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  priorities Priority[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 }
