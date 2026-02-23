@@ -14,9 +14,6 @@
 // | startDate      | DateTime?     | Optional task start date                       |
 // | dueDate        | DateTime?     | Optional due date                              |
 // | estimatedHours | Float?        | Estimated effort in hours                      |
-// | isRecurring    | Boolean       | Whether task repeats                           |
-// | recurrenceRule | String?       | RRule string (RFC 5545) for recurrence pattern |
-// | recurrenceEnd  | DateTime?     | End date for recurring tasks                   |
 // | createdAt      | DateTime      | Creation timestamp                             |
 // | updatedAt      | DateTime      | Last update timestamp                          |
 

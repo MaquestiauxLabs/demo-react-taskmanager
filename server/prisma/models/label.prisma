@@ -1,11 +1,13 @@
-// Tags that can be applied to both Projects and Tasks for categorization.
+// Labels that can be applied to both Projects and Tasks for categorization.
 // | Field     | Type          | Description                            |
 // | --------- | ------------- | -------------------------------------- |
 // | id        | String (cuid) | Unique identifier                      |
 // | name      | String        | Label name                             |
-// | color     | String        | Hex color code (e.g., "#FF5733")     |
+// | color     | String        | Hex color code (e.g., "#FF5733")       |
+// | creatorId | String        | User who created the label             |
+// | tasks     | Task[]        | Tasks associated with the label        |
 // | createdAt | DateTime      | Creation timestamp                     |
-// | updatedAt  | DateTime      | Last update timestamp      |
+// | updatedAt | DateTime      | Last update timestamp                  |
 
 model Label {
   id        String   @id @default(cuid())
