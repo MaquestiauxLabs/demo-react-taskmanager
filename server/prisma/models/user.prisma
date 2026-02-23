@@ -18,6 +18,7 @@ model User {
   tasks      Task[]
   projects   Project[]
   labels     Label[]
+  statuses   Status[]
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
