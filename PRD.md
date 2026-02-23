@@ -189,7 +189,7 @@ Join table for project access management.
 
 ---
 
-### 2.9 Role
+### 2.9 Role (DONE - needs review)
 
 Represents project membership roles. Can be global (default) or project-specific.
 
