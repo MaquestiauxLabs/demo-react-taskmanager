@@ -13,6 +13,7 @@ model Label {
   color     String
   creatorId String   @map("ownerId")
   creator   User     @relation(fields: [creatorId], references: [id])
+  tasks     Task[]   @relation("TaskLabels")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
