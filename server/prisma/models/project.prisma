@@ -13,6 +13,8 @@ model Project {
   creatorId   String    @map("ownerId")
   /// Project owner.
   creator     User      @relation(fields: [creatorId], references: [id])
+  /// Tasks associated with this project.
+  tasks       Task[]
   /// Optional project start date.
   startDate   DateTime?
   /// Optional project end date.
