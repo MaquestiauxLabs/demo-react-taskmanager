@@ -1,10 +1,3 @@
-// | Method | Endpoint       | Description    |
-// | ------ | -------------- | -------------- |
-// | GET    | /api/priorities     | List all priorities |
-// | POST   | /api/priorities     | Create a priority  |
-// | GET    | /api/priorities/:id | Get priority by ID |
-// | PUT    | /api/priorities/:id | Update priority    |
-// | DELETE | /api/priorities/:id | Delete priority    |
 import { Router } from "express";
 import { PrioritiesController } from "../controllers";
 

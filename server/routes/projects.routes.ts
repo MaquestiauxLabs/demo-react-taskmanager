@@ -1,10 +1,3 @@
-// | Method | Endpoint                          | Description                |
-// | ------ | --------------------------------- | -------------------------- |
-// | GET    | /api/projects                     | List all projects          |
-// | POST   | /api/projects                     | Create a project           |
-// | GET    | /api/projects/:id                 | Get project by ID          |
-// | PUT    | /api/projects/:id                 | Update project             |
-// | DELETE | /api/projects/:id                 | Delete project             |
 import { Router } from "express";
 import { ProjectsController } from "../controllers";
 

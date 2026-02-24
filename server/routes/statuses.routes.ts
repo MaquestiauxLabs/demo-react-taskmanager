@@ -1,10 +1,3 @@
-// | Method | Endpoint       | Description    |
-// | ------ | -------------- | -------------- |
-// | GET    | /api/statuses     | List all statuses |
-// | POST   | /api/statuses     | Create a status  |
-// | GET    | /api/statuses/:id | Get status by ID |
-// | PUT    | /api/statuses/:id | Update status    |
-// | DELETE | /api/statuses/:id | Delete status    |
 import { Router } from "express";
 import { StatusesController } from "../controllers";
 
