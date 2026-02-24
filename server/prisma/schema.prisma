@@ -8,6 +8,13 @@ generator zod {
   output   = "./generated/zod"
 }
 
+generator erd {
+  provider                  = "prisma-erd-generator"
+  output                    = "../../docs/database-schema.svg"
+  theme                     = "forest"
+  includeRelationFromFields = true
+}
+
 datasource db {
   provider = "postgresql"
 }
