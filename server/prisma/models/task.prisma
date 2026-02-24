@@ -30,6 +30,9 @@ model Task {
   status         Status?   @relation(fields: [statusId], references: [id])
   /// Labels associated with this task.
   labels         Label[]   @relation("TaskLabels")
+  /// Projects associated with this task.
+  projectId      String?
+  project        Project?  @relation(fields: [projectId], references: [id])
   /// Optional task start date.
   startDate      DateTime?
   /// Optional task due date.

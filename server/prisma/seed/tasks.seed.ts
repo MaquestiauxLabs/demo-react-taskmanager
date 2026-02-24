@@ -12,6 +12,7 @@ type TaskSeed = {
   labelNames?: string[];
   priorityName?: string;
   statusName?: string;
+  projectTitle?: string;
 };
 
 const now = new Date();
@@ -116,6 +117,63 @@ const TASKS: TaskSeed[] = [
     description: "Investigate options for offline task editing.",
     creatorEmail: "jane.doe@taskmanager.local",
   },
+
+  // API hardening project - single task
+  {
+    key: "validate-endpoints",
+    title: "Validate all endpoint inputs",
+    description: "Add comprehensive input validation to all API endpoints.",
+    creatorEmail: "jane.doe@taskmanager.local",
+    projectTitle: "API hardening",
+    startDate: now,
+    dueDate: new Date(now.getTime() + 5 * 24 * 60 * 60 * 1000),
+    estimatedHours: 6,
+    labelNames: ["Backend"],
+    priorityName: "High",
+    statusName: "In Progress",
+  },
+
+  // Frontend polish project - three tasks
+  {
+    key: "refine-task-form",
+    title: "Refine task creation form UX",
+    description: "Improve form layout, validation messages, and accessibility.",
+    creatorEmail: "john.smith@taskmanager.local",
+    projectTitle: "Frontend polish",
+    startDate: now,
+    dueDate: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000),
+    estimatedHours: 8,
+    labelNames: ["Frontend", "Improvement"],
+    priorityName: "Medium",
+    statusName: "In Progress",
+  },
+  {
+    key: "cross-browser-testing",
+    title: "Cross-browser testing and fixes",
+    description:
+      "Verify and fix CSS/JS issues across Chrome, Firefox, Safari, Edge.",
+    creatorEmail: "john.smith@taskmanager.local",
+    projectTitle: "Frontend polish",
+    startDate: now,
+    dueDate: new Date(now.getTime() + 9 * 24 * 60 * 60 * 1000),
+    estimatedHours: 10,
+    labelNames: ["Frontend", "Bug"],
+    priorityName: "High",
+    statusName: "Todo",
+  },
+  {
+    key: "dark-mode-support",
+    title: "Add dark mode support",
+    description: "Implement theme toggle and persist user preference.",
+    creatorEmail: "jane.doe@taskmanager.local",
+    projectTitle: "Frontend polish",
+    startDate: now,
+    dueDate: new Date(now.getTime() + 12 * 24 * 60 * 60 * 1000),
+    estimatedHours: 5,
+    labelNames: ["Frontend", "Improvement"],
+    priorityName: "Low",
+    statusName: "Todo",
+  },
 ];
 
 export async function seedTasks(prisma: PrismaClient) {
@@ -149,6 +207,13 @@ export async function seedTasks(prisma: PrismaClient) {
     },
   });
 
+  const projects = await prisma.project.findMany({
+    select: {
+      id: true,
+      title: true,
+    },
+  });
+
   const userIdByEmail = new Map(users.map((user) => [user.email, user.id]));
   const labelIdByName = new Map(labels.map((label) => [label.name, label.id]));
   const priorityIdByName = new Map(
@@ -156,6 +221,9 @@ export async function seedTasks(prisma: PrismaClient) {
   );
   const statusIdByName = new Map(
     statuses.map((status) => [status.name, status.id]),
+  );
+  const projectIdByTitle = new Map(
+    projects.map((project) => [project.title, project.id]),
   );
   const taskIdByKey = new Map<string, string>();
 
@@ -194,6 +262,9 @@ export async function seedTasks(prisma: PrismaClient) {
           ? priorityIdByName.get(task.priorityName)
           : null,
         statusId: task.statusName ? statusIdByName.get(task.statusName) : null,
+        projectId: task.projectTitle
+          ? (projectIdByTitle.get(task.projectTitle) ?? null)
+          : null,
         labels: task.labelNames
           ? {
               connect: task.labelNames
