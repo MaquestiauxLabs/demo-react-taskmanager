@@ -216,4 +216,115 @@ export class TasksService {
       };
     }
   }
+
+  async assignProject(taskId: string, projectId: string) {
+    try {
+      if (!projectId) {
+        return {
+          message: "projectId is required",
+          httpStatus: 400,
+        };
+      }
+
+      const task = await prisma.task.findUnique({ where: { id: taskId } });
+      if (!task) {
+        return {
+          message: `Task with ID ${taskId} not found`,
+          httpStatus: 404,
+        };
+      }
+
+      const project = await prisma.project.findUnique({
+        where: { id: projectId },
+      });
+      if (!project) {
+        return {
+          message: `Project with ID ${projectId} not found`,
+          httpStatus: 404,
+        };
+      }
+
+      const response = await prisma.task.update({
+        where: { id: taskId },
+        data: {
+          project: {
+            connect: { id: projectId },
+          },
+        },
+        include: {
+          labels: true,
+          priority: true,
+          status: true,
+        },
+      });
+      return {
+        message: `Assign project ${projectId} to task ${taskId}`,
+        httpStatus: 200,
+        data: response,
+      };
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.includes("Record to update not found")
+      ) {
+        return {
+          message: `Task with ID ${taskId} not found`,
+          httpStatus: 404,
+        };
+      }
+
+      return {
+        message: `Error assigning project ${projectId} to task ${taskId}`,
+        httpStatus: 500,
+        error,
+      };
+    }
+  }
+
+  async unassignProject(taskId: string) {
+    try {
+      const task = await prisma.task.findUnique({ where: { id: taskId } });
+      if (!task) {
+        return {
+          message: `Task with ID ${taskId} not found`,
+          httpStatus: 404,
+        };
+      }
+
+      const response = await prisma.task.update({
+        where: { id: taskId },
+        data: {
+          project: {
+            disconnect: true,
+          },
+        },
+        include: {
+          labels: true,
+          priority: true,
+          status: true,
+        },
+      });
+      return {
+        message: `Unassign project from task ${taskId}`,
+        httpStatus: 200,
+        data: response,
+      };
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.includes("Record to update not found")
+      ) {
+        return {
+          message: `Task with ID ${taskId} not found`,
+          httpStatus: 404,
+        };
+      }
+
+      return {
+        message: `Error unassigning project from task ${taskId}`,
+        httpStatus: 500,
+        error,
+      };
+    }
+  }
 }

@@ -63,4 +63,17 @@ export class TasksController {
     const result = await this.service.setStatus(id as string, statusId);
     res.status(result.httpStatus).json(result);
   };
+
+  assignProject = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { projectId } = req.body;
+    const result = await this.service.assignProject(id as string, projectId);
+    res.status(result.httpStatus).json(result);
+  };
+
+  unassignProject = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await this.service.unassignProject(id as string);
+    res.status(result.httpStatus).json(result);
+  };
 }
