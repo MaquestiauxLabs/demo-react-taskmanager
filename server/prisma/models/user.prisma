@@ -1,26 +1,32 @@
-// Represents a user in the system.
-// | Field      | Type          | Description                |
-// | ---------- | ------------- | -------------------------- |
-// | id         | String (cuid) | Unique identifier          |
-// | email      | String        | User's email (unique)      |
-// | givenName  | String        | First name                 |
-// | familyName | String        | Last name                  |
-// | avatarUrl  | String?       | Optional avatar image URL  |
-// | createdAt  | DateTime      | Account creation timestamp |
-// | updatedAt  | DateTime      | Last update timestamp      |
-
+/// Represents an application user.
+///
+/// @namespace Core
+/// @erd Overview
 model User {
+  /// User identifier (CUID).
   id         String     @id @unique @default(cuid())
+  /// User email address.
   email      String     @unique /// @zod.email("Invalid email address")
+  /// Given name.
   givenName  String     @db.VarChar(255) /// @zod.string().min(1, "Given name is required").max(255, "Given name must be at most 255 characters")
+  /// Family name.
   familyName String     @db.VarChar(255) /// @zod.string().min(1, "Family name is required").max(255, "Family name must be at most 255 characters")
+  /// Optional avatar image URL.
   avatarUrl  String? /// @zod.url("Invalid avatar URL").nullish()
+  /// Tasks created by the user.
   tasks      Task[]
+  /// Projects created by the user.
   projects   Project[]
+  /// Labels defined by the user.
   labels     Label[]
+  /// Statuses defined by the user.
   statuses   Status[]
+  /// Priorities defined by the user.
   priorities Priority[]
+  /// Roles defined by the user.
   roles      Role[]
+  /// Creation timestamp.
   createdAt  DateTime   @default(now())
+  /// Last update timestamp.
   updatedAt  DateTime   @updatedAt
 }

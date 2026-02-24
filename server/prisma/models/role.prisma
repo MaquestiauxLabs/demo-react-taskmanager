@@ -1,19 +1,19 @@
-// Roles that can be applied to both Projects and Tasks for categorization.
-// | Field     | Type          | Description                            |
-// | --------- | ------------- | -------------------------------------- |
-// | id        | String (cuid) | Unique identifier                      |
-// | name      | String        | Role name                              |
-// | color     | String        | Hex color code (e.g., "#FF5733")       |
-// | creatorId | String        | User who created the role              |
-// | createdAt | DateTime      | Creation timestamp                     |
-// | updatedAt | DateTime      | Last update timestamp                  |
-
+/// Represents a role definition for future access control.
+///
+/// @namespace Core
 model Role {
+  /// Role identifier (CUID).
   id        String   @id @default(cuid())
+  /// Role display name.
   name      String
+  /// Role color (hex code).
   color     String
+  /// Owner user identifier (mapped to `ownerId`).
   creatorId String   @map("ownerId")
+  /// Role owner.
   creator   User     @relation(fields: [creatorId], references: [id])
+  /// Creation timestamp.
   createdAt DateTime @default(now())
+  /// Last update timestamp.
   updatedAt DateTime @updatedAt
 }

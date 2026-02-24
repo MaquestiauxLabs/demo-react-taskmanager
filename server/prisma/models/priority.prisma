@@ -1,21 +1,21 @@
-// Priorities that can be applied to both Projects and Tasks for categorization.
-// | Field     | Type          | Description                            |
-// | --------- | ------------- | -------------------------------------- |
-// | id        | String (cuid) | Unique identifier                      |
-// | name      | String        | Priority name                          |
-// | color     | String        | Hex color code (e.g., "#FF5733")       |
-// | creatorId | String        | User who created the priority          |
-// | tasks     | Task[]        | Tasks associated with the priority     |
-// | createdAt | DateTime      | Creation timestamp                     |
-// | updatedAt | DateTime      | Last update timestamp                  |
-
+/// Represents a reusable task priority.
+///
+/// @namespace Taxonomy
 model Priority {
+  /// Priority identifier (CUID).
   id        String   @id @default(cuid())
+  /// Priority display name.
   name      String
+  /// Priority color (hex code).
   color     String
+  /// Owner user identifier (mapped to `ownerId`).
   creatorId String   @map("ownerId")
+  /// Priority owner.
   creator   User     @relation(fields: [creatorId], references: [id])
+  /// Tasks using this priority.
   tasks     Task[]
+  /// Creation timestamp.
   createdAt DateTime @default(now())
+  /// Last update timestamp.
   updatedAt DateTime @updatedAt
 }

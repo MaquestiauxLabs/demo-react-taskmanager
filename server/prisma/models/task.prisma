@@ -1,39 +1,43 @@
-// The core entity representing a work item. 
-// Tasks can be nested recursively (unlimited depth).
-// | Field          | Type          | Description                                    |
-// | -------------- | ------------- | ---------------------------------------------- |
-// | id             | String (cuid) | Unique identifier                              |
-// | title          | String        | Task title                                     |
-// | description    | String?       | Detailed task description                      |
-// | projectId      | String?       | Associated project (null = standalone)         |
-// | parentId       | String?       | Parent task for subtasks (null = root)         |
-// | creatorId      | String        | User who created the task                      |
-// | priorityId     | String?       | Associated priority                            |
-// | statusId       | String?       | Associated status                              |
-// | labels         | Label[]       | Labels associated with task                   |
-// | startDate      | DateTime?     | Optional task start date                       |
-// | dueDate        | DateTime?     | Optional due date                              |
-// | estimatedHours | Float?        | Estimated effort in hours                      |
-// | createdAt      | DateTime      | Creation timestamp                             |
-// | updatedAt      | DateTime      | Last update timestamp                          |
-
+/// Represents a task work item.
+/// Supports recursive nesting through parent-child relationships.
+///
+/// @namespace Work
+/// @erd Overview
 model Task {
+  /// Task identifier (CUID).
   id             String    @id @unique @default(cuid())
+  /// Task title.
   title          String    @db.VarChar(255) /// @zod.string().min(1, "Title is required").max(255, "Title must be at most 255 characters")
+  /// Optional task description.
   description    String?   @db.VarChar(1000) /// @zod.string().max(1000, "Description must be at most 1000 characters").nullish()
+  /// Parent task identifier.
   parentId       String?
+  /// Parent task.
   parent         Task?     @relation("TaskHierarchy", fields: [parentId], references: [id])
+  /// Child tasks.
   subtasks       Task[]    @relation("TaskHierarchy")
+  /// Creator user identifier.
   creatorId      String
+  /// Task creator.
   creator        User      @relation(fields: [creatorId], references: [id])
+  /// Priority identifier.
   priorityId     String?
+  /// Task priority.
   priority       Priority? @relation(fields: [priorityId], references: [id])
+  /// Status identifier.
   statusId       String?
+  /// Task status.
   status         Status?   @relation(fields: [statusId], references: [id])
+  /// Labels associated with this task.
   labels         Label[]   @relation("TaskLabels")
+  /// Optional task start date.
   startDate      DateTime?
+  /// Optional task due date.
   dueDate        DateTime?
+  /// Optional estimated effort in hours.
   estimatedHours Float?
+  /// Creation timestamp.
   createdAt      DateTime  @default(now())
+  /// Last update timestamp.
   updatedAt      DateTime  @updatedAt
 }

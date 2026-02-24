@@ -1,21 +1,21 @@
-// Status that can be applied to both Projects and Tasks for categorization.
-// | Field     | Type          | Description                            |
-// | --------- | ------------- | -------------------------------------- |
-// | id        | String (cuid) | Unique identifier                      |
-// | name      | String        | Status name                            |
-// | color     | String        | Hex color code (e.g., "#FF5733")       |
-// | creatorId | String        | User who created the status            |
-// | tasks     | Task[]        | Tasks associated with the status       |
-// | createdAt | DateTime      | Creation timestamp                     |
-// | updatedAt | DateTime      | Last update timestamp                  |
-
+/// Represents a reusable task status.
+///
+/// @namespace Taxonomy
 model Status {
+  /// Status identifier (CUID).
   id        String   @id @default(cuid())
+  /// Status display name.
   name      String
+  /// Status color (hex code).
   color     String
+  /// Owner user identifier (mapped to `ownerId`).
   creatorId String   @map("ownerId")
+  /// Status owner.
   creator   User     @relation(fields: [creatorId], references: [id])
+  /// Tasks using this status.
   tasks     Task[]
+  /// Creation timestamp.
   createdAt DateTime @default(now())
+  /// Last update timestamp.
   updatedAt DateTime @updatedAt
 }

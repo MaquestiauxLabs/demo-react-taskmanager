@@ -1,23 +1,24 @@
-// A container for organizing related tasks.
-// | Field       | Type          | Description                  |
-// | ----------- | ------------- | ---------------------------- |
-// | id          | String (cuid) | Unique identifier            |
-// | title       | String        | Project name                 |
-// | description | String?       | Optional project description |
-// | creatorId   | String        | User who owns the project    |
-// | startDate   | DateTime?     | Optional project start date  |
-// | endDate     | DateTime?     | Optional project end date    |
-// | createdAt   | DateTime      | Creation timestamp           |
-// | updatedAt   | DateTime      | Last update timestamp        |
-
+/// Represents a project that groups related tasks.
+///
+/// @namespace Work
+/// @erd Overview
 model Project {
+  /// Project identifier (CUID).
   id          String    @id @default(cuid())
+  /// Project title.
   title       String    @db.VarChar(255) /// @zod.string().min(1, "Title is required").max(255, "Title must be at most 255 characters")
+  /// Optional project description.
   description String?   @db.VarChar(1000) /// @zod.string().max(1000, "Description must be at most 1000 characters").nullish()
+  /// Owner user identifier (mapped to `ownerId`).
   creatorId   String    @map("ownerId")
+  /// Project owner.
   creator     User      @relation(fields: [creatorId], references: [id])
+  /// Optional project start date.
   startDate   DateTime?
+  /// Optional project end date.
   endDate     DateTime?
+  /// Creation timestamp.
   createdAt   DateTime  @default(now())
+  /// Last update timestamp.
   updatedAt   DateTime  @updatedAt
 }

@@ -1,21 +1,21 @@
-// Labels that can be applied to both Projects and Tasks for categorization.
-// | Field     | Type          | Description                            |
-// | --------- | ------------- | -------------------------------------- |
-// | id        | String (cuid) | Unique identifier                      |
-// | name      | String        | Label name                             |
-// | color     | String        | Hex color code (e.g., "#FF5733")       |
-// | creatorId | String        | User who created the label             |
-// | tasks     | Task[]        | Tasks associated with the label        |
-// | createdAt | DateTime      | Creation timestamp                     |
-// | updatedAt | DateTime      | Last update timestamp                  |
-
+/// Represents a reusable label for task categorization.
+///
+/// @namespace Taxonomy
 model Label {
+  /// Label identifier (CUID).
   id        String   @id @default(cuid())
+  /// Label display name.
   name      String
+  /// Label color (hex code).
   color     String
+  /// Owner user identifier (mapped to `ownerId`).
   creatorId String   @map("ownerId")
+  /// Label owner.
   creator   User     @relation(fields: [creatorId], references: [id])
+  /// Tasks associated with this label.
   tasks     Task[]   @relation("TaskLabels")
+  /// Creation timestamp.
   createdAt DateTime @default(now())
+  /// Last update timestamp.
   updatedAt DateTime @updatedAt
 }
