@@ -39,7 +39,12 @@ erDiagram
   String A FK
   String B FK
 }
+"_LabelToProject" {
+  String A FK
+  String B FK
+}
 "_LabelToTask" }o--|| "Label" : Label
+"_LabelToProject" }o--|| "Label" : Label
 ```
 
 ### `Label`
@@ -90,6 +95,15 @@ Properties as follows:
 - `A`:
 - `B`:
 
+### `_LabelToProject`
+
+Pair relationship table between [Label](#Label) and [Project](#Project)
+
+Properties as follows:
+
+- `A`:
+- `B`:
+
 ## Work
 
 ```mermaid
@@ -101,6 +115,8 @@ erDiagram
   String ownerId FK
   DateTime startDate "nullable"
   DateTime endDate "nullable"
+  String priorityId FK "nullable"
+  String statusId FK "nullable"
   DateTime createdAt
   DateTime updatedAt
 }
@@ -123,9 +139,14 @@ erDiagram
   String A FK
   String B FK
 }
+"_LabelToProject" {
+  String A FK
+  String B FK
+}
 "Task" }o--o| "Task" : parent
 "Task" }o--o| "Project" : project
 "_LabelToTask" }o--|| "Task" : Task
+"_LabelToProject" }o--|| "Project" : Project
 ```
 
 ### `Project`
@@ -140,6 +161,8 @@ Properties as follows:
 - `ownerId`: Owner user identifier (mapped to `ownerId`).
 - `startDate`: Optional project start date.
 - `endDate`: Optional project end date.
+- `priorityId`: Priority identifier.
+- `statusId`: Status identifier.
 - `createdAt`: Creation timestamp.
 - `updatedAt`: Last update timestamp.
 
@@ -167,6 +190,15 @@ Properties as follows:
 ### `_LabelToTask`
 
 Pair relationship table between [Label](#Label) and [Task](#Task)
+
+Properties as follows:
+
+- `A`:
+- `B`:
+
+### `_LabelToProject`
+
+Pair relationship table between [Label](#Label) and [Project](#Project)
 
 Properties as follows:
 
@@ -235,6 +267,8 @@ erDiagram
   String ownerId FK
   DateTime startDate "nullable"
   DateTime endDate "nullable"
+  String priorityId FK "nullable"
+  String statusId FK "nullable"
   DateTime createdAt
   DateTime updatedAt
 }
@@ -266,10 +300,15 @@ erDiagram
   String A FK
   String B FK
 }
+"_LabelToProject" {
+  String A FK
+  String B FK
+}
 "Project" }o--|| "User" : creator
 "Task" }o--o| "Task" : parent
 "Task" }o--|| "User" : creator
 "Task" }o--o| "Project" : project
 "_LabelToTask" }o--|| "Task" : Task
+"_LabelToProject" }o--|| "Project" : Project
 ```
 

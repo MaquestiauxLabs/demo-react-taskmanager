@@ -3,19 +3,21 @@
 /// @namespace Taxonomy
 model Priority {
   /// Priority identifier (CUID).
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   /// Priority display name.
   name      String
   /// Priority color (hex code).
   color     String
   /// Owner user identifier (mapped to `ownerId`).
-  creatorId String   @map("ownerId")
+  creatorId String    @map("ownerId")
   /// Priority owner.
-  creator   User     @relation(fields: [creatorId], references: [id])
+  creator   User      @relation(fields: [creatorId], references: [id])
   /// Tasks using this priority.
   tasks     Task[]
+  /// Projects using this priority.
+  projects  Project[]
   /// Creation timestamp.
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
   /// Last update timestamp.
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime  @updatedAt
 }
