@@ -1,5 +1,9 @@
 import type { PrismaClient } from "../generated/client";
 
+function toLookupKey(value: string) {
+  return value.trim().toLowerCase();
+}
+
 type TaskSeed = {
   key: string;
   title: string;
@@ -26,9 +30,9 @@ const TASKS: TaskSeed[] = [
     startDate: now,
     dueDate: new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000),
     estimatedHours: 24,
-    labelNames: ["Improvement"],
-    priorityName: "High",
-    statusName: "In Progress",
+    labelNames: ["iMProVeMenT"],
+    priorityName: "hIgH",
+    statusName: "in progress",
   },
   {
     key: "api-checklist",
@@ -39,9 +43,9 @@ const TASKS: TaskSeed[] = [
     startDate: now,
     dueDate: new Date(now.getTime() + 6 * 24 * 60 * 60 * 1000),
     estimatedHours: 8,
-    labelNames: ["Backend", "Urgent"],
-    priorityName: "Critical",
-    statusName: "In Progress",
+    labelNames: ["baCkEnd", "uRGenT"],
+    priorityName: "CRITICAL",
+    statusName: "IN PROGRESS",
   },
   {
     key: "api-docs",
@@ -65,9 +69,9 @@ const TASKS: TaskSeed[] = [
     startDate: now,
     dueDate: new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000),
     estimatedHours: 10,
-    labelNames: ["Frontend", "Bug"],
-    priorityName: "High",
-    statusName: "Review",
+    labelNames: ["frONtEnd", "bUG"],
+    priorityName: "hIGh",
+    statusName: "rEViEw",
   },
   {
     key: "smoke-tests",
@@ -124,13 +128,13 @@ const TASKS: TaskSeed[] = [
     title: "Validate all endpoint inputs",
     description: "Add comprehensive input validation to all API endpoints.",
     creatorEmail: "jane.doe@taskmanager.local",
-    projectTitle: "API hardening",
+    projectTitle: "api hardening",
     startDate: now,
     dueDate: new Date(now.getTime() + 5 * 24 * 60 * 60 * 1000),
     estimatedHours: 6,
-    labelNames: ["Backend"],
-    priorityName: "High",
-    statusName: "In Progress",
+    labelNames: ["BACKEND"],
+    priorityName: "HIGH",
+    statusName: "in progress",
   },
 
   // Frontend polish project - three tasks
@@ -139,13 +143,13 @@ const TASKS: TaskSeed[] = [
     title: "Refine task creation form UX",
     description: "Improve form layout, validation messages, and accessibility.",
     creatorEmail: "john.smith@taskmanager.local",
-    projectTitle: "Frontend polish",
+    projectTitle: "frOntend polish",
     startDate: now,
     dueDate: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000),
     estimatedHours: 8,
-    labelNames: ["Frontend", "Improvement"],
-    priorityName: "Medium",
-    statusName: "In Progress",
+    labelNames: ["FrOnTeNd", "IMPROVEMENT"],
+    priorityName: "mEDiuM",
+    statusName: "in progress",
   },
   {
     key: "cross-browser-testing",
@@ -153,13 +157,13 @@ const TASKS: TaskSeed[] = [
     description:
       "Verify and fix CSS/JS issues across Chrome, Firefox, Safari, Edge.",
     creatorEmail: "john.smith@taskmanager.local",
-    projectTitle: "Frontend polish",
+    projectTitle: "FRONTEND POLISH",
     startDate: now,
     dueDate: new Date(now.getTime() + 9 * 24 * 60 * 60 * 1000),
     estimatedHours: 10,
-    labelNames: ["Frontend", "Bug"],
-    priorityName: "High",
-    statusName: "Todo",
+    labelNames: ["frontend", "BUG"],
+    priorityName: "hIGh",
+    statusName: "tOdO",
   },
   {
     key: "dark-mode-support",
@@ -215,15 +219,17 @@ export async function seedTasks(prisma: PrismaClient) {
   });
 
   const userIdByEmail = new Map(users.map((user) => [user.email, user.id]));
-  const labelIdByName = new Map(labels.map((label) => [label.name, label.id]));
+  const labelIdByName = new Map(
+    labels.map((label) => [toLookupKey(label.name), label.id]),
+  );
   const priorityIdByName = new Map(
-    priorities.map((priority) => [priority.name, priority.id]),
+    priorities.map((priority) => [toLookupKey(priority.name), priority.id]),
   );
   const statusIdByName = new Map(
-    statuses.map((status) => [status.name, status.id]),
+    statuses.map((status) => [toLookupKey(status.name), status.id]),
   );
   const projectIdByTitle = new Map(
-    projects.map((project) => [project.title, project.id]),
+    projects.map((project) => [toLookupKey(project.title), project.id]),
   );
   const taskIdByKey = new Map<string, string>();
 
@@ -259,15 +265,18 @@ export async function seedTasks(prisma: PrismaClient) {
         estimatedHours: task.estimatedHours,
         parentId: task.parentKey ? taskIdByKey.get(task.parentKey) : null,
         priorityId: task.priorityName
-          ? priorityIdByName.get(task.priorityName)
+          ? (priorityIdByName.get(toLookupKey(task.priorityName)) ?? null)
           : null,
-        statusId: task.statusName ? statusIdByName.get(task.statusName) : null,
+        statusId: task.statusName
+          ? (statusIdByName.get(toLookupKey(task.statusName)) ?? null)
+          : null,
         projectId: task.projectTitle
-          ? (projectIdByTitle.get(task.projectTitle) ?? null)
+          ? (projectIdByTitle.get(toLookupKey(task.projectTitle)) ?? null)
           : null,
         labels: task.labelNames
           ? {
               connect: task.labelNames
+                .map((name) => toLookupKey(name))
                 .filter((name) => labelIdByName.has(name))
                 .map((name) => ({ id: labelIdByName.get(name)! })),
             }
