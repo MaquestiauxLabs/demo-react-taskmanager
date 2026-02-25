@@ -2,7 +2,7 @@ import {
   ProjectCreateInput,
   ProjectUpdateInput,
 } from "../prisma/generated/models";
-import { prisma } from "../utils";
+import { prisma, standardiseResponse } from "../utils";
 
 export class ProjectsService {
   async get() {
@@ -13,11 +13,23 @@ export class ProjectsService {
         },
       });
       if (!response || response.length === 0) {
-        return { message: "No projects found", httpStatus: 404 };
+        return standardiseResponse({
+          message: "No projects found",
+          httpStatus: 404,
+          error: "No projects found in the database",
+        });
       }
-      return { message: "List all projects", httpStatus: 200, data: response };
+      return standardiseResponse({
+        message: "List all projects",
+        httpStatus: 200,
+        data: response,
+      });
     } catch (error) {
-      return { message: "Error fetching projects", httpStatus: 500, error };
+      return standardiseResponse({
+        message: "Error fetching projects",
+        httpStatus: 500,
+        error: error,
+      });
     }
   }
 
@@ -29,9 +41,17 @@ export class ProjectsService {
           labels: true,
         },
       });
-      return { message: "Create a project", httpStatus: 201, data: response };
+      return standardiseResponse({
+        message: "Create a project",
+        httpStatus: 201,
+        data: response,
+      });
     } catch (error) {
-      return { message: "Error creating project", httpStatus: 500, error };
+      return standardiseResponse({
+        message: "Error creating project",
+        httpStatus: 500,
+        error: error,
+      });
     }
   }
 
@@ -44,19 +64,23 @@ export class ProjectsService {
         },
       });
       if (!response) {
-        return { message: `Project with ID ${id} not found`, httpStatus: 404 };
+        return standardiseResponse({
+          message: `Project with ID ${id} not found`,
+          httpStatus: 404,
+          error: `No project found with ID ${id} in the database`,
+        });
       }
-      return {
+      return standardiseResponse({
         message: `Get project by ID: ${id}`,
         httpStatus: 200,
         data: response,
-      };
+      });
     } catch (error) {
-      return {
+      return standardiseResponse({
         message: `Error fetching project with ID ${id}`,
         httpStatus: 500,
-        error,
-      };
+        error: error,
+      });
     }
   }
 
@@ -69,30 +93,33 @@ export class ProjectsService {
           labels: true,
         },
       });
-      return {
+      return standardiseResponse({
         message: `Update project with ID: ${id}`,
         httpStatus: 200,
         data: response,
-      };
+      });
     } catch (error) {
-      return {
+      return standardiseResponse({
         message: `Error updating project with ID ${id}`,
         httpStatus: 500,
-        error,
-      };
+        error: error,
+      });
     }
   }
 
   async delete(id: string) {
     try {
       await prisma.project.delete({ where: { id } });
-      return { message: `Delete project with ID: ${id}`, httpStatus: 200 };
+      return standardiseResponse({
+        message: `Delete project with ID: ${id}`,
+        httpStatus: 200,
+      });
     } catch (error) {
-      return {
+      return standardiseResponse({
         message: `Error deleting project with ID ${id}`,
         httpStatus: 500,
-        error,
-      };
+        error: error,
+      });
     }
   }
 }
