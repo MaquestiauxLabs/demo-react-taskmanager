@@ -3,19 +3,21 @@
 /// @namespace Taxonomy
 model Label {
   /// Label identifier (CUID).
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   /// Label display name.
   name      String
   /// Label color (hex code).
   color     String
   /// Owner user identifier (mapped to `ownerId`).
-  creatorId String   @map("ownerId")
+  creatorId String    @map("ownerId")
   /// Label owner.
-  creator   User     @relation(fields: [creatorId], references: [id])
+  creator   User      @relation(fields: [creatorId], references: [id])
   /// Tasks associated with this label.
-  tasks     Task[]   @relation("TaskLabels")
+  tasks     Task[]    @relation("TaskLabels")
+  /// Projects associated with this label.
+  projects  Project[] @relation("ProjectLabels")
   /// Creation timestamp.
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
   /// Last update timestamp.
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime  @updatedAt
 }

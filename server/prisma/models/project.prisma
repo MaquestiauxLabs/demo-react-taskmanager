@@ -19,6 +19,16 @@ model Project {
   startDate   DateTime?
   /// Optional project end date.
   endDate     DateTime?
+  /// Priority identifier.
+  priorityId  String?
+  /// Task priority.
+  priority    Priority? @relation(fields: [priorityId], references: [id])
+  /// Status identifier.
+  statusId    String?
+  /// Task status.
+  status      Status?   @relation(fields: [statusId], references: [id])
+  /// Labels associated with this project.
+  labels      Label[]   @relation("ProjectLabels")
   /// Creation timestamp.
   createdAt   DateTime  @default(now())
   /// Last update timestamp.
