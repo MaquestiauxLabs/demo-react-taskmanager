@@ -10,6 +10,11 @@ export class ProjectsService {
       const response = await prisma.project.findMany({
         include: {
           labels: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       if (!response || response.length === 0) {
@@ -39,6 +44,11 @@ export class ProjectsService {
         data,
         include: {
           labels: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       return standardiseResponse({
@@ -61,6 +71,11 @@ export class ProjectsService {
         where: { id },
         include: {
           labels: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       if (!response) {
@@ -91,6 +106,11 @@ export class ProjectsService {
         data,
         include: {
           labels: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       return standardiseResponse({

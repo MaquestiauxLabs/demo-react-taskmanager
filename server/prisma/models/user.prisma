@@ -25,6 +25,8 @@ model User {
   priorities Priority[]
   /// Roles defined by the user.
   roles      Role[]
+  /// Comments authored by the user.
+  comments   Comment[]
   /// Creation timestamp.
   createdAt  DateTime   @default(now())
   /// Last update timestamp.
