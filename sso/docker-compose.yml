@@ -1,0 +1,19 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: demo-sso
+    command: start-dev
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      # This allows Keycloak to be accessed via 'localhost' from your browser
+      - KC_HOSTNAME=localhost
+      - KC_HTTP_ENABLED=true
+    ports:
+      - "8888:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
