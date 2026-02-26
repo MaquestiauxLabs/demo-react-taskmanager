@@ -4,33 +4,35 @@
 /// @erd Overview
 model Project {
   /// Project identifier (CUID).
-  id          String    @id @default(cuid())
+  id           String           @id @default(cuid())
   /// Project title.
-  title       String    @db.VarChar(255) /// @zod.string().min(1, "Title is required").max(255, "Title must be at most 255 characters")
+  title        String           @db.VarChar(255) /// @zod.string().min(1, "Title is required").max(255, "Title must be at most 255 characters")
   /// Optional project description.
-  description String?   @db.VarChar(1000) /// @zod.string().max(1000, "Description must be at most 1000 characters").nullish()
+  description  String?          @db.VarChar(1000) /// @zod.string().max(1000, "Description must be at most 1000 characters").nullish()
   /// Owner user identifier (mapped to `ownerId`).
-  creatorId   String    @map("ownerId")
+  creatorId    String           @map("ownerId")
   /// Project owner.
-  creator     User      @relation(fields: [creatorId], references: [id])
+  creator      User             @relation(fields: [creatorId], references: [id])
   /// Tasks associated with this project.
-  tasks       Task[]
+  tasks        Task[]
   /// Optional project start date.
-  startDate   DateTime?
+  startDate    DateTime?
   /// Optional project end date.
-  endDate     DateTime?
+  endDate      DateTime?
   /// Priority identifier.
-  priorityId  String?
+  priorityId   String?
   /// Task priority.
-  priority    Priority? @relation(fields: [priorityId], references: [id])
+  priority     Priority?        @relation(fields: [priorityId], references: [id])
   /// Status identifier.
-  statusId    String?
+  statusId     String?
   /// Task status.
-  status      Status?   @relation(fields: [statusId], references: [id])
+  status       Status?          @relation(fields: [statusId], references: [id])
   /// Labels associated with this project.
-  labels      Label[]   @relation("ProjectLabels")
+  labels       Label[]          @relation("ProjectLabels")
+  /// Comment links associated with this project.
+  commentLinks CommentProject[]
   /// Creation timestamp.
-  createdAt   DateTime  @default(now())
+  createdAt    DateTime         @default(now())
   /// Last update timestamp.
-  updatedAt   DateTime  @updatedAt
+  updatedAt    DateTime         @updatedAt
 }

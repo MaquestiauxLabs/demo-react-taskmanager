@@ -1,0 +1,54 @@
+/// Represent a comment on a task or a project.
+/// @namespace Communication
+model Comment {
+  /// Comment identifier (CUID).
+  id           String           @id @default(cuid())
+  /// Comment content.
+  content      String
+  /// Author user identifier (mapped to `creatorId`).
+  creatorId    String           @map("authorId")
+  /// Comment author.
+  creator      User             @relation(fields: [creatorId], references: [id])
+  /// Task links associated with this comment.
+  taskLinks    CommentTask[]
+  /// Project links associated with this comment.
+  projectLinks CommentProject[]
+  /// Creation timestamp.
+  createdAt    DateTime         @default(now())
+  /// Last update timestamp.
+  updatedAt    DateTime         @updatedAt
+}
+
+/// Join model linking comments to tasks with meaningful foreign key names.
+model CommentTask {
+  /// Comment identifier.
+  commentId String
+  /// Task identifier.
+  taskId    String
+
+  /// Linked comment.
+  comment Comment @relation(fields: [commentId], references: [id])
+  /// Linked task.
+  task    Task    @relation(fields: [taskId], references: [id])
+
+  @@id([commentId, taskId])
+  @@index([taskId])
+  @@map("_CommentTask")
+}
+
+/// Join model linking comments to projects with meaningful foreign key names.
+model CommentProject {
+  /// Comment identifier.
+  commentId String
+  /// Project identifier.
+  projectId String
+
+  /// Linked comment.
+  comment Comment @relation(fields: [commentId], references: [id])
+  /// Linked project.
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@id([commentId, projectId])
+  @@index([projectId])
+  @@map("_CommentProject")
+}

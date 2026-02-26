@@ -5,34 +5,36 @@
 /// @erd Overview
 model Task {
   /// Task identifier (CUID).
-  id             String    @id @unique @default(cuid())
+  id             String        @id @unique @default(cuid())
   /// Task title.
-  title          String    @db.VarChar(255) /// @zod.string().min(1, "Title is required").max(255, "Title must be at most 255 characters")
+  title          String        @db.VarChar(255) /// @zod.string().min(1, "Title is required").max(255, "Title must be at most 255 characters")
   /// Optional task description.
-  description    String?   @db.VarChar(1000) /// @zod.string().max(1000, "Description must be at most 1000 characters").nullish()
+  description    String?       @db.VarChar(1000) /// @zod.string().max(1000, "Description must be at most 1000 characters").nullish()
   /// Parent task identifier.
   parentId       String?
   /// Parent task.
-  parent         Task?     @relation("TaskHierarchy", fields: [parentId], references: [id])
+  parent         Task?         @relation("TaskHierarchy", fields: [parentId], references: [id])
   /// Child tasks.
-  subtasks       Task[]    @relation("TaskHierarchy")
+  subtasks       Task[]        @relation("TaskHierarchy")
   /// Creator user identifier.
   creatorId      String
   /// Task creator.
-  creator        User      @relation(fields: [creatorId], references: [id])
+  creator        User          @relation(fields: [creatorId], references: [id])
   /// Priority identifier.
   priorityId     String?
   /// Task priority.
-  priority       Priority? @relation(fields: [priorityId], references: [id])
+  priority       Priority?     @relation(fields: [priorityId], references: [id])
   /// Status identifier.
   statusId       String?
   /// Task status.
-  status         Status?   @relation(fields: [statusId], references: [id])
+  status         Status?       @relation(fields: [statusId], references: [id])
   /// Labels associated with this task.
-  labels         Label[]   @relation("TaskLabels")
+  labels         Label[]       @relation("TaskLabels")
   /// Projects associated with this task.
   projectId      String?
-  project        Project?  @relation(fields: [projectId], references: [id])
+  project        Project?      @relation(fields: [projectId], references: [id])
+  /// Comment links associated with this task.
+  commentLinks   CommentTask[]
   /// Optional task start date.
   startDate      DateTime?
   /// Optional task due date.
@@ -40,7 +42,7 @@ model Task {
   /// Optional estimated effort in hours.
   estimatedHours Float?
   /// Creation timestamp.
-  createdAt      DateTime  @default(now())
+  createdAt      DateTime      @default(now())
   /// Last update timestamp.
-  updatedAt      DateTime  @updatedAt
+  updatedAt      DateTime      @updatedAt
 }

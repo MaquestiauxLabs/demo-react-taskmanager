@@ -9,6 +9,11 @@ export class TasksService {
           labels: true,
           priority: true,
           status: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       if (!response || response.length === 0) {
@@ -39,6 +44,11 @@ export class TasksService {
           labels: true,
           priority: true,
           status: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       return standardiseResponse({
@@ -63,6 +73,11 @@ export class TasksService {
           labels: true,
           priority: true,
           status: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       if (!response) {
@@ -94,6 +109,11 @@ export class TasksService {
           labels: true,
           priority: true,
           status: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       return standardiseResponse({
@@ -139,6 +159,11 @@ export class TasksService {
           labels: true,
           priority: true,
           status: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       return standardiseResponse({
@@ -168,6 +193,11 @@ export class TasksService {
           labels: true,
           priority: true,
           status: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       return standardiseResponse({
@@ -197,6 +227,11 @@ export class TasksService {
           labels: true,
           priority: true,
           status: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       return standardiseResponse({
@@ -226,6 +261,11 @@ export class TasksService {
           labels: true,
           priority: true,
           status: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       return standardiseResponse({
@@ -280,6 +320,11 @@ export class TasksService {
           labels: true,
           priority: true,
           status: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       return standardiseResponse({
@@ -327,6 +372,11 @@ export class TasksService {
           labels: true,
           priority: true,
           status: true,
+          commentLinks: {
+            include: {
+              comment: true,
+            },
+          },
         },
       });
       return standardiseResponse({
