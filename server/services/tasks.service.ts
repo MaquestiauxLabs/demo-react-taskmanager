@@ -1,5 +1,5 @@
 import { TaskCreateInput, TaskUpdateInput } from "../prisma/generated/models";
-import { prisma } from "../utils";
+import { prisma, standardiseResponse } from "../utils";
 
 export class TasksService {
   async get() {
@@ -12,11 +12,22 @@ export class TasksService {
         },
       });
       if (!response || response.length === 0) {
-        return { message: "No tasks found", httpStatus: 404 };
+        return standardiseResponse({
+          message: "No tasks found",
+          httpStatus: 404,
+        });
       }
-      return { message: "List all tasks", httpStatus: 200, data: response };
+      return standardiseResponse({
+        message: "List all tasks",
+        httpStatus: 200,
+        data: response,
+      });
     } catch (error) {
-      return { message: "Error fetching tasks", httpStatus: 500, error };
+      return standardiseResponse({
+        message: "Error fetching tasks",
+        httpStatus: 500,
+        error,
+      });
     }
   }
 
@@ -30,9 +41,17 @@ export class TasksService {
           status: true,
         },
       });
-      return { message: "Create a task", httpStatus: 201, data: response };
+      return standardiseResponse({
+        message: "Create a task",
+        httpStatus: 201,
+        data: response,
+      });
     } catch (error) {
-      return { message: "Error creating task", httpStatus: 500, error };
+      return standardiseResponse({
+        message: "Error creating task",
+        httpStatus: 500,
+        error,
+      });
     }
   }
 
@@ -47,19 +66,22 @@ export class TasksService {
         },
       });
       if (!response) {
-        return { message: `Task with ID ${id} not found`, httpStatus: 404 };
+        return standardiseResponse({
+          message: `Task with ID ${id} not found`,
+          httpStatus: 404,
+        });
       }
-      return {
+      return standardiseResponse({
         message: `Get task by ID: ${id}`,
         httpStatus: 200,
         data: response,
-      };
+      });
     } catch (error) {
-      return {
+      return standardiseResponse({
         message: `Error fetching task with ID ${id}`,
         httpStatus: 500,
         error,
-      };
+      });
     }
   }
 
@@ -74,30 +96,33 @@ export class TasksService {
           status: true,
         },
       });
-      return {
+      return standardiseResponse({
         message: `Update task with ID: ${id}`,
         httpStatus: 200,
         data: response,
-      };
+      });
     } catch (error) {
-      return {
+      return standardiseResponse({
         message: `Error updating task with ID ${id}`,
         httpStatus: 500,
         error,
-      };
+      });
     }
   }
 
   async delete(id: string) {
     try {
       await prisma.task.delete({ where: { id } });
-      return { message: `Delete task with ID: ${id}`, httpStatus: 200 };
+      return standardiseResponse({
+        message: `Delete task with ID: ${id}`,
+        httpStatus: 200,
+      });
     } catch (error) {
-      return {
+      return standardiseResponse({
         message: `Error deleting task with ID ${id}`,
         httpStatus: 500,
         error,
-      };
+      });
     }
   }
 
@@ -116,17 +141,17 @@ export class TasksService {
           status: true,
         },
       });
-      return {
+      return standardiseResponse({
         message: `Add labels to task ${taskId}`,
         httpStatus: 200,
         data: response,
-      };
+      });
     } catch (error) {
-      return {
+      return standardiseResponse({
         message: `Error adding labels to task ${taskId}`,
         httpStatus: 500,
         error,
-      };
+      });
     }
   }
 
@@ -145,17 +170,17 @@ export class TasksService {
           status: true,
         },
       });
-      return {
+      return standardiseResponse({
         message: `Remove labels from task ${taskId}`,
         httpStatus: 200,
         data: response,
-      };
+      });
     } catch (error) {
-      return {
+      return standardiseResponse({
         message: `Error removing labels from task ${taskId}`,
         httpStatus: 500,
         error,
-      };
+      });
     }
   }
 
@@ -174,17 +199,17 @@ export class TasksService {
           status: true,
         },
       });
-      return {
+      return standardiseResponse({
         message: `Set priority for task ${taskId}`,
         httpStatus: 200,
         data: response,
-      };
+      });
     } catch (error) {
-      return {
+      return standardiseResponse({
         message: `Error setting priority for task ${taskId}`,
         httpStatus: 500,
         error,
-      };
+      });
     }
   }
 
@@ -203,45 +228,45 @@ export class TasksService {
           status: true,
         },
       });
-      return {
+      return standardiseResponse({
         message: `Set status for task ${taskId}`,
         httpStatus: 200,
         data: response,
-      };
+      });
     } catch (error) {
-      return {
+      return standardiseResponse({
         message: `Error setting status for task ${taskId}`,
         httpStatus: 500,
         error,
-      };
+      });
     }
   }
 
   async assignProject(taskId: string, projectId: string) {
     try {
       if (!projectId) {
-        return {
+        return standardiseResponse({
           message: "projectId is required",
           httpStatus: 400,
-        };
+        });
       }
 
       const task = await prisma.task.findUnique({ where: { id: taskId } });
       if (!task) {
-        return {
+        return standardiseResponse({
           message: `Task with ID ${taskId} not found`,
           httpStatus: 404,
-        };
+        });
       }
 
       const project = await prisma.project.findUnique({
         where: { id: projectId },
       });
       if (!project) {
-        return {
+        return standardiseResponse({
           message: `Project with ID ${projectId} not found`,
           httpStatus: 404,
-        };
+        });
       }
 
       const response = await prisma.task.update({
@@ -257,27 +282,27 @@ export class TasksService {
           status: true,
         },
       });
-      return {
+      return standardiseResponse({
         message: `Assign project ${projectId} to task ${taskId}`,
         httpStatus: 200,
         data: response,
-      };
+      });
     } catch (error) {
       if (
         error instanceof Error &&
         error.message.includes("Record to update not found")
       ) {
-        return {
+        return standardiseResponse({
           message: `Task with ID ${taskId} not found`,
           httpStatus: 404,
-        };
+        });
       }
 
-      return {
+      return standardiseResponse({
         message: `Error assigning project ${projectId} to task ${taskId}`,
         httpStatus: 500,
         error,
-      };
+      });
     }
   }
 
@@ -285,10 +310,10 @@ export class TasksService {
     try {
       const task = await prisma.task.findUnique({ where: { id: taskId } });
       if (!task) {
-        return {
+        return standardiseResponse({
           message: `Task with ID ${taskId} not found`,
           httpStatus: 404,
-        };
+        });
       }
 
       const response = await prisma.task.update({
@@ -304,27 +329,27 @@ export class TasksService {
           status: true,
         },
       });
-      return {
+      return standardiseResponse({
         message: `Unassign project from task ${taskId}`,
         httpStatus: 200,
         data: response,
-      };
+      });
     } catch (error) {
       if (
         error instanceof Error &&
         error.message.includes("Record to update not found")
       ) {
-        return {
+        return standardiseResponse({
           message: `Task with ID ${taskId} not found`,
           httpStatus: 404,
-        };
+        });
       }
 
-      return {
+      return standardiseResponse({
         message: `Error unassigning project from task ${taskId}`,
         httpStatus: 500,
         error,
-      };
+      });
     }
   }
 }
