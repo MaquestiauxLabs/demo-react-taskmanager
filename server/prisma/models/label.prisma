@@ -3,21 +3,57 @@
 /// @namespace Taxonomy
 model Label {
   /// Label identifier (CUID).
-  id        String    @id @default(cuid())
+  id           String         @id @default(cuid())
   /// Label display name.
-  name      String
+  name         String
   /// Label color (hex code).
-  color     String
+  color        String
   /// Owner user identifier (mapped to `ownerId`).
-  creatorId String    @map("ownerId")
+  creatorId    String         @map("ownerId")
   /// Label owner.
-  creator   User      @relation(fields: [creatorId], references: [id])
-  /// Tasks associated with this label.
-  tasks     Task[]    @relation("TaskLabels")
-  /// Projects associated with this label.
-  projects  Project[] @relation("ProjectLabels")
+  creator      User           @relation(fields: [creatorId], references: [id])
+  /// Task links associated with this label.
+  taskLinks    TaskLabel[]
+  /// Project links associated with this label.
+  projectLinks ProjectLabel[]
   /// Creation timestamp.
-  createdAt DateTime  @default(now())
+  createdAt    DateTime       @default(now())
   /// Last update timestamp.
-  updatedAt DateTime  @updatedAt
+  updatedAt    DateTime       @updatedAt
+}
+
+/// Join model linking labels to tasks with meaningful foreign key names.
+model TaskLabel {
+  /// Task identifier.
+  taskId  String
+  /// Label identifier.
+  labelId String
+
+  /// Linked task.
+  task  Task  @relation(fields: [taskId], references: [id])
+  /// Linked label.
+  label Label @relation(fields: [labelId], references: [id])
+
+  @@id([taskId, labelId])
+  @@index([taskId])
+  @@index([labelId])
+  @@map("_TaskLabel")
+}
+
+/// Join model linking labels to projects with meaningful foreign key names.
+model ProjectLabel {
+  /// Project identifier.
+  projectId String
+  /// Label identifier.
+  labelId   String
+
+  /// Linked project.
+  project Project @relation(fields: [projectId], references: [id])
+  /// Linked label.
+  label   Label   @relation(fields: [labelId], references: [id])
+
+  @@id([projectId, labelId])
+  @@index([projectId])
+  @@index([labelId])
+  @@map("_ProjectLabel")
 }

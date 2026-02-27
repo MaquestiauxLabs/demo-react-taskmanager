@@ -29,7 +29,7 @@ model Task {
   /// Task status.
   status         Status?       @relation(fields: [statusId], references: [id])
   /// Labels associated with this task.
-  labels         Label[]       @relation("TaskLabels")
+  labelLinks     TaskLabel[]
   /// Projects associated with this task.
   projectId      String?
   project        Project?      @relation(fields: [projectId], references: [id])

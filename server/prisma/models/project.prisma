@@ -28,7 +28,7 @@ model Project {
   /// Task status.
   status       Status?          @relation(fields: [statusId], references: [id])
   /// Labels associated with this project.
-  labels       Label[]          @relation("ProjectLabels")
+  labelLinks   ProjectLabel[]
   /// Comment links associated with this project.
   commentLinks CommentProject[]
   /// Creation timestamp.

@@ -236,9 +236,9 @@ export async function seedProjects(prisma: PrismaClient) {
         endDate: project.endDate,
         priorityId,
         statusId,
-        labels: labelIds.length
+        labelLinks: labelIds.length
           ? {
-              connect: labelIds.map((id) => ({ id })),
+              create: labelIds.map((labelId) => ({ labelId })),
             }
           : undefined,
       },

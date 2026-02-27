@@ -62,16 +62,6 @@ erDiagram
   DateTime createdAt
   DateTime updatedAt
 }
-"_LabelToTask" {
-  String A FK
-  String B FK
-}
-"_LabelToProject" {
-  String A FK
-  String B FK
-}
-"_LabelToTask" }o--|| "Label" : Label
-"_LabelToProject" }o--|| "Label" : Label
 ```
 
 ### `Label`
@@ -113,24 +103,6 @@ Properties as follows:
 - `createdAt`: Creation timestamp.
 - `updatedAt`: Last update timestamp.
 
-### `_LabelToTask`
-
-Pair relationship table between [Label](#Label) and [Task](#Task)
-
-Properties as follows:
-
-- `A`:
-- `B`:
-
-### `_LabelToProject`
-
-Pair relationship table between [Label](#Label) and [Project](#Project)
-
-Properties as follows:
-
-- `A`:
-- `B`:
-
 ## Work
 
 ```mermaid
@@ -162,18 +134,8 @@ erDiagram
   DateTime createdAt
   DateTime updatedAt
 }
-"_LabelToTask" {
-  String A FK
-  String B FK
-}
-"_LabelToProject" {
-  String A FK
-  String B FK
-}
 "Task" }o--o| "Task" : parent
 "Task" }o--o| "Project" : project
-"_LabelToTask" }o--|| "Task" : Task
-"_LabelToProject" }o--|| "Project" : Project
 ```
 
 ### `Project`
@@ -213,24 +175,6 @@ Properties as follows:
 - `estimatedHours`: Optional estimated effort in hours.
 - `createdAt`: Creation timestamp.
 - `updatedAt`: Last update timestamp.
-
-### `_LabelToTask`
-
-Pair relationship table between [Label](#Label) and [Task](#Task)
-
-Properties as follows:
-
-- `A`:
-- `B`:
-
-### `_LabelToProject`
-
-Pair relationship table between [Label](#Label) and [Project](#Project)
-
-Properties as follows:
-
-- `A`:
-- `B`:
 
 ## Core
 
@@ -323,20 +267,10 @@ erDiagram
   DateTime createdAt
   DateTime updatedAt
 }
-"_LabelToTask" {
-  String A FK
-  String B FK
-}
-"_LabelToProject" {
-  String A FK
-  String B FK
-}
 "Project" }o--|| "User" : creator
 "Task" }o--o| "Task" : parent
 "Task" }o--|| "User" : creator
 "Task" }o--o| "Project" : project
-"_LabelToTask" }o--|| "Task" : Task
-"_LabelToProject" }o--|| "Project" : Project
 ```
 
 
@@ -351,6 +285,14 @@ erDiagram
 "_CommentProject" {
   String commentId FK
   String projectId FK
+}
+"_TaskLabel" {
+  String taskId FK
+  String labelId FK
+}
+"_ProjectLabel" {
+  String projectId FK
+  String labelId FK
 }
 ```
 
@@ -371,3 +313,21 @@ Properties as follows:
 
 - `commentId`: Comment identifier.
 - `projectId`: Project identifier.
+
+### `_TaskLabel`
+
+Join model linking labels to tasks with meaningful foreign key names.
+
+Properties as follows:
+
+- `taskId`: Task identifier.
+- `labelId`: Label identifier.
+
+### `_ProjectLabel`
+
+Join model linking labels to projects with meaningful foreign key names.
+
+Properties as follows:
+
+- `projectId`: Project identifier.
+- `labelId`: Label identifier.
