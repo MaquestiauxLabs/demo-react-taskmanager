@@ -508,6 +508,79 @@
       "description": ""
     },
     {
+      "name": "COMMENTS",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "variablesOrder": []
+      },
+      "deleted": false,
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "id": "e6c5120e-2f26-420c-b93b-fde7082c5f19",
+      "description": ""
+    },
+    {
+      "name": "PROJECT_COMMENTS::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/projects/cmluvtkqs0000h4kha60dco03/comments",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "contentType": "text/plain"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "e6c5120e-2f26-420c-b93b-fde7082c5f19",
+      "rank": "aza",
+      "id": "34f24f27-3ecc-4f79-923d-95e87f760f6a",
+      "description": ""
+    },
+    {
+      "name": "PROJECT_COMMENTS::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/comments",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"content\":\"Project comment from PROJECTS suite\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\",\n  \"projectId\":\"cmluvtkqs0000h4kha60dco03\"\n}",
+          "contentType": "application/json"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "e6c5120e-2f26-420c-b93b-fde7082c5f19",
+      "rank": "azb",
+      "id": "3243623b-13cc-4e8e-8549-4ce4686bca07",
+      "description": ""
+    },
+    {
       "name": "ROLES",
       "type": "collection",
       "data": {
@@ -1219,6 +1292,266 @@
       "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
       "rank": "ay",
       "id": "923aa5cf-4fd3-4d28-af54-b2e642db4efc",
+      "description": ""
+    },
+    {
+      "name": "COMMENTS",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "variablesOrder": []
+      },
+      "deleted": false,
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "id": "f8f0d105-b08e-4899-8e93-f1207231ff8f",
+      "description": ""
+    },
+    {
+      "name": "TASK_COMMENTS::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/comments",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "contentType": "text/plain"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "f8f0d105-b08e-4899-8e93-f1207231ff8f",
+      "rank": "aza",
+      "id": "b5b532ac-cf5e-4f07-a147-75a22f8f5f3a",
+      "description": ""
+    },
+    {
+      "name": "TASK_COMMENTS::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/comments",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"content\":\"Task comment from TASKS suite\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\",\n  \"taskId\":\"cmm0kaq5z000wfdkh092y1v8i\"\n}",
+          "contentType": "application/json"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "f8f0d105-b08e-4899-8e93-f1207231ff8f",
+      "rank": "azb",
+      "id": "ff8524de-cf42-44d4-b6ef-72704f6ed6f5",
+      "description": ""
+    },
+    {
+      "name": "COMMENTS",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "variablesOrder": []
+      },
+      "deleted": false,
+      "collectionId": "1445e82b-c841-4b98-a932-8a418f3570d1",
+      "id": "d2a27ea9-24fe-4f49-b8bd-8f381a3b5f42",
+      "description": ""
+    },
+    {
+      "name": "COMMENTS::TASK::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/comments",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "contentType": "text/plain"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "d2a27ea9-24fe-4f49-b8bd-8f381a3b5f42",
+      "rank": "auntit17721860000111",
+      "id": "4f24b1ef-59f5-4874-a4af-c0f0fc67cdde",
+      "description": ""
+    },
+    {
+      "name": "COMMENTS::PROJECT::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/projects/cmluvtkqs0000h4kha60dco03/comments",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "contentType": "text/plain"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "d2a27ea9-24fe-4f49-b8bd-8f381a3b5f42",
+      "rank": "auq",
+      "id": "093e50de-57da-40e0-bc73-80e53f4ecfba",
+      "description": ""
+    },
+    {
+      "name": "COMMENTS::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/comments",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"content\":\"Comment created from Requestly\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\",\n  \"taskId\":\"cmm0kaq5z000wfdkh092y1v8i\"\n}",
+          "contentType": "application/json"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "d2a27ea9-24fe-4f49-b8bd-8f381a3b5f42",
+      "rank": "aur",
+      "id": "9166167f-3ec0-4f68-a2db-3e53cd97f2d0",
+      "description": ""
+    },
+    {
+      "name": "COMMENT::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/comments/cmm0m8rr1000ifdkh8o8f83wi",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "contentType": "text/plain"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "d2a27ea9-24fe-4f49-b8bd-8f381a3b5f42",
+      "rank": "aus",
+      "id": "c3858cfb-8df1-407d-94a3-f4fafe96c7d0",
+      "description": ""
+    },
+    {
+      "name": "COMMENT::PUT",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/comments/cmm0m8rr1000ifdkh8o8f83wi",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"content\":\"Updated comment from Requestly\",\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\",\n  \"projectId\":\"cmluvtkqs0000h4kha60dco03\"\n}",
+          "contentType": "application/json"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "d2a27ea9-24fe-4f49-b8bd-8f381a3b5f42",
+      "rank": "aut",
+      "id": "5a8f3048-70cb-4899-a7dc-a819d8a4d9f3",
+      "description": ""
+    },
+    {
+      "name": "COMMENT::DELETE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/comments/cmm0m8rr1000ifdkh8o8f83wi",
+          "method": "DELETE",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "d2a27ea9-24fe-4f49-b8bd-8f381a3b5f42",
+      "rank": "auu",
+      "id": "9fe07ca5-6f28-4db4-b046-3846cb1d8117",
       "description": ""
     },
     {

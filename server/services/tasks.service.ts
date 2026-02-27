@@ -1,20 +1,31 @@
 import { TaskCreateInput, TaskUpdateInput } from "../prisma/generated/models";
-import { prisma, standardiseResponse } from "../utils";
+import {
+  normalizeManyWithLabelsAndComments,
+  normalizeWithLabelsAndComments,
+  prisma,
+  standardiseResponse,
+} from "../utils";
+
+const taskInclude = {
+  labelLinks: {
+    include: {
+      label: true,
+    },
+  },
+  priority: true,
+  status: true,
+  commentLinks: {
+    include: {
+      comment: true,
+    },
+  },
+};
 
 export class TasksService {
   async get() {
     try {
       const response = await prisma.task.findMany({
-        include: {
-          labels: true,
-          priority: true,
-          status: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: taskInclude,
       });
       if (!response || response.length === 0) {
         return standardiseResponse({
@@ -25,7 +36,7 @@ export class TasksService {
       return standardiseResponse({
         message: "List all tasks",
         httpStatus: 200,
-        data: response,
+        data: normalizeManyWithLabelsAndComments(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -40,21 +51,12 @@ export class TasksService {
     try {
       const response = await prisma.task.create({
         data,
-        include: {
-          labels: true,
-          priority: true,
-          status: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: taskInclude,
       });
       return standardiseResponse({
         message: "Create a task",
         httpStatus: 201,
-        data: response,
+        data: normalizeWithLabelsAndComments(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -69,16 +71,7 @@ export class TasksService {
     try {
       const response = await prisma.task.findUnique({
         where: { id },
-        include: {
-          labels: true,
-          priority: true,
-          status: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: taskInclude,
       });
       if (!response) {
         return standardiseResponse({
@@ -89,7 +82,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Get task by ID: ${id}`,
         httpStatus: 200,
-        data: response,
+        data: normalizeWithLabelsAndComments(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -105,21 +98,12 @@ export class TasksService {
       const response = await prisma.task.update({
         where: { id },
         data,
-        include: {
-          labels: true,
-          priority: true,
-          status: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: taskInclude,
       });
       return standardiseResponse({
         message: `Update task with ID: ${id}`,
         httpStatus: 200,
-        data: response,
+        data: normalizeWithLabelsAndComments(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -151,25 +135,20 @@ export class TasksService {
       const response = await prisma.task.update({
         where: { id: taskId },
         data: {
-          labels: {
-            connect: labelIds.map((id) => ({ id })),
+          labelLinks: {
+            create: labelIds.map((id) => ({
+              label: {
+                connect: { id },
+              },
+            })),
           },
         },
-        include: {
-          labels: true,
-          priority: true,
-          status: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: taskInclude,
       });
       return standardiseResponse({
         message: `Add labels to task ${taskId}`,
         httpStatus: 200,
-        data: response,
+        data: normalizeWithLabelsAndComments(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -185,25 +164,20 @@ export class TasksService {
       const response = await prisma.task.update({
         where: { id: taskId },
         data: {
-          labels: {
-            disconnect: labelIds.map((id) => ({ id })),
-          },
-        },
-        include: {
-          labels: true,
-          priority: true,
-          status: true,
-          commentLinks: {
-            include: {
-              comment: true,
+          labelLinks: {
+            deleteMany: {
+              labelId: {
+                in: labelIds,
+              },
             },
           },
         },
+        include: taskInclude,
       });
       return standardiseResponse({
         message: `Remove labels from task ${taskId}`,
         httpStatus: 200,
-        data: response,
+        data: normalizeWithLabelsAndComments(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -223,21 +197,12 @@ export class TasksService {
             ? { connect: { id: priorityId } }
             : { disconnect: true },
         },
-        include: {
-          labels: true,
-          priority: true,
-          status: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: taskInclude,
       });
       return standardiseResponse({
         message: `Set priority for task ${taskId}`,
         httpStatus: 200,
-        data: response,
+        data: normalizeWithLabelsAndComments(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -257,21 +222,12 @@ export class TasksService {
             ? { connect: { id: statusId } }
             : { disconnect: true },
         },
-        include: {
-          labels: true,
-          priority: true,
-          status: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: taskInclude,
       });
       return standardiseResponse({
         message: `Set status for task ${taskId}`,
         httpStatus: 200,
-        data: response,
+        data: normalizeWithLabelsAndComments(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -316,21 +272,12 @@ export class TasksService {
             connect: { id: projectId },
           },
         },
-        include: {
-          labels: true,
-          priority: true,
-          status: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: taskInclude,
       });
       return standardiseResponse({
         message: `Assign project ${projectId} to task ${taskId}`,
         httpStatus: 200,
-        data: response,
+        data: normalizeWithLabelsAndComments(response),
       });
     } catch (error) {
       if (
@@ -368,21 +315,12 @@ export class TasksService {
             disconnect: true,
           },
         },
-        include: {
-          labels: true,
-          priority: true,
-          status: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: taskInclude,
       });
       return standardiseResponse({
         message: `Unassign project from task ${taskId}`,
         httpStatus: 200,
-        data: response,
+        data: normalizeWithLabelsAndComments(response),
       });
     } catch (error) {
       if (
