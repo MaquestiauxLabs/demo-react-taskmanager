@@ -35,6 +35,9 @@ const LABELS: LabelSeed[] = [
 ];
 
 export async function seedLabels(prisma: PrismaClient) {
+  await prisma.taskLabel.deleteMany();
+  await prisma.projectLabel.deleteMany();
+
   const labelDelegate = (
     prisma as PrismaClient & {
       label?: {

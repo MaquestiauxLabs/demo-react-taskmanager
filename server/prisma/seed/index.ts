@@ -1,6 +1,7 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import "dotenv/config";
 import { PrismaClient } from "../generated/client";
+import { seedComments } from "./comments.seed";
 import { seedLabels } from "./labels.seed";
 import { seedPriorities } from "./priorities.seed";
 import { seedProjects } from "./projects.seed";
@@ -26,6 +27,7 @@ async function main() {
   await seedStatuses(prisma);
   await seedProjects(prisma);
   await seedTasks(prisma);
+  await seedComments(prisma);
 }
 
 main()

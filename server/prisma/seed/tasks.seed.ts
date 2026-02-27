@@ -273,12 +273,12 @@ export async function seedTasks(prisma: PrismaClient) {
         projectId: task.projectTitle
           ? (projectIdByTitle.get(toLookupKey(task.projectTitle)) ?? null)
           : null,
-        labels: task.labelNames
+        labelLinks: task.labelNames
           ? {
-              connect: task.labelNames
+              create: task.labelNames
                 .map((name) => toLookupKey(name))
                 .filter((name) => labelIdByName.has(name))
-                .map((name) => ({ id: labelIdByName.get(name)! })),
+                .map((name) => ({ labelId: labelIdByName.get(name)! })),
             }
           : undefined,
       },
