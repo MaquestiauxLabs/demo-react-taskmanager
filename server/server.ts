@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import { errorHandler } from "./middlewares";
 import {
+  commentsRouter,
   labelsRouter,
   prioritiesRouter,
   projectsRouter,
@@ -33,6 +34,7 @@ app.get("/api", (req, res) => {
 app.use("/api/users", usersRouter);
 app.use("/api/tasks", tasksRouter);
 app.use("/api/projects", projectsRouter);
+app.use("/api", commentsRouter);
 app.use("/api/labels", labelsRouter);
 app.use("/api/statuses", statusesRouter);
 app.use("/api/priorities", prioritiesRouter);

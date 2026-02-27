@@ -2,20 +2,31 @@ import {
   ProjectCreateInput,
   ProjectUpdateInput,
 } from "../prisma/generated/models";
-import { prisma, standardiseResponse } from "../utils";
+import {
+  normalizeManyWithLabelsAndComments,
+  normalizeWithLabelsAndComments,
+  prisma,
+  standardiseResponse,
+} from "../utils";
+
+const projectInclude = {
+  labelLinks: {
+    include: {
+      label: true,
+    },
+  },
+  commentLinks: {
+    include: {
+      comment: true,
+    },
+  },
+};
 
 export class ProjectsService {
   async get() {
     try {
       const response = await prisma.project.findMany({
-        include: {
-          labels: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: projectInclude,
       });
       if (!response || response.length === 0) {
         return standardiseResponse({
@@ -27,7 +38,7 @@ export class ProjectsService {
       return standardiseResponse({
         message: "List all projects",
         httpStatus: 200,
-        data: response,
+        data: normalizeManyWithLabelsAndComments(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -42,19 +53,12 @@ export class ProjectsService {
     try {
       const response = await prisma.project.create({
         data,
-        include: {
-          labels: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: projectInclude,
       });
       return standardiseResponse({
         message: "Create a project",
         httpStatus: 201,
-        data: response,
+        data: normalizeWithLabelsAndComments(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -69,14 +73,7 @@ export class ProjectsService {
     try {
       const response = await prisma.project.findUnique({
         where: { id },
-        include: {
-          labels: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: projectInclude,
       });
       if (!response) {
         return standardiseResponse({
@@ -88,7 +85,7 @@ export class ProjectsService {
       return standardiseResponse({
         message: `Get project by ID: ${id}`,
         httpStatus: 200,
-        data: response,
+        data: normalizeWithLabelsAndComments(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -104,19 +101,12 @@ export class ProjectsService {
       const response = await prisma.project.update({
         where: { id },
         data,
-        include: {
-          labels: true,
-          commentLinks: {
-            include: {
-              comment: true,
-            },
-          },
-        },
+        include: projectInclude,
       });
       return standardiseResponse({
         message: `Update project with ID: ${id}`,
         httpStatus: 200,
-        data: response,
+        data: normalizeWithLabelsAndComments(response),
       });
     } catch (error) {
       return standardiseResponse({

@@ -1,15 +1,22 @@
 import { Request, Response } from "express";
-import { PrioritiesService } from "../services";
+import { CommentsService } from "../services";
 
-export class PrioritiesController {
-  private service: PrioritiesService;
+export class CommentsController {
+  private service: CommentsService;
 
   constructor() {
-    this.service = new PrioritiesService();
+    this.service = new CommentsService();
   }
 
-  get = async (req: Request, res: Response) => {
-    const result = await this.service.get();
+  getByTaskId = async (req: Request, res: Response) => {
+    const { taskId } = req.params;
+    const result = await this.service.getByTaskId(taskId as string);
+    res.status(result.httpStatus).json(result);
+  };
+
+  getByProjectId = async (req: Request, res: Response) => {
+    const { projectId } = req.params;
+    const result = await this.service.getByProjectId(projectId as string);
     res.status(result.httpStatus).json(result);
   };
 
@@ -33,6 +40,9 @@ export class PrioritiesController {
   delete = async (req: Request, res: Response) => {
     const { id } = req.params;
     const result = await this.service.delete(id as string);
+    if (result.httpStatus === 204) {
+      return res.status(204).send();
+    }
     res.status(result.httpStatus).json(result);
   };
 }

@@ -1,3 +1,4 @@
+export { CommentsController } from "./comments.controller";
 export { LabelsController } from "./labels.controller";
 export { PrioritiesController } from "./priorities.controller";
 export { ProjectsController } from "./projects.controller";

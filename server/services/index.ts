@@ -1,3 +1,4 @@
+export { CommentsService } from "./comments.service";
 export { LabelsService } from "./labels.service";
 export { PrioritiesService } from "./priorities.service";
 export { ProjectsService } from "./projects.service";

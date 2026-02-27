@@ -1,3 +1,4 @@
+export { default as commentsRouter } from "./comments.routes";
 export { default as labelsRouter } from "./labels.routes";
 export { default as prioritiesRouter } from "./priorities.routes";
 export { default as projectsRouter } from "./projects.routes";
