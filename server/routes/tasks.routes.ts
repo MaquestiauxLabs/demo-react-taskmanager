@@ -26,4 +26,8 @@ router.put("/:id/project", controller.assignProject);
 
 router.delete("/:id/project", controller.unassignProject);
 
+router.put("/:id/archive", controller.archive);
+
+router.put("/:id/unarchive", controller.unarchive);
+
 export default router;
