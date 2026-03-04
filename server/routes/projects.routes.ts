@@ -13,4 +13,8 @@ router.put("/:id", controller.update);
 
 router.delete("/:id", controller.delete);
 
+router.put("/:id/archive", controller.archive);
+
+router.put("/:id/unarchive", controller.unarchive);
+
 export default router;

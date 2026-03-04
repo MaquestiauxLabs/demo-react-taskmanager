@@ -341,4 +341,46 @@ export class TasksService {
       });
     }
   }
+
+  async archive(id: string) {
+    try {
+      const response = await prisma.task.update({
+        where: { id },
+        data: { isArchived: true },
+        include: taskInclude,
+      });
+      return standardiseResponse({
+        message: `Archive task with ID: ${id}`,
+        httpStatus: 200,
+        data: normalizeWithLabelsAndComments(response),
+      });
+    } catch (error) {
+      return standardiseResponse({
+        message: `Error archiving task with ID ${id}`,
+        httpStatus: 500,
+        error: error,
+      });
+    }
+  }
+
+  async unarchive(id: string) {
+    try {
+      const response = await prisma.task.update({
+        where: { id },
+        data: { isArchived: false },
+        include: taskInclude,
+      });
+      return standardiseResponse({
+        message: `Unarchive task with ID: ${id}`,
+        httpStatus: 200,
+        data: normalizeWithLabelsAndComments(response),
+      });
+    } catch (error) {
+      return standardiseResponse({
+        message: `Error unarchiving task with ID ${id}`,
+        httpStatus: 500,
+        error: error,
+      });
+    }
+  }
 }

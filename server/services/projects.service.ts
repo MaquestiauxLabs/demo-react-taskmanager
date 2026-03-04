@@ -133,4 +133,46 @@ export class ProjectsService {
       });
     }
   }
+
+  async archive(id: string) {
+    try {
+      const response = await prisma.project.update({
+        where: { id },
+        data: { isArchived: true },
+        include: projectInclude,
+      });
+      return standardiseResponse({
+        message: `Archive project with ID: ${id}`,
+        httpStatus: 200,
+        data: normalizeWithLabelsAndComments(response),
+      });
+    } catch (error) {
+      return standardiseResponse({
+        message: `Error archiving project with ID ${id}`,
+        httpStatus: 500,
+        error: error,
+      });
+    }
+  }
+
+  async unarchive(id: string) {
+    try {
+      const response = await prisma.project.update({
+        where: { id },
+        data: { isArchived: false },
+        include: projectInclude,
+      });
+      return standardiseResponse({
+        message: `Unarchive project with ID: ${id}`,
+        httpStatus: 200,
+        data: normalizeWithLabelsAndComments(response),
+      });
+    } catch (error) {
+      return standardiseResponse({
+        message: `Error unarchiving project with ID ${id}`,
+        httpStatus: 500,
+        error: error,
+      });
+    }
+  }
 }
