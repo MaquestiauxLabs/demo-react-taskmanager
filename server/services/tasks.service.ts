@@ -26,6 +26,7 @@ export class TasksService {
     try {
       const response = await prisma.task.findMany({
         include: taskInclude,
+        where: { isArchived: false },
       });
       if (!response || response.length === 0) {
         return standardiseResponse({
