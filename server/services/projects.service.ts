@@ -27,6 +27,7 @@ export class ProjectsService {
     try {
       const response = await prisma.project.findMany({
         include: projectInclude,
+        where: { isArchived: false },
       });
       if (!response || response.length === 0) {
         return standardiseResponse({
