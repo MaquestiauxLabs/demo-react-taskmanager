@@ -116,6 +116,7 @@ erDiagram
   DateTime endDate "nullable"
   String priorityId FK "nullable"
   String statusId FK "nullable"
+  Boolean isArchived
   DateTime createdAt
   DateTime updatedAt
 }
@@ -131,6 +132,7 @@ erDiagram
   DateTime startDate "nullable"
   DateTime dueDate "nullable"
   Float estimatedHours "nullable"
+  Boolean isArchived
   DateTime createdAt
   DateTime updatedAt
 }
@@ -152,6 +154,7 @@ Properties as follows:
 - `endDate`: Optional project end date.
 - `priorityId`: Priority identifier.
 - `statusId`: Status identifier.
+- `isArchived`: archived status.
 - `createdAt`: Creation timestamp.
 - `updatedAt`: Last update timestamp.
 
@@ -173,6 +176,7 @@ Properties as follows:
 - `startDate`: Optional task start date.
 - `dueDate`: Optional task due date.
 - `estimatedHours`: Optional estimated effort in hours.
+- `isArchived`: archived status.
 - `createdAt`: Creation timestamp.
 - `updatedAt`: Last update timestamp.
 
@@ -240,6 +244,7 @@ erDiagram
   DateTime endDate "nullable"
   String priorityId FK "nullable"
   String statusId FK "nullable"
+  Boolean isArchived
   DateTime createdAt
   DateTime updatedAt
 }
@@ -255,6 +260,7 @@ erDiagram
   DateTime startDate "nullable"
   DateTime dueDate "nullable"
   Float estimatedHours "nullable"
+  Boolean isArchived
   DateTime createdAt
   DateTime updatedAt
 }

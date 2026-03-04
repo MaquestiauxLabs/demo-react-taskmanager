@@ -41,6 +41,8 @@ model Task {
   dueDate        DateTime?
   /// Optional estimated effort in hours.
   estimatedHours Float?
+  /// archived status.
+  isArchived     Boolean       @default(false)
   /// Creation timestamp.
   createdAt      DateTime      @default(now())
   /// Last update timestamp.
