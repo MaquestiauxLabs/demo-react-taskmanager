@@ -31,6 +31,8 @@ model Project {
   labelLinks   ProjectLabel[]
   /// Comment links associated with this project.
   commentLinks CommentProject[]
+  /// archived status.
+  isArchived   Boolean          @default(false)
   /// Creation timestamp.
   createdAt    DateTime         @default(now())
   /// Last update timestamp.
