@@ -27,8 +27,26 @@ model User {
   roles      Role[]
   /// Comments authored by the user.
   comments   Comment[]
+  /// User's task assignments.
+  userTasks  UserTask[]
   /// Creation timestamp.
   createdAt  DateTime   @default(now())
   /// Last update timestamp.
   updatedAt  DateTime   @updatedAt
+}
+
+model UserTask {
+  /// User identifier.
+  userId String
+  /// Task identifier.
+  taskId String
+
+  /// Linked user.
+  user User @relation(fields: [userId], references: [id])
+  /// Linked task.
+  task Task @relation(fields: [taskId], references: [id])
+
+  @@id([userId, taskId])
+  @@index([taskId])
+  @@map("_UserTask")
 }
