@@ -123,11 +123,3 @@ Current Models:
 4. Checklist Items (TaskChecklist) - Simple inline checkboxes within a task (lighter than full subtasks).
 5. Activity Log - Track who changed what (status changes, assignments, etc.) - adds useful history without complexity.
 6. Attachments - Just a URL reference to files (can integrate with cloud storage later).
-
----
-
-Quick question: Are you planning to have:
-
-- Multiple users collaborating on the same project?
-- Task dependencies (Task B can't start until Task A is done)?
-- Just a single-user demo for now?
