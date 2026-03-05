@@ -47,4 +47,18 @@ export class ProjectsController {
     const result = await this.service.unarchive(id as string);
     res.status(result.httpStatus).json(result);
   };
+
+  assignUser = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { userId } = req.body;
+    const result = await this.service.assignUser(id as string, userId);
+    res.status(result.httpStatus).json(result);
+  };
+
+  unassignUser = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { userId } = req.body;
+    const result = await this.service.unassignUser(id as string, userId);
+    res.status(result.httpStatus).json(result);
+  };
 }
