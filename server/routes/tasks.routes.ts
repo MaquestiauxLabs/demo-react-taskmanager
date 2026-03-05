@@ -30,4 +30,8 @@ router.put("/:id/archive", controller.archive);
 
 router.put("/:id/unarchive", controller.unarchive);
 
+router.post("/:id/assignee", controller.assignUser);
+
+router.delete("/:id/assignee", controller.unassignUser);
+
 export default router;

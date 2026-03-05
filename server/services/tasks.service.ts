@@ -383,4 +383,117 @@ export class TasksService {
       });
     }
   }
+
+  async assignUser(taskId: string, userId: string) {
+    try {
+      if (!userId) {
+        return standardiseResponse({
+          message: "userId is required",
+          httpStatus: 400,
+        });
+      }
+
+      const task = await prisma.task.findUnique({ where: { id: taskId } });
+      if (!task) {
+        return standardiseResponse({
+          message: `Task with ID ${taskId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+      if (!user) {
+        return standardiseResponse({
+          message: `User with ID ${userId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const response = await prisma.task.update({
+        where: { id: taskId },
+        data: {
+          assignees: {
+            connect: { userId_taskId: { userId, taskId } },
+          },
+        },
+        include: taskInclude,
+      });
+      return standardiseResponse({
+        message: `Assign user ${userId} to task ${taskId}`,
+        httpStatus: 200,
+        data: normalizeWithLabelsAndComments(response),
+      });
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.includes("Record to update not found")
+      ) {
+        return standardiseResponse({
+          message: `Task with ID ${taskId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      return standardiseResponse({
+        message: `Error assigning user ${userId} to task ${taskId}`,
+        httpStatus: 500,
+        error,
+      });
+    }
+  }
+
+  async unassignUser(taskId: string, userId: string) {
+    try {
+      const task = await prisma.task.findUnique({ where: { id: taskId } });
+      if (!task) {
+        return standardiseResponse({
+          message: `Task with ID ${taskId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+      if (!user) {
+        return standardiseResponse({
+          message: `User with ID ${userId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const response = await prisma.task.update({
+        where: { id: taskId },
+        data: {
+          assignees: {
+            disconnect: { userId_taskId: { userId, taskId } },
+          },
+        },
+        include: taskInclude,
+      });
+      return standardiseResponse({
+        message: `Unassign user ${userId} from task ${taskId}`,
+        httpStatus: 200,
+        data: normalizeWithLabelsAndComments(response),
+      });
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.includes("Record to update not found")
+      ) {
+        return standardiseResponse({
+          message: `Task with ID ${taskId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      return standardiseResponse({
+        message: `Error unassigning user ${userId} from task ${taskId}`,
+        httpStatus: 500,
+        error,
+      });
+    }
+  }
 }

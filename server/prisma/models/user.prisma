@@ -28,7 +28,7 @@ model User {
   /// Comments authored by the user.
   comments   Comment[]
   /// User's task assignments.
-  userTasks  UserTask[]
+  userTasks  UserTask[] @relation("TaskAssignees")
   /// Creation timestamp.
   createdAt  DateTime   @default(now())
   /// Last update timestamp.
@@ -42,9 +42,9 @@ model UserTask {
   taskId String
 
   /// Linked user.
-  user User @relation(fields: [userId], references: [id])
+  user User @relation("TaskAssignees", fields: [userId], references: [id])
   /// Linked task.
-  task Task @relation(fields: [taskId], references: [id])
+  task Task @relation("TaskAssignees", fields: [taskId], references: [id])
 
   @@id([userId, taskId])
   @@index([taskId])

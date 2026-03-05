@@ -44,7 +44,7 @@ model Task {
   /// archived status.
   isArchived     Boolean       @default(false)
   /// Assignees of the task.
-  assignees      UserTask[]
+  assignees      UserTask[]    @relation("TaskAssignees")
   /// Creation timestamp.
   createdAt      DateTime      @default(now())
   /// Last update timestamp.
