@@ -175,4 +175,121 @@ export class ProjectsService {
       });
     }
   }
+
+  async assignUser(projectId: string, userId: string) {
+    try {
+      if (!userId) {
+        return standardiseResponse({
+          message: "userId is required",
+          httpStatus: 400,
+        });
+      }
+
+      const project = await prisma.project.findUnique({
+        where: { id: projectId },
+      });
+      if (!project) {
+        return standardiseResponse({
+          message: `Project with ID ${projectId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+      if (!user) {
+        return standardiseResponse({
+          message: `User with ID ${userId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const response = await prisma.project.update({
+        where: { id: projectId },
+        data: {
+          assignees: {
+            connect: { userId_projectId: { userId, projectId } },
+          },
+        },
+        include: projectInclude,
+      });
+      return standardiseResponse({
+        message: `Assign user ${userId} to project ${projectId}`,
+        httpStatus: 200,
+        data: normalizeWithLabelsAndComments(response),
+      });
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.includes("Record to update not found")
+      ) {
+        return standardiseResponse({
+          message: `Project with ID ${projectId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      return standardiseResponse({
+        message: `Error assigning user ${userId} to project ${projectId}`,
+        httpStatus: 500,
+        error,
+      });
+    }
+  }
+
+  async unassignUser(projectId: string, userId: string) {
+    try {
+      const project = await prisma.project.findUnique({
+        where: { id: projectId },
+      });
+      if (!project) {
+        return standardiseResponse({
+          message: `Project with ID ${projectId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+      if (!user) {
+        return standardiseResponse({
+          message: `User with ID ${userId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const response = await prisma.project.update({
+        where: { id: projectId },
+        data: {
+          assignees: {
+            disconnect: { userId_projectId: { userId, projectId } },
+          },
+        },
+        include: projectInclude,
+      });
+      return standardiseResponse({
+        message: `Unassign user ${userId} from project ${projectId}`,
+        httpStatus: 200,
+        data: normalizeWithLabelsAndComments(response),
+      });
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.includes("Record to update not found")
+      ) {
+        return standardiseResponse({
+          message: `Project with ID ${projectId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      return standardiseResponse({
+        message: `Error unassigning user ${userId} from project ${projectId}`,
+        httpStatus: 500,
+        error,
+      });
+    }
+  }
 }

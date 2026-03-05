@@ -33,6 +33,8 @@ model Project {
   commentLinks CommentProject[]
   /// archived status.
   isArchived   Boolean          @default(false)
+  /// Assignees of the project.
+  assignees    UserProject[]    @relation("ProjectAssignees")
   /// Creation timestamp.
   createdAt    DateTime         @default(now())
   /// Last update timestamp.

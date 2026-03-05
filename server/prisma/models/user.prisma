@@ -4,37 +4,43 @@
 /// @erd Overview
 model User {
   /// User identifier (CUID).
-  id         String     @id @unique @default(cuid())
+  id           String        @id @unique @default(cuid())
   /// User email address.
-  email      String     @unique /// @zod.email("Invalid email address")
+  email        String        @unique /// @zod.email("Invalid email address")
   /// Given name.
-  givenName  String     @db.VarChar(255) /// @zod.string().min(1, "Given name is required").max(255, "Given name must be at most 255 characters")
+  givenName    String        @db.VarChar(255) /// @zod.string().min(1, "Given name is required").max(255, "Given name must be at most 255 characters")
   /// Family name.
-  familyName String     @db.VarChar(255) /// @zod.string().min(1, "Family name is required").max(255, "Family name must be at most 255 characters")
+  familyName   String        @db.VarChar(255) /// @zod.string().min(1, "Family name is required").max(255, "Family name must be at most 255 characters")
   /// Optional avatar image URL.
-  avatarUrl  String? /// @zod.url("Invalid avatar URL").nullish()
+  avatarUrl    String? /// @zod.url("Invalid avatar URL").nullish()
   /// Tasks created by the user.
-  tasks      Task[]
+  tasks        Task[]
   /// Projects created by the user.
-  projects   Project[]
+  projects     Project[]
   /// Labels defined by the user.
-  labels     Label[]
+  labels       Label[]
   /// Statuses defined by the user.
-  statuses   Status[]
+  statuses     Status[]
   /// Priorities defined by the user.
-  priorities Priority[]
+  priorities   Priority[]
   /// Roles defined by the user.
-  roles      Role[]
+  roles        Role[]
   /// Comments authored by the user.
-  comments   Comment[]
+  comments     Comment[]
   /// User's task assignments.
-  userTasks  UserTask[] @relation("TaskAssignees")
+  userTasks    UserTask[]    @relation("TaskAssignees")
+  /// User's project assignments.
+  userProjects UserProject[] @relation("ProjectAssignees")
   /// Creation timestamp.
-  createdAt  DateTime   @default(now())
+  createdAt    DateTime      @default(now())
   /// Last update timestamp.
-  updatedAt  DateTime   @updatedAt
+  updatedAt    DateTime      @updatedAt
 }
 
+/// Represents the many-to-many relationship between users and tasks for task assignments.
+///
+/// @namespace Core
+/// @erd Overview
 model UserTask {
   /// User identifier.
   userId String
@@ -49,4 +55,24 @@ model UserTask {
   @@id([userId, taskId])
   @@index([taskId])
   @@map("_UserTask")
+}
+
+/// Represents the many-to-many relationship between users and projects for project assignments.
+///
+/// @namespace Core
+/// @erd Overview
+model UserProject {
+  /// User identifier.
+  userId    String
+  /// Project identifier.
+  projectId String
+
+  /// Linked user.
+  user    User    @relation("ProjectAssignees", fields: [userId], references: [id])
+  /// Linked project.
+  project Project @relation("ProjectAssignees", fields: [projectId], references: [id])
+
+  @@id([userId, projectId])
+  @@index([projectId])
+  @@map("_UserProject")
 }

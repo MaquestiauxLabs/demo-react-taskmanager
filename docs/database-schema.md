@@ -304,6 +304,10 @@ erDiagram
   String userId FK
   String taskId FK
 }
+"_UserProject" {
+  String userId FK
+  String projectId FK
+}
 ```
 
 ### `_CommentTask`
@@ -348,3 +352,10 @@ Properties as follows:
 
 - `userId`: User identifier.
 - `taskId`: Task identifier.
+
+### `_UserProject`
+
+Properties as follows:
+
+- `userId`: User identifier.
+- `projectId`: Project identifier.
