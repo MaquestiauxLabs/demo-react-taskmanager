@@ -43,6 +43,8 @@ model Task {
   estimatedHours Float?
   /// archived status.
   isArchived     Boolean       @default(false)
+  /// Assignees of the task.
+  assignees      UserTask[]    @relation("TaskAssignees")
   /// Creation timestamp.
   createdAt      DateTime      @default(now())
   /// Last update timestamp.
