@@ -1,7 +1,7 @@
 import { TaskCreateInput, TaskUpdateInput } from "../prisma/generated/models";
 import {
-  normalizeManyWithLabelsAndComments,
-  normalizeWithLabelsAndComments,
+  normalizeManyTasksWithDetails,
+  normalizeTaskWithDetails,
   prisma,
   standardiseResponse,
 } from "../utils";
@@ -17,6 +17,11 @@ const taskInclude = {
   commentLinks: {
     include: {
       comment: true,
+    },
+  },
+  watchers: {
+    include: {
+      user: true,
     },
   },
 };
@@ -37,7 +42,7 @@ export class TasksService {
       return standardiseResponse({
         message: "List all tasks",
         httpStatus: 200,
-        data: normalizeManyWithLabelsAndComments(response),
+        data: normalizeManyTasksWithDetails(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -57,7 +62,7 @@ export class TasksService {
       return standardiseResponse({
         message: "Create a task",
         httpStatus: 201,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -83,7 +88,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Get task by ID: ${id}`,
         httpStatus: 200,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -104,7 +109,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Update task with ID: ${id}`,
         httpStatus: 200,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -149,7 +154,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Add labels to task ${taskId}`,
         httpStatus: 200,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -178,7 +183,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Remove labels from task ${taskId}`,
         httpStatus: 200,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -203,7 +208,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Set priority for task ${taskId}`,
         httpStatus: 200,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -228,7 +233,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Set status for task ${taskId}`,
         httpStatus: 200,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -278,7 +283,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Assign project ${projectId} to task ${taskId}`,
         httpStatus: 200,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       if (
@@ -321,7 +326,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Unassign project from task ${taskId}`,
         httpStatus: 200,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       if (
@@ -352,7 +357,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Archive task with ID: ${id}`,
         httpStatus: 200,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -373,7 +378,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Unarchive task with ID: ${id}`,
         httpStatus: 200,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       return standardiseResponse({
@@ -423,7 +428,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Assign user ${userId} to task ${taskId}`,
         httpStatus: 200,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       if (
@@ -476,7 +481,7 @@ export class TasksService {
       return standardiseResponse({
         message: `Unassign user ${userId} from task ${taskId}`,
         httpStatus: 200,
-        data: normalizeWithLabelsAndComments(response),
+        data: normalizeTaskWithDetails(response),
       });
     } catch (error) {
       if (
@@ -491,6 +496,128 @@ export class TasksService {
 
       return standardiseResponse({
         message: `Error unassigning user ${userId} from task ${taskId}`,
+        httpStatus: 500,
+        error,
+      });
+    }
+  }
+
+  async watchTask(taskId: string, userId: string) {
+    try {
+      if (!userId) {
+        return standardiseResponse({
+          message: "userId is required",
+          httpStatus: 400,
+        });
+      }
+
+      const task = await prisma.task.findUnique({ where: { id: taskId } });
+      if (!task) {
+        return standardiseResponse({
+          message: `Task with ID ${taskId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+      if (!user) {
+        return standardiseResponse({
+          message: `User with ID ${userId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const response = await prisma.task.update({
+        where: { id: taskId },
+        data: {
+          watchers: {
+            connect: { userId_taskId: { userId, taskId } },
+          },
+        },
+        include: taskInclude,
+      });
+
+      return standardiseResponse({
+        message: `Watch task ${taskId} as user ${userId}`,
+        httpStatus: 200,
+        data: normalizeTaskWithDetails(response),
+      });
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.includes("Record to update not found")
+      ) {
+        return standardiseResponse({
+          message: `Task with ID ${taskId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      return standardiseResponse({
+        message: `Error watching task ${taskId} as user ${userId}`,
+        httpStatus: 500,
+        error,
+      });
+    }
+  }
+
+  async unwatchTask(taskId: string, userId: string) {
+    try {
+      if (!userId) {
+        return standardiseResponse({
+          message: "userId is required",
+          httpStatus: 400,
+        });
+      }
+
+      const task = await prisma.task.findUnique({ where: { id: taskId } });
+      if (!task) {
+        return standardiseResponse({
+          message: `Task with ID ${taskId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+      if (!user) {
+        return standardiseResponse({
+          message: `User with ID ${userId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const response = await prisma.task.update({
+        where: { id: taskId },
+        data: {
+          watchers: {
+            disconnect: { userId_taskId: { userId, taskId } },
+          },
+        },
+        include: taskInclude,
+      });
+
+      return standardiseResponse({
+        message: `Unwatch task ${taskId} as user ${userId}`,
+        httpStatus: 200,
+        data: normalizeTaskWithDetails(response),
+      });
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.includes("Record to update not found")
+      ) {
+        return standardiseResponse({
+          message: `Task with ID ${taskId} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      return standardiseResponse({
+        message: `Error unwatching task ${taskId} as user ${userId}`,
         httpStatus: 500,
         error,
       });
