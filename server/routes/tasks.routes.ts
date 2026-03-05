@@ -34,4 +34,8 @@ router.post("/:id/assignee", controller.assignUser);
 
 router.delete("/:id/assignee", controller.unassignUser);
 
+router.post("/:id/watchers", controller.watchUser);
+
+router.delete("/:id/watchers", controller.unwatchUser);
+
 export default router;

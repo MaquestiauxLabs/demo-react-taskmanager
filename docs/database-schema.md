@@ -201,7 +201,22 @@ erDiagram
   DateTime createdAt
   DateTime updatedAt
 }
+"_UserTask" {
+  String userId FK
+  String taskId FK
+}
+"_TaskWatcher" {
+  String userId FK
+  String taskId FK
+}
+"_UserProject" {
+  String userId FK
+  String projectId FK
+}
 "Role" }o--|| "User" : creator
+"_UserTask" }o--|| "User" : user
+"_TaskWatcher" }o--|| "User" : user
+"_UserProject" }o--|| "User" : user
 ```
 
 ### `Role`
@@ -230,6 +245,33 @@ Properties as follows:
 - `avatarUrl`: Optional avatar image URL.
 - `createdAt`: Creation timestamp.
 - `updatedAt`: Last update timestamp.
+
+### `_UserTask`
+
+Represents the many-to-many relationship between users and tasks for task assignments.
+
+Properties as follows:
+
+- `userId`: User identifier.
+- `taskId`: Task identifier.
+
+### `_TaskWatcher`
+
+Represents the many-to-many relationship between users and tasks for task watchers.
+
+Properties as follows:
+
+- `userId`: User identifier.
+- `taskId`: Task identifier.
+
+### `_UserProject`
+
+Represents the many-to-many relationship between users and projects for project assignments.
+
+Properties as follows:
+
+- `userId`: User identifier.
+- `projectId`: Project identifier.
 
 ## Overview
 
@@ -273,10 +315,28 @@ erDiagram
   DateTime createdAt
   DateTime updatedAt
 }
+"_UserTask" {
+  String userId FK
+  String taskId FK
+}
+"_TaskWatcher" {
+  String userId FK
+  String taskId FK
+}
+"_UserProject" {
+  String userId FK
+  String projectId FK
+}
 "Project" }o--|| "User" : creator
 "Task" }o--o| "Task" : parent
 "Task" }o--|| "User" : creator
 "Task" }o--o| "Project" : project
+"_UserTask" }o--|| "User" : user
+"_UserTask" }o--|| "Task" : task
+"_TaskWatcher" }o--|| "User" : user
+"_TaskWatcher" }o--|| "Task" : task
+"_UserProject" }o--|| "User" : user
+"_UserProject" }o--|| "Project" : project
 ```
 
 
@@ -299,14 +359,6 @@ erDiagram
 "_ProjectLabel" {
   String projectId FK
   String labelId FK
-}
-"_UserTask" {
-  String userId FK
-  String taskId FK
-}
-"_UserProject" {
-  String userId FK
-  String projectId FK
 }
 ```
 
@@ -345,17 +397,3 @@ Properties as follows:
 
 - `projectId`: Project identifier.
 - `labelId`: Label identifier.
-
-### `_UserTask`
-
-Properties as follows:
-
-- `userId`: User identifier.
-- `taskId`: Task identifier.
-
-### `_UserProject`
-
-Properties as follows:
-
-- `userId`: User identifier.
-- `projectId`: Project identifier.

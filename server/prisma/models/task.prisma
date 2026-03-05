@@ -45,6 +45,8 @@ model Task {
   isArchived     Boolean       @default(false)
   /// Assignees of the task.
   assignees      UserTask[]    @relation("TaskAssignees")
+  /// Watchers of the task.
+  watchers       TaskWatcher[] @relation("TaskWatchers")
   /// Creation timestamp.
   createdAt      DateTime      @default(now())
   /// Last update timestamp.

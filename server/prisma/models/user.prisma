@@ -29,6 +29,8 @@ model User {
   comments     Comment[]
   /// User's task assignments.
   userTasks    UserTask[]    @relation("TaskAssignees")
+  /// Tasks watched by the user.
+  taskWatchers TaskWatcher[] @relation("TaskWatchers")
   /// User's project assignments.
   userProjects UserProject[] @relation("ProjectAssignees")
   /// Creation timestamp.
@@ -55,6 +57,26 @@ model UserTask {
   @@id([userId, taskId])
   @@index([taskId])
   @@map("_UserTask")
+}
+
+/// Represents the many-to-many relationship between users and tasks for task watchers.
+///
+/// @namespace Core
+/// @erd Overview
+model TaskWatcher {
+  /// User identifier.
+  userId String
+  /// Task identifier.
+  taskId String
+
+  /// Linked user.
+  user User @relation("TaskWatchers", fields: [userId], references: [id])
+  /// Linked task.
+  task Task @relation("TaskWatchers", fields: [taskId], references: [id])
+
+  @@id([userId, taskId])
+  @@index([taskId])
+  @@map("_TaskWatcher")
 }
 
 /// Represents the many-to-many relationship between users and projects for project assignments.

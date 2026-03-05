@@ -102,4 +102,18 @@ export class TasksController {
     const result = await this.service.unassignUser(id as string, userId);
     res.status(result.httpStatus).json(result);
   };
+
+  watchUser = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { userId } = req.body;
+    const result = await this.service.watchTask(id as string, userId);
+    res.status(result.httpStatus).json(result);
+  };
+
+  unwatchUser = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { userId } = req.body;
+    const result = await this.service.unwatchTask(id as string, userId);
+    res.status(result.httpStatus).json(result);
+  };
 }
