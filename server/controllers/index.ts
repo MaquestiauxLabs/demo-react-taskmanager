@@ -5,4 +5,5 @@ export { ProjectsController } from "./projects.controller";
 export { RolesController } from "./roles.controller";
 export { StatusesController } from "./statuses.controller";
 export { TasksController } from "./tasks.controller";
+export { TimeEntriesController } from "./time_entries.controller";
 export { UsersController } from "./users.controller";
