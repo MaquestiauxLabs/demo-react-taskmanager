@@ -5,4 +5,5 @@ export { ProjectsService } from "./projects.service";
 export { RolesService } from "./roles.service";
 export { StatusesService } from "./statuses.service";
 export { TasksService } from "./tasks.service";
+export { TimeEntriesService } from "./time_entries.service";
 export { UsersService } from "./users.service";

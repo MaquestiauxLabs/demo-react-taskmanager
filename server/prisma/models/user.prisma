@@ -33,6 +33,8 @@ model User {
   taskWatchers TaskWatcher[] @relation("TaskWatchers")
   /// User's project assignments.
   userProjects UserProject[] @relation("ProjectAssignees")
+  /// Time entries logged by the user.
+  timeEntries  TimeEntry[]
   /// Creation timestamp.
   createdAt    DateTime      @default(now())
   /// Last update timestamp.

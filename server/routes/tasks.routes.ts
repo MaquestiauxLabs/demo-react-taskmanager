@@ -1,8 +1,11 @@
 import { Router } from "express";
 import { TasksController } from "../controllers";
+import timeEntriesRouter from "./timeEntries.routes";
 
 const router = Router();
 const controller = new TasksController();
+
+router.use("/:id/time-entries", timeEntriesRouter);
 
 router.get("/", controller.get);
 
