@@ -1,0 +1,29 @@
+/// Represents a time entry for tracking work on a task.
+///
+/// @namespace Work
+model TimeEntry {
+  /// Time entry identifier (CUID).
+  id          String    @id @unique @default(cuid())
+  /// Associated task identifier.
+  taskId      String
+  /// Associated task.
+  task        Task      @relation(fields: [taskId], references: [id])
+  /// User who logged the time entry.
+  creatorId   String
+  /// User who logged the time entry.
+  creator     User      @relation(fields: [creatorId], references: [id])
+  /// Start timestamp of the time entry.
+  startDate   DateTime
+  /// End timestamp of the time entry (null if running).
+  endDate     DateTime?
+  /// Duration of the time entry in hours.
+  duration    Float
+  /// Optional description of the time entry.
+  description String?   @db.VarChar(1000)
+  /// Timestamp when the time entry was created.
+  createdAt   DateTime  @default(now())
+  /// Last update timestamp.
+  updatedAt   DateTime  @updatedAt
+
+  @@index([taskId])
+}

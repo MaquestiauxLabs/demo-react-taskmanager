@@ -47,6 +47,8 @@ model Task {
   assignees      UserTask[]    @relation("TaskAssignees")
   /// Watchers of the task.
   watchers       TaskWatcher[] @relation("TaskWatchers")
+  /// Time entries associated with this task.
+  timeEntries    TimeEntry[]
   /// Creation timestamp.
   createdAt      DateTime      @default(now())
   /// Last update timestamp.

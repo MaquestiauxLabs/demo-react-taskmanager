@@ -136,8 +136,20 @@ erDiagram
   DateTime createdAt
   DateTime updatedAt
 }
+"TimeEntry" {
+  String id PK
+  String taskId FK
+  String creatorId FK
+  DateTime startDate
+  DateTime endDate "nullable"
+  Float duration
+  String(1000) description "nullable"
+  DateTime createdAt
+  DateTime updatedAt
+}
 "Task" }o--o| "Task" : parent
 "Task" }o--o| "Project" : project
+"TimeEntry" }o--|| "Task" : task
 ```
 
 ### `Project`
@@ -178,6 +190,22 @@ Properties as follows:
 - `estimatedHours`: Optional estimated effort in hours.
 - `isArchived`: archived status.
 - `createdAt`: Creation timestamp.
+- `updatedAt`: Last update timestamp.
+
+### `TimeEntry`
+
+Represents a time entry for tracking work on a task.
+
+Properties as follows:
+
+- `id`: Time entry identifier (CUID).
+- `taskId`: Associated task identifier.
+- `creatorId`: User who logged the time entry.
+- `startDate`: Start timestamp of the time entry.
+- `endDate`: End timestamp of the time entry (null if running).
+- `duration`: Duration of the time entry in hours.
+- `description`: Optional description of the time entry.
+- `createdAt`: Timestamp when the time entry was created.
 - `updatedAt`: Last update timestamp.
 
 ## Core
