@@ -1,27 +1,24 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const {
-  mockPrisma,
-  mockIsPrismaConflictError,
-  mockIsPrismaForeignKeyError,
-} = vi.hoisted(() => {
-  return {
-    mockPrisma: {
-      status: {
-        findMany: vi.fn(),
-        create: vi.fn(),
-        findUnique: vi.fn(),
-        update: vi.fn(),
-        delete: vi.fn(),
+const { mockPrisma, mockIsPrismaConflictError, mockIsPrismaForeignKeyError } =
+  vi.hoisted(() => {
+    return {
+      mockPrisma: {
+        status: {
+          findMany: vi.fn(),
+          create: vi.fn(),
+          findUnique: vi.fn(),
+          update: vi.fn(),
+          delete: vi.fn(),
+        },
+        user: {
+          findUnique: vi.fn(),
+        },
       },
-      user: {
-        findUnique: vi.fn(),
-      },
-    },
-    mockIsPrismaConflictError: vi.fn(() => false),
-    mockIsPrismaForeignKeyError: vi.fn(() => false),
-  };
-});
+      mockIsPrismaConflictError: vi.fn(() => false),
+      mockIsPrismaForeignKeyError: vi.fn(() => false),
+    };
+  });
 
 vi.mock("../../utils", () => ({
   prisma: mockPrisma,
