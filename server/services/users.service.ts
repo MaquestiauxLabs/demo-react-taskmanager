@@ -1,4 +1,3 @@
-import { UserCreateInput, UserUpdateInput } from "../prisma/generated/models";
 import {
   isPrismaConflictError,
   isPrismaForeignKeyError,
@@ -6,6 +5,18 @@ import {
   prisma,
   standardiseResponse,
 } from "../utils";
+
+type CreateUserInput = {
+  name?: string;
+  email?: string;
+  roleId?: string;
+};
+
+type UpdateUserInput = {
+  name?: string;
+  email?: string;
+  roleId?: string;
+};
 
 export class UsersService {
   async get() {
@@ -31,10 +42,10 @@ export class UsersService {
     }
   }
 
-  async create(data: UserCreateInput) {
+  async create(data: CreateUserInput) {
     try {
       // Normalize string inputs
-      const normalizedData: UserCreateInput = {
+      const normalizedData: CreateUserInput = {
         ...data,
         name: data.name?.trim(),
         email: data.email?.trim(),
@@ -71,7 +82,11 @@ export class UsersService {
         }
       }
 
-      const response = await prisma.user.create({ data: normalizedData });
+      const createData = normalizedData as unknown as Parameters<
+        typeof prisma.user.create
+      >[0]["data"];
+
+      const response = await prisma.user.create({ data: createData });
       return standardiseResponse({
         message: "Create a user",
         httpStatus: 201,
@@ -136,7 +151,7 @@ export class UsersService {
     }
   }
 
-  async update(id: string, data: UserUpdateInput) {
+  async update(id: string, data: UpdateUserInput) {
     try {
       // Validate id input
       const normalizedId = id?.trim();
@@ -149,7 +164,7 @@ export class UsersService {
       }
 
       // Normalize string inputs
-      const normalizedData: UserUpdateInput = {
+      const normalizedData: UpdateUserInput = {
         ...data,
         name: data.name?.trim(),
         email: data.email?.trim(),
@@ -282,7 +297,8 @@ export class UsersService {
         return standardiseResponse({
           message: "Cannot delete user with associated records",
           httpStatus: 400,
-          error: "User has associated tasks, projects, comments, or other records",
+          error:
+            "User has associated tasks, projects, comments, or other records",
         });
       }
       return standardiseResponse({
