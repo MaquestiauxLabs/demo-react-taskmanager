@@ -1,27 +1,24 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const {
-  mockPrisma,
-  mockIsPrismaConflictError,
-  mockIsPrismaForeignKeyError,
-} = vi.hoisted(() => {
-  return {
-    mockPrisma: {
-      label: {
-        findMany: vi.fn(),
-        create: vi.fn(),
-        findUnique: vi.fn(),
-        update: vi.fn(),
-        delete: vi.fn(),
+const { mockPrisma, mockIsPrismaConflictError, mockIsPrismaForeignKeyError } =
+  vi.hoisted(() => {
+    return {
+      mockPrisma: {
+        label: {
+          findMany: vi.fn(),
+          create: vi.fn(),
+          findUnique: vi.fn(),
+          update: vi.fn(),
+          delete: vi.fn(),
+        },
+        user: {
+          findUnique: vi.fn(),
+        },
       },
-      user: {
-        findUnique: vi.fn(),
-      },
-    },
-    mockIsPrismaConflictError: vi.fn(() => false),
-    mockIsPrismaForeignKeyError: vi.fn(() => false),
-  };
-});
+      mockIsPrismaConflictError: vi.fn(() => false),
+      mockIsPrismaForeignKeyError: vi.fn(() => false),
+    };
+  });
 
 vi.mock("../../utils", () => ({
   prisma: mockPrisma,
@@ -134,7 +131,9 @@ describe("LabelsService", () => {
     const result = await service.update("l1", {});
 
     expect(result.httpStatus).toBe(400);
-    expect(result.message).toBe("At least one field is required to update a label");
+    expect(result.message).toBe(
+      "At least one field is required to update a label",
+    );
     expect(mockPrisma.label.update).not.toHaveBeenCalled();
   });
 
