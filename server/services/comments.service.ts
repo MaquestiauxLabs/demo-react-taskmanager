@@ -1,4 +1,10 @@
-import { prisma, standardiseResponse } from "../utils";
+import {
+  isPrismaConflictError,
+  isPrismaForeignKeyError,
+  isPrismaNotFoundError,
+  prisma,
+  standardiseResponse,
+} from "../utils";
 
 type CreateCommentInput = {
   content?: string;
@@ -30,11 +36,22 @@ const commentInclude = {
 
 export class CommentsService {
   async getByTaskId(taskId: string) {
+    const normalizedTaskId = taskId.trim();
+
+    if (!normalizedTaskId) {
+      return standardiseResponse({
+        message: "taskId is required",
+        httpStatus: 400,
+      });
+    }
+
     try {
-      const task = await prisma.task.findUnique({ where: { id: taskId } });
+      const task = await prisma.task.findUnique({
+        where: { id: normalizedTaskId },
+      });
       if (!task) {
         return standardiseResponse({
-          message: `Task with ID ${taskId} not found`,
+          message: `Task with ID ${normalizedTaskId} not found`,
           httpStatus: 404,
         });
       }
@@ -43,7 +60,7 @@ export class CommentsService {
         where: {
           taskLinks: {
             some: {
-              taskId,
+              taskId: normalizedTaskId,
             },
           },
         },
@@ -52,19 +69,19 @@ export class CommentsService {
 
       if (!response || response.length === 0) {
         return standardiseResponse({
-          message: `No comments found for task ${taskId}`,
+          message: `No comments found for task ${normalizedTaskId}`,
           httpStatus: 404,
         });
       }
 
       return standardiseResponse({
-        message: `List comments for task ${taskId}`,
+        message: `List comments for task ${normalizedTaskId}`,
         httpStatus: 200,
         data: response,
       });
     } catch (error) {
       return standardiseResponse({
-        message: `Error fetching comments for task ${taskId}`,
+        message: `Error fetching comments for task ${normalizedTaskId}`,
         httpStatus: 500,
         error,
       });
@@ -72,13 +89,22 @@ export class CommentsService {
   }
 
   async getByProjectId(projectId: string) {
+    const normalizedProjectId = projectId.trim();
+
+    if (!normalizedProjectId) {
+      return standardiseResponse({
+        message: "projectId is required",
+        httpStatus: 400,
+      });
+    }
+
     try {
       const project = await prisma.project.findUnique({
-        where: { id: projectId },
+        where: { id: normalizedProjectId },
       });
       if (!project) {
         return standardiseResponse({
-          message: `Project with ID ${projectId} not found`,
+          message: `Project with ID ${normalizedProjectId} not found`,
           httpStatus: 404,
         });
       }
@@ -87,7 +113,7 @@ export class CommentsService {
         where: {
           projectLinks: {
             some: {
-              projectId,
+              projectId: normalizedProjectId,
             },
           },
         },
@@ -96,19 +122,19 @@ export class CommentsService {
 
       if (!response || response.length === 0) {
         return standardiseResponse({
-          message: `No comments found for project ${projectId}`,
+          message: `No comments found for project ${normalizedProjectId}`,
           httpStatus: 404,
         });
       }
 
       return standardiseResponse({
-        message: `List comments for project ${projectId}`,
+        message: `List comments for project ${normalizedProjectId}`,
         httpStatus: 200,
         data: response,
       });
     } catch (error) {
       return standardiseResponse({
-        message: `Error fetching comments for project ${projectId}`,
+        message: `Error fetching comments for project ${normalizedProjectId}`,
         httpStatus: 500,
         error,
       });
@@ -116,9 +142,12 @@ export class CommentsService {
   }
 
   async create(data: CreateCommentInput) {
-    const { content, creatorId, taskId, projectId } = data;
+    const content = data.content?.trim();
+    const creatorId = data.creatorId?.trim();
+    const taskId = data.taskId?.trim();
+    const projectId = data.projectId?.trim();
 
-    if (!content || content.trim().length === 0) {
+    if (!content) {
       return standardiseResponse({
         message: "content is required",
         httpStatus: 400,
@@ -128,6 +157,20 @@ export class CommentsService {
     if (!creatorId) {
       return standardiseResponse({
         message: "creatorId is required",
+        httpStatus: 400,
+      });
+    }
+
+    if (data.taskId !== undefined && !taskId) {
+      return standardiseResponse({
+        message: "taskId cannot be empty",
+        httpStatus: 400,
+      });
+    }
+
+    if (data.projectId !== undefined && !projectId) {
+      return standardiseResponse({
+        message: "projectId cannot be empty",
         httpStatus: 400,
       });
     }
@@ -175,11 +218,7 @@ export class CommentsService {
       const response = await prisma.comment.create({
         data: {
           content,
-          creator: {
-            connect: {
-              id: creatorId,
-            },
-          },
+          creatorId,
           ...(taskId
             ? {
                 taskLinks: {
@@ -213,6 +252,20 @@ export class CommentsService {
         data: response,
       });
     } catch (error) {
+      if (isPrismaConflictError(error)) {
+        return standardiseResponse({
+          message: "Comment already exists",
+          httpStatus: 409,
+        });
+      }
+
+      if (isPrismaForeignKeyError(error)) {
+        return standardiseResponse({
+          message: "Invalid reference while creating comment",
+          httpStatus: 400,
+        });
+      }
+
       return standardiseResponse({
         message: "Error creating comment",
         httpStatus: 500,
@@ -222,27 +275,36 @@ export class CommentsService {
   }
 
   async getById(id: string) {
+    const normalizedId = id.trim();
+
+    if (!normalizedId) {
+      return standardiseResponse({
+        message: "id is required",
+        httpStatus: 400,
+      });
+    }
+
     try {
       const response = await prisma.comment.findUnique({
-        where: { id },
+        where: { id: normalizedId },
         include: commentInclude,
       });
 
       if (!response) {
         return standardiseResponse({
-          message: `Comment with ID ${id} not found`,
+          message: `Comment with ID ${normalizedId} not found`,
           httpStatus: 404,
         });
       }
 
       return standardiseResponse({
-        message: `Get comment by ID: ${id}`,
+        message: `Get comment by ID: ${normalizedId}`,
         httpStatus: 200,
         data: response,
       });
     } catch (error) {
       return standardiseResponse({
-        message: `Error fetching comment with ID ${id}`,
+        message: `Error fetching comment with ID ${normalizedId}`,
         httpStatus: 500,
         error,
       });
@@ -250,7 +312,18 @@ export class CommentsService {
   }
 
   async update(id: string, data: UpdateCommentInput) {
-    const { content, creatorId, taskId, projectId } = data;
+    const normalizedId = id.trim();
+    const content = data.content?.trim();
+    const creatorId = data.creatorId?.trim();
+    const taskId = data.taskId?.trim();
+    const projectId = data.projectId?.trim();
+
+    if (!normalizedId) {
+      return standardiseResponse({
+        message: "id is required",
+        httpStatus: 400,
+      });
+    }
 
     if (!creatorId) {
       return standardiseResponse({
@@ -259,9 +332,23 @@ export class CommentsService {
       });
     }
 
-    if (content !== undefined && content.trim().length === 0) {
+    if (data.content !== undefined && !content) {
       return standardiseResponse({
         message: "content cannot be empty",
+        httpStatus: 400,
+      });
+    }
+
+    if (data.taskId !== undefined && !taskId) {
+      return standardiseResponse({
+        message: "taskId cannot be empty",
+        httpStatus: 400,
+      });
+    }
+
+    if (data.projectId !== undefined && !projectId) {
+      return standardiseResponse({
+        message: "projectId cannot be empty",
         httpStatus: 400,
       });
     }
@@ -275,7 +362,7 @@ export class CommentsService {
 
     try {
       const existing = await prisma.comment.findUnique({
-        where: { id },
+        where: { id: normalizedId },
         include: {
           taskLinks: true,
           projectLinks: true,
@@ -284,7 +371,7 @@ export class CommentsService {
 
       if (!existing) {
         return standardiseResponse({
-          message: `Comment with ID ${id} not found`,
+          message: `Comment with ID ${normalizedId} not found`,
           httpStatus: 404,
         });
       }
@@ -338,11 +425,13 @@ export class CommentsService {
       }
 
       const response = await prisma.$transaction(async (tx) => {
-        await tx.commentTask.deleteMany({ where: { commentId: id } });
-        await tx.commentProject.deleteMany({ where: { commentId: id } });
+        await tx.commentTask.deleteMany({ where: { commentId: normalizedId } });
+        await tx.commentProject.deleteMany({
+          where: { commentId: normalizedId },
+        });
 
         await tx.comment.update({
-          where: { id },
+          where: { id: normalizedId },
           data: {
             ...(content !== undefined ? { content } : {}),
             creatorId,
@@ -352,7 +441,7 @@ export class CommentsService {
         if (nextTaskId) {
           await tx.commentTask.create({
             data: {
-              commentId: id,
+              commentId: normalizedId,
               taskId: nextTaskId,
             },
           });
@@ -361,26 +450,54 @@ export class CommentsService {
         if (nextProjectId) {
           await tx.commentProject.create({
             data: {
-              commentId: id,
+              commentId: normalizedId,
               projectId: nextProjectId,
             },
           });
         }
 
         return tx.comment.findUnique({
-          where: { id },
+          where: { id: normalizedId },
           include: commentInclude,
         });
       });
 
+      if (!response) {
+        return standardiseResponse({
+          message: `Comment with ID ${normalizedId} not found`,
+          httpStatus: 404,
+        });
+      }
+
       return standardiseResponse({
-        message: `Update comment with ID: ${id}`,
+        message: `Update comment with ID: ${normalizedId}`,
         httpStatus: 200,
         data: response,
       });
     } catch (error) {
+      if (isPrismaConflictError(error)) {
+        return standardiseResponse({
+          message: "Comment already exists",
+          httpStatus: 409,
+        });
+      }
+
+      if (isPrismaForeignKeyError(error)) {
+        return standardiseResponse({
+          message: "Invalid reference while updating comment",
+          httpStatus: 400,
+        });
+      }
+
+      if (isPrismaNotFoundError(error)) {
+        return standardiseResponse({
+          message: `Comment with ID ${normalizedId} not found`,
+          httpStatus: 404,
+        });
+      }
+
       return standardiseResponse({
-        message: `Error updating comment with ID ${id}`,
+        message: `Error updating comment with ID ${normalizedId}`,
         httpStatus: 500,
         error,
       });
@@ -388,28 +505,48 @@ export class CommentsService {
   }
 
   async delete(id: string) {
+    const normalizedId = id.trim();
+
+    if (!normalizedId) {
+      return standardiseResponse({
+        message: "id is required",
+        httpStatus: 400,
+      });
+    }
+
     try {
-      const existing = await prisma.comment.findUnique({ where: { id } });
+      const existing = await prisma.comment.findUnique({
+        where: { id: normalizedId },
+      });
       if (!existing) {
         return standardiseResponse({
-          message: `Comment with ID ${id} not found`,
+          message: `Comment with ID ${normalizedId} not found`,
           httpStatus: 404,
         });
       }
 
       await prisma.$transaction(async (tx) => {
-        await tx.commentTask.deleteMany({ where: { commentId: id } });
-        await tx.commentProject.deleteMany({ where: { commentId: id } });
-        await tx.comment.delete({ where: { id } });
+        await tx.commentTask.deleteMany({ where: { commentId: normalizedId } });
+        await tx.commentProject.deleteMany({
+          where: { commentId: normalizedId },
+        });
+        await tx.comment.delete({ where: { id: normalizedId } });
       });
 
       return standardiseResponse({
-        message: `Delete comment with ID: ${id}`,
-        httpStatus: 204,
+        message: `Delete comment with ID: ${normalizedId}`,
+        httpStatus: 200,
       });
     } catch (error) {
+      if (isPrismaNotFoundError(error)) {
+        return standardiseResponse({
+          message: `Comment with ID ${normalizedId} not found`,
+          httpStatus: 404,
+        });
+      }
+
       return standardiseResponse({
-        message: `Error deleting comment with ID ${id}`,
+        message: `Error deleting comment with ID ${normalizedId}`,
         httpStatus: 500,
         error,
       });
