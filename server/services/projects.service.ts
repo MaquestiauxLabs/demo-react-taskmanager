@@ -1,8 +1,4 @@
 import {
-  ProjectCreateInput,
-  ProjectUpdateInput,
-} from "../prisma/generated/models";
-import {
   isPrismaConflictError,
   isPrismaForeignKeyError,
   isPrismaNotFoundError,
@@ -11,6 +7,18 @@ import {
   prisma,
   standardiseResponse,
 } from "../utils";
+
+type CreateProjectInput = {
+  name?: string;
+  description?: string | null;
+  creatorId?: string;
+};
+
+type UpdateProjectInput = {
+  name?: string;
+  description?: string | null;
+  creatorId?: string;
+};
 
 const projectInclude = {
   labelLinks: {
@@ -53,10 +61,10 @@ export class ProjectsService {
     }
   }
 
-  async create(data: ProjectCreateInput) {
+  async create(data: CreateProjectInput) {
     try {
       // Normalize string inputs
-      const normalizedData: ProjectCreateInput = {
+      const normalizedData: CreateProjectInput = {
         ...data,
         name: data.name?.trim(),
         description: data.description?.trim(),
@@ -85,8 +93,12 @@ export class ProjectsService {
         }
       }
 
+      const createData = normalizedData as unknown as Parameters<
+        typeof prisma.project.create
+      >[0]["data"];
+
       const response = await prisma.project.create({
-        data: normalizedData,
+        data: createData,
         include: projectInclude,
       });
       return standardiseResponse({
@@ -154,7 +166,7 @@ export class ProjectsService {
     }
   }
 
-  async update(id: string, data: ProjectUpdateInput) {
+  async update(id: string, data: UpdateProjectInput) {
     try {
       // Validate id input
       const normalizedId = id?.trim();
@@ -167,7 +179,7 @@ export class ProjectsService {
       }
 
       // Normalize string inputs
-      const normalizedData: ProjectUpdateInput = {
+      const normalizedData: UpdateProjectInput = {
         ...data,
         name: data.name?.trim(),
         description: data.description?.trim(),
