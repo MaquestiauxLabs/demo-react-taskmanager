@@ -9,7 +9,7 @@ export class TimeEntriesController {
   }
 
   getByTaskId = async (req: Request, res: Response) => {
-    const { taskId } = req.params;
+    const taskId = req.params.taskId ?? req.params.id;
     const result = await this.service.getByTaskId(taskId as string);
     res.status(result.httpStatus).json(result);
   };
@@ -21,13 +21,13 @@ export class TimeEntriesController {
   };
 
   create = async (req: Request, res: Response) => {
-    const { taskId } = req.params;
+    const taskId = req.params.taskId ?? req.params.id;
     const result = await this.service.create(taskId as string, req.body);
     res.status(result.httpStatus).json(result);
   };
 
   startTimer = async (req: Request, res: Response) => {
-    const { taskId } = req.params;
+    const taskId = req.params.taskId ?? req.params.id;
     const { creatorId } = req.body;
     const result = await this.service.startTimer(taskId as string, creatorId);
     res.status(result.httpStatus).json(result);
