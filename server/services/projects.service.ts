@@ -10,12 +10,14 @@ import {
 
 type CreateProjectInput = {
   name?: string;
+  title?: string;
   description?: string | null;
   creatorId?: string;
 };
 
 type UpdateProjectInput = {
   name?: string;
+  title?: string;
   description?: string | null;
   creatorId?: string;
 };
@@ -67,15 +69,25 @@ export class ProjectsService {
       const normalizedData: CreateProjectInput = {
         ...data,
         name: data.name?.trim(),
+        title: data.title?.trim() ?? data.name?.trim(),
         description: data.description?.trim(),
+        creatorId: data.creatorId?.trim(),
       };
 
       // Validate required fields
-      if (!normalizedData.name || normalizedData.name === "") {
+      if (!normalizedData.title || normalizedData.title === "") {
         return standardiseResponse({
           message: "Project name is required",
           httpStatus: 400,
           error: "name field cannot be empty",
+        });
+      }
+
+      if (!normalizedData.creatorId) {
+        return standardiseResponse({
+          message: "creatorId is required",
+          httpStatus: 400,
+          error: "creatorId field cannot be empty",
         });
       }
 
@@ -93,9 +105,11 @@ export class ProjectsService {
         }
       }
 
-      const createData = normalizedData as unknown as Parameters<
-        typeof prisma.project.create
-      >[0]["data"];
+      const createData: Parameters<typeof prisma.project.create>[0]["data"] = {
+        title: normalizedData.title,
+        description: normalizedData.description,
+        creatorId: normalizedData.creatorId,
+      };
 
       const response = await prisma.project.create({
         data: createData,
@@ -182,15 +196,29 @@ export class ProjectsService {
       const normalizedData: UpdateProjectInput = {
         ...data,
         name: data.name?.trim(),
+        title: data.title?.trim() ?? data.name?.trim(),
         description: data.description?.trim(),
+        creatorId:
+          data.creatorId !== undefined ? data.creatorId?.trim() : undefined,
       };
 
       // Validate name if provided
-      if (normalizedData.name !== undefined && normalizedData.name === "") {
+      if (
+        (data.name !== undefined && normalizedData.name === "") ||
+        (data.title !== undefined && !normalizedData.title)
+      ) {
         return standardiseResponse({
           message: "Project name cannot be empty",
           httpStatus: 400,
           error: "name field cannot be empty string",
+        });
+      }
+
+      if (data.creatorId !== undefined && !normalizedData.creatorId) {
+        return standardiseResponse({
+          message: "creatorId cannot be empty",
+          httpStatus: 400,
+          error: "creatorId field cannot be empty string",
         });
       }
 
@@ -206,9 +234,21 @@ export class ProjectsService {
         });
       }
 
+      const updateData: Parameters<typeof prisma.project.update>[0]["data"] = {
+        ...(normalizedData.title !== undefined
+          ? { title: normalizedData.title }
+          : {}),
+        ...(normalizedData.description !== undefined
+          ? { description: normalizedData.description }
+          : {}),
+        ...(normalizedData.creatorId !== undefined
+          ? { creatorId: normalizedData.creatorId }
+          : {}),
+      };
+
       const response = await prisma.project.update({
         where: { id: normalizedId },
-        data: normalizedData,
+        data: updateData,
         include: projectInclude,
       });
       return standardiseResponse({
