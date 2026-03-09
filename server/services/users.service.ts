@@ -8,17 +8,34 @@ import {
 
 type CreateUserInput = {
   name?: string;
+  givenName?: string;
+  familyName?: string;
   email?: string;
+  avatarUrl?: string | null;
   roleId?: string;
 };
 
 type UpdateUserInput = {
   name?: string;
+  givenName?: string;
+  familyName?: string;
   email?: string;
+  avatarUrl?: string | null;
   roleId?: string;
 };
 
 export class UsersService {
+  private parseLegacyName(name?: string) {
+    const normalized = name?.trim();
+    if (!normalized) return { givenName: undefined, familyName: undefined };
+
+    const [first, ...rest] = normalized.split(/\s+/);
+    return {
+      givenName: first,
+      familyName: rest.length > 0 ? rest.join(" ") : first,
+    };
+  }
+
   async get() {
     try {
       const response = await prisma.user.findMany();
@@ -44,15 +61,19 @@ export class UsersService {
 
   async create(data: CreateUserInput) {
     try {
+      const parsedName = this.parseLegacyName(data.name);
+
       // Normalize string inputs
       const normalizedData: CreateUserInput = {
         ...data,
         name: data.name?.trim(),
+        givenName: data.givenName?.trim() ?? parsedName.givenName,
+        familyName: data.familyName?.trim() ?? parsedName.familyName,
         email: data.email?.trim(),
       };
 
       // Validate required fields
-      if (!normalizedData.name || normalizedData.name === "") {
+      if (!normalizedData.givenName || !normalizedData.familyName) {
         return standardiseResponse({
           message: "User name is required",
           httpStatus: 400,
@@ -82,9 +103,14 @@ export class UsersService {
         }
       }
 
-      const createData = normalizedData as unknown as Parameters<
-        typeof prisma.user.create
-      >[0]["data"];
+      const createData: Parameters<typeof prisma.user.create>[0]["data"] = {
+        email: normalizedData.email,
+        givenName: normalizedData.givenName,
+        familyName: normalizedData.familyName,
+        ...(normalizedData.avatarUrl !== undefined
+          ? { avatarUrl: normalizedData.avatarUrl }
+          : {}),
+      };
 
       const response = await prisma.user.create({ data: createData });
       return standardiseResponse({
@@ -153,6 +179,8 @@ export class UsersService {
 
   async update(id: string, data: UpdateUserInput) {
     try {
+      const parsedName = this.parseLegacyName(data.name);
+
       // Validate id input
       const normalizedId = id?.trim();
       if (!normalizedId || normalizedId === "") {
@@ -167,11 +195,17 @@ export class UsersService {
       const normalizedData: UpdateUserInput = {
         ...data,
         name: data.name?.trim(),
+        givenName: data.givenName?.trim() ?? parsedName.givenName,
+        familyName: data.familyName?.trim() ?? parsedName.familyName,
         email: data.email?.trim(),
       };
 
       // Validate name if provided
-      if (normalizedData.name !== undefined && normalizedData.name === "") {
+      if (
+        (data.name !== undefined && normalizedData.name === "") ||
+        (data.givenName !== undefined && !normalizedData.givenName) ||
+        (data.familyName !== undefined && !normalizedData.familyName)
+      ) {
         return standardiseResponse({
           message: "User name cannot be empty",
           httpStatus: 400,
@@ -214,9 +248,24 @@ export class UsersService {
         });
       }
 
+      const updateData: Parameters<typeof prisma.user.update>[0]["data"] = {
+        ...(normalizedData.email !== undefined
+          ? { email: normalizedData.email }
+          : {}),
+        ...(normalizedData.givenName !== undefined
+          ? { givenName: normalizedData.givenName }
+          : {}),
+        ...(normalizedData.familyName !== undefined
+          ? { familyName: normalizedData.familyName }
+          : {}),
+        ...(normalizedData.avatarUrl !== undefined
+          ? { avatarUrl: normalizedData.avatarUrl }
+          : {}),
+      };
+
       const response = await prisma.user.update({
         where: { id: normalizedId },
-        data: normalizedData,
+        data: updateData,
       });
       return standardiseResponse({
         message: `Update user with ID: ${normalizedId}`,
