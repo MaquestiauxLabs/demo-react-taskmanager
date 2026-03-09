@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:18.2-alpine
+    container_name: postgres_test_db
+    restart: always
+    environment:
+      POSTGRES_USER: tasks_manager
+      POSTGRES_PASSWORD: tasks_manager
+      POSTGRES_DB: tasks_manager_test
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+      - ./init-db.test.sql:/docker-entrypoint-initdb.d/init-db.test.sql
+
+volumes:
+  postgres_test_data:
+
+networks:
+  default:
+    name: taskmanager_db_test_default

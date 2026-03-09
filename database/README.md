@@ -118,6 +118,36 @@ CREATE DATABASE tasks_manager_shadow;
 GRANT ALL PRIVILEGES ON DATABASE tasks_manager_shadow TO tasks_manager;
 ```
 
+## Dedicated Test Database
+
+Use a separate PostgreSQL instance for integration tests to avoid touching development data.
+
+### Test Compose
+
+The repository includes:
+
+- `database/docker-compose.test.yml`
+- `database/init-db.test.sql`
+
+The test DB runs on port `5434` and uses:
+
+- database: `tasks_manager_test`
+- shadow database: `tasks_manager_test_shadow`
+
+### Server test environment sample
+
+Use `server/.env.test.sample` as the template for `server/.env.test`.
+
+### Useful commands (run from `server/`)
+
+```bash
+npm run db:test:start
+npm run db:test:status
+npm run prisma:test:reset
+npm run prisma:test:seed
+npm run db:test:stop
+```
+
 ## Create the user and database if not using Docker
 
 ```sql
