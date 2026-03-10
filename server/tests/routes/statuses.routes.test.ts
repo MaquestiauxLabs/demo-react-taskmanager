@@ -50,7 +50,7 @@ vi.mock("../../utils", () => ({
   isPrismaForeignKeyError: mockIsPrismaForeignKeyError,
 }));
 
-import statusesRouter from "../statuses.routes";
+import statusesRouter from "../../routes/statuses.routes";
 
 const buildApp = () => {
   const app = express();
@@ -145,9 +145,7 @@ describe("Statuses API routes", () => {
   });
 
   it("PUT /api/statuses/:id validates empty update payload", async () => {
-    const response = await request(buildApp())
-      .put("/api/statuses/s1")
-      .send({});
+    const response = await request(buildApp()).put("/api/statuses/s1").send({});
 
     expect(response.status).toBe(400);
     expect(response.body.message).toBe(

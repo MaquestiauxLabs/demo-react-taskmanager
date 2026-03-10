@@ -49,7 +49,7 @@ vi.mock("../../utils", () => ({
   }),
 }));
 
-import tasksRouter from "../tasks.routes";
+import tasksRouter from "../../routes/tasks.routes";
 
 const buildApp = () => {
   const app = express();

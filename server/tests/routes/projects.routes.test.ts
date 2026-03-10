@@ -58,7 +58,7 @@ vi.mock("../../utils", () => ({
   normalizeManyWithLabelsAndComments: <T>(entities: T[]) => entities,
 }));
 
-import projectsRouter from "../projects.routes";
+import projectsRouter from "../../routes/projects.routes";
 
 const buildApp = () => {
   const app = express();
@@ -174,7 +174,9 @@ describe("Projects API routes", () => {
     mockPrisma.project.findUnique.mockResolvedValueOnce({ id: "p1" });
     mockPrisma.project.update.mockResolvedValueOnce(unarchived);
 
-    const response = await request(buildApp()).put("/api/projects/p1/unarchive");
+    const response = await request(buildApp()).put(
+      "/api/projects/p1/unarchive",
+    );
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe("Unarchive project with ID: p1");

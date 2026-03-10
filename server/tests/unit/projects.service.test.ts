@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { ProjectsService } from "../projects.service";
+import { ProjectsService } from "../../services/projects.service";
 
 // Mock dependencies
 const mockFindMany = vi.fn();

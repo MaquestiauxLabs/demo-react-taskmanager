@@ -73,7 +73,7 @@ vi.mock("../../utils", () => ({
   normalizeManyTasksWithDetails: <T>(entities: T[]) => entities,
 }));
 
-import tasksRouter from "../tasks.routes";
+import tasksRouter from "../../routes/tasks.routes";
 
 const buildApp = () => {
   const app = express();
@@ -242,7 +242,9 @@ describe("Tasks API routes", () => {
   it("DELETE /api/tasks/:id/project returns 404 when task is missing", async () => {
     mockPrisma.task.findUnique.mockResolvedValueOnce(null);
 
-    const response = await request(buildApp()).delete("/api/tasks/missing/project");
+    const response = await request(buildApp()).delete(
+      "/api/tasks/missing/project",
+    );
 
     expect(response.status).toBe(404);
     expect(response.body.message).toBe("Task with ID missing not found");

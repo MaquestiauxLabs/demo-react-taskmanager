@@ -77,7 +77,7 @@ vi.mock("../../utils", () => ({
   isPrismaNotFoundError: mockIsPrismaNotFoundError,
 }));
 
-import { CommentsService } from "../comments.service";
+import { CommentsService } from "../../services/comments.service";
 
 describe("CommentsService", () => {
   let service: CommentsService;

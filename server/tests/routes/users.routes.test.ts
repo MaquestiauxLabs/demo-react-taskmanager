@@ -56,7 +56,7 @@ vi.mock("../../utils", () => ({
   isPrismaNotFoundError: mockIsPrismaNotFoundError,
 }));
 
-import usersRouter from "../users.routes";
+import usersRouter from "../../routes/users.routes";
 
 const buildApp = () => {
   const app = express();
@@ -154,7 +154,11 @@ describe("Users API routes", () => {
   });
 
   it("PUT /api/users/:id updates a user", async () => {
-    const updated = { id: "u1", name: "Alice Updated", email: "alice@acme.com" };
+    const updated = {
+      id: "u1",
+      name: "Alice Updated",
+      email: "alice@acme.com",
+    };
     mockPrisma.user.findUnique.mockResolvedValueOnce({ id: "u1" });
     mockPrisma.user.update.mockResolvedValueOnce(updated);
 
@@ -170,7 +174,9 @@ describe("Users API routes", () => {
   it("PUT /api/users/:id handles duplicate email conflict", async () => {
     mockPrisma.user.findUnique.mockResolvedValueOnce({ id: "u1" });
     mockIsPrismaConflictError.mockReturnValueOnce(true);
-    mockPrisma.user.update.mockRejectedValueOnce(new Error("Unique constraint"));
+    mockPrisma.user.update.mockRejectedValueOnce(
+      new Error("Unique constraint"),
+    );
 
     const response = await request(buildApp())
       .put("/api/users/u1")

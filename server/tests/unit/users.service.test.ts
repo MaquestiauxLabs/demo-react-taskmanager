@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { UsersService } from "../users.service";
+import { UsersService } from "../../services/users.service";
 
 // Mock dependencies
 const mockFindMany = vi.fn();
@@ -39,7 +39,8 @@ vi.mock("../../utils/prismaErrors", () => ({
   isPrismaForeignKeyError: (error: unknown) =>
     error instanceof Error && error.message.includes("Foreign key constraint"),
   isPrismaNotFoundError: (error: unknown) =>
-    error instanceof Error && error.message.includes("Record to update not found"),
+    error instanceof Error &&
+    error.message.includes("Record to update not found"),
 }));
 
 describe("UsersService", () => {
@@ -78,7 +79,10 @@ describe("UsersService", () => {
 
   describe("create", () => {
     it("should return 400 if name is missing", async () => {
-      const result = await service.create({ name: "", email: "test@example.com" });
+      const result = await service.create({
+        name: "",
+        email: "test@example.com",
+      });
       expect(result.httpStatus).toBe(400);
       expect(result.message).toContain("name is required");
     });
@@ -130,7 +134,7 @@ describe("UsersService", () => {
     it("should return 400 on foreign key error", async () => {
       mockRoleFindUnique.mockResolvedValueOnce({ id: "role-1" });
       mockCreate.mockRejectedValueOnce(
-        new Error("Foreign key constraint failed")
+        new Error("Foreign key constraint failed"),
       );
       const result = await service.create({
         name: "John Doe",
@@ -246,9 +250,7 @@ describe("UsersService", () => {
     it("should return 404 on Prisma not found error", async () => {
       mockRoleFindUnique.mockResolvedValueOnce({ id: "role-1" });
       mockUserFindUnique.mockResolvedValueOnce({ id: "user-1" });
-      mockUpdate.mockRejectedValueOnce(
-        new Error("Record to update not found")
-      );
+      mockUpdate.mockRejectedValueOnce(new Error("Record to update not found"));
       const result = await service.update("user-1", {
         name: "Updated",
         roleId: "role-1",
@@ -294,7 +296,7 @@ describe("UsersService", () => {
     it("should return 400 on foreign key constraint error", async () => {
       mockUserFindUnique.mockResolvedValueOnce({ id: "user-1" });
       mockDelete.mockRejectedValueOnce(
-        new Error("Foreign key constraint failed")
+        new Error("Foreign key constraint failed"),
       );
       const result = await service.delete("user-1");
       expect(result.httpStatus).toBe(400);

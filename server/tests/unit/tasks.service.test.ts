@@ -71,7 +71,7 @@ vi.mock("../../utils", () => ({
   normalizeManyTasksWithDetails: <T>(entities: T[]) => entities,
 }));
 
-import { TasksService } from "../tasks.service";
+import { TasksService } from "../../services/tasks.service";
 
 describe("TasksService", () => {
   let service: TasksService;

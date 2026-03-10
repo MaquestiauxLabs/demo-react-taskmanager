@@ -4,7 +4,7 @@ const { mockPrisma, mockIsPrismaConflictError, mockIsPrismaForeignKeyError } =
   vi.hoisted(() => {
     return {
       mockPrisma: {
-        label: {
+        status: {
           findMany: vi.fn(),
           create: vi.fn(),
           findUnique: vi.fn(),
@@ -48,23 +48,23 @@ vi.mock("../../utils", () => ({
   isPrismaForeignKeyError: mockIsPrismaForeignKeyError,
 }));
 
-import { LabelsService } from "../labels.service";
+import { StatusesService } from "../../services/statuses.service";
 
-describe("LabelsService", () => {
-  let service: LabelsService;
+describe("StatusesService", () => {
+  let service: StatusesService;
 
   beforeEach(() => {
     vi.clearAllMocks();
-    service = new LabelsService();
+    service = new StatusesService();
   });
 
-  it("returns 404 when no labels are found", async () => {
-    mockPrisma.label.findMany.mockResolvedValueOnce([]);
+  it("returns 404 when no statuses are found", async () => {
+    mockPrisma.status.findMany.mockResolvedValueOnce([]);
 
     const result = await service.get();
 
     expect(result.httpStatus).toBe(404);
-    expect(result.message).toBe("No labels found");
+    expect(result.message).toBe("No statuses found");
   });
 
   it("returns 400 when create payload is missing name", async () => {
@@ -72,101 +72,103 @@ describe("LabelsService", () => {
 
     expect(result.httpStatus).toBe(400);
     expect(result.message).toBe("name is required");
-    expect(mockPrisma.label.create).not.toHaveBeenCalled();
+    expect(mockPrisma.status.create).not.toHaveBeenCalled();
   });
 
   it("returns 404 when creator is not found during create", async () => {
     mockPrisma.user.findUnique.mockResolvedValueOnce(null);
 
     const result = await service.create({
-      name: "Backend",
+      name: "In Progress",
       color: "#ff0000",
       creatorId: "missing-user",
     });
 
     expect(result.httpStatus).toBe(404);
     expect(result.message).toBe("User with ID missing-user not found");
-    expect(mockPrisma.label.create).not.toHaveBeenCalled();
+    expect(mockPrisma.status.create).not.toHaveBeenCalled();
   });
 
-  it("creates a label when payload is valid", async () => {
+  it("creates a status when payload is valid", async () => {
     const created = {
-      id: "l1",
-      name: "Backend",
+      id: "s1",
+      name: "In Progress",
       color: "#ff0000",
       creatorId: "u1",
     };
 
     mockPrisma.user.findUnique.mockResolvedValueOnce({ id: "u1" });
-    mockPrisma.label.create.mockResolvedValueOnce(created);
+    mockPrisma.status.create.mockResolvedValueOnce(created);
 
     const result = await service.create({
-      name: "Backend",
+      name: "In Progress",
       color: "#ff0000",
       creatorId: "u1",
     });
 
     expect(result.httpStatus).toBe(201);
-    expect(result.message).toBe("Create a label");
+    expect(result.message).toBe("Create a status");
     expect(result.data).toEqual(created);
-    expect(mockPrisma.label.create).toHaveBeenCalledWith({
+    expect(mockPrisma.status.create).toHaveBeenCalledWith({
       data: {
-        name: "Backend",
+        name: "In Progress",
         color: "#ff0000",
         creatorId: "u1",
       },
     });
   });
 
-  it("returns 404 when getById cannot find label", async () => {
-    mockPrisma.label.findUnique.mockResolvedValueOnce(null);
+  it("returns 404 when getById cannot find status", async () => {
+    mockPrisma.status.findUnique.mockResolvedValueOnce(null);
 
-    const result = await service.getById("missing-label");
+    const result = await service.getById("missing-status");
 
     expect(result.httpStatus).toBe(404);
-    expect(result.message).toBe("Label with ID missing-label not found");
+    expect(result.message).toBe("Status with ID missing-status not found");
   });
 
   it("returns 400 when update has no fields", async () => {
-    const result = await service.update("l1", {});
+    const result = await service.update("s1", {});
 
     expect(result.httpStatus).toBe(400);
     expect(result.message).toBe(
-      "At least one field is required to update a label",
+      "At least one field is required to update a status",
     );
-    expect(mockPrisma.label.update).not.toHaveBeenCalled();
+    expect(mockPrisma.status.update).not.toHaveBeenCalled();
   });
 
   it("returns 404 when update target does not exist", async () => {
-    mockPrisma.label.findUnique.mockResolvedValueOnce(null);
+    mockPrisma.status.findUnique.mockResolvedValueOnce(null);
 
-    const result = await service.update("missing-label", { name: "Frontend" });
+    const result = await service.update("missing-status", {
+      name: "Blocked",
+    });
 
     expect(result.httpStatus).toBe(404);
-    expect(result.message).toBe("Label with ID missing-label not found");
-    expect(mockPrisma.label.update).not.toHaveBeenCalled();
+    expect(result.message).toBe("Status with ID missing-status not found");
+    expect(mockPrisma.status.update).not.toHaveBeenCalled();
   });
 
   it("returns 404 when delete target does not exist", async () => {
-    mockPrisma.label.findUnique.mockResolvedValueOnce(null);
+    mockPrisma.status.findUnique.mockResolvedValueOnce(null);
 
-    const result = await service.delete("missing-label");
+    const result = await service.delete("missing-status");
 
     expect(result.httpStatus).toBe(404);
-    expect(result.message).toBe("Label with ID missing-label not found");
-    expect(mockPrisma.label.delete).not.toHaveBeenCalled();
+    expect(result.message).toBe("Status with ID missing-status not found");
+    expect(mockPrisma.status.delete).not.toHaveBeenCalled();
   });
 
-  it("deletes a label when it exists", async () => {
-    mockPrisma.label.findUnique.mockResolvedValueOnce({ id: "l1" });
-    mockPrisma.label.delete.mockResolvedValueOnce({ id: "l1" });
+  it("deletes a status when it exists", async () => {
+    mockPrisma.status.findUnique.mockResolvedValueOnce({ id: "s1" });
+    mockPrisma.status.delete.mockResolvedValueOnce({ id: "s1" });
 
-    const result = await service.delete("l1");
+    const result = await service.delete("s1");
 
     expect(result.httpStatus).toBe(200);
-    expect(result.message).toBe("Delete label with ID: l1");
-    expect(mockPrisma.label.delete).toHaveBeenCalledWith({
-      where: { id: "l1" },
+    expect(result.message).toBe("Delete status with ID: s1");
+    expect(mockPrisma.status.delete).toHaveBeenCalledWith({
+      where: { id: "s1" },
     });
   });
 });

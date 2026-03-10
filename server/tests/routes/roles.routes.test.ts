@@ -50,7 +50,7 @@ vi.mock("../../utils", () => ({
   isPrismaForeignKeyError: mockIsPrismaForeignKeyError,
 }));
 
-import rolesRouter from "../roles.routes";
+import rolesRouter from "../../routes/roles.routes";
 
 const buildApp = () => {
   const app = express();

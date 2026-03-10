@@ -48,7 +48,7 @@ vi.mock("../../utils", () => ({
   isPrismaForeignKeyError: mockIsPrismaForeignKeyError,
 }));
 
-import { RolesService } from "../roles.service";
+import { RolesService } from "../../services/roles.service";
 
 describe("RolesService", () => {
   let service: RolesService;

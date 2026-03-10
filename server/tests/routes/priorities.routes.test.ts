@@ -50,7 +50,7 @@ vi.mock("../../utils", () => ({
   isPrismaForeignKeyError: mockIsPrismaForeignKeyError,
 }));
 
-import prioritiesRouter from "../priorities.routes";
+import prioritiesRouter from "../../routes/priorities.routes";
 
 const buildApp = () => {
   const app = express();

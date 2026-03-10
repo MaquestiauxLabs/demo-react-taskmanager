@@ -61,7 +61,7 @@ vi.mock("../../utils", () => ({
   isPrismaNotFoundError: mockIsPrismaNotFoundError,
 }));
 
-import commentsRouter from "../comments.routes";
+import commentsRouter from "../../routes/comments.routes";
 
 const buildApp = () => {
   const app = express();
@@ -78,7 +78,9 @@ describe("Comments API routes", () => {
   it("GET /api/tasks/:taskId/comments returns 404 when task is missing", async () => {
     mockPrisma.task.findUnique.mockResolvedValueOnce(null);
 
-    const response = await request(buildApp()).get("/api/tasks/missing/comments");
+    const response = await request(buildApp()).get(
+      "/api/tasks/missing/comments",
+    );
 
     expect(response.status).toBe(404);
     expect(response.body.message).toBe("Task with ID missing not found");
