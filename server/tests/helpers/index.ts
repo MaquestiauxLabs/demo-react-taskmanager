@@ -1,6 +1,11 @@
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient, Role, User } from "../../prisma/generated/client";
+import {
+  PrismaClient,
+  Priority,
+  Role,
+  User,
+} from "../../prisma/generated/client";
 
 const globalForPrisma = globalThis as unknown as {
   __testPrisma?: PrismaClient;
@@ -83,10 +88,43 @@ export async function createTestRole(
   });
 }
 
+export type CreateTestPriorityInput = {
+  name?: string;
+  color?: string;
+  creatorId?: string;
+};
+
+export async function createTestPriority(
+  input: CreateTestPriorityInput = {},
+): Promise<Priority> {
+  const prisma = getTestPrisma();
+
+  const defaultPriority = {
+    name: `Priority-${Date.now()}-${Math.random()}`,
+    color: "#FF5733",
+  };
+
+  let creatorId = input.creatorId;
+  if (!creatorId) {
+    const creator = await createTestUser();
+    creatorId = creator.id;
+  }
+
+  const priorityData = {
+    ...defaultPriority,
+    ...input,
+    creatorId,
+  };
+
+  return await prisma.priority.create({
+    data: priorityData,
+  });
+}
+
 export async function cleanDatabase(): Promise<void> {
   const prisma = getTestPrisma();
 
-  const tableNames = ["Role", "User"];
+  const tableNames = ["Priority", "Role", "User"];
 
   for (const table of tableNames) {
     try {

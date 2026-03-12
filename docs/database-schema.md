@@ -48,7 +48,7 @@ erDiagram
 }
 "Priority" {
   String id PK
-  String name
+  String name UK
   String color
   String ownerId FK
   DateTime createdAt

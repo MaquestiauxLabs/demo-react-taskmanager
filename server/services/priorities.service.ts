@@ -259,6 +259,7 @@ export class PrioritiesService {
       return standardiseResponse({
         message: `Delete priority with ID: ${id}`,
         httpStatus: 200,
+        data: existing,
       });
     } catch (error) {
       return standardiseResponse({
