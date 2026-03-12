@@ -1,10 +1,11 @@
+import { Role } from "../prisma/generated/client";
 import {
   isPrismaConflictError,
   isPrismaForeignKeyError,
+  isPrismaNotFoundError,
   prisma,
   standardiseResponse,
 } from "../utils";
-import { Role } from "../prisma/generated/client";
 import { StandardResponse } from "../utils/api";
 
 type CreateRoleInput = {
@@ -247,6 +248,17 @@ export class RolesService {
 
   async delete(id: string): Promise<StandardResponse<Role>> {
     try {
+      // Validate id input
+      const normalizedId = id?.trim();
+      if (!normalizedId || normalizedId === "") {
+        return standardiseResponse({
+          message: "Role ID is required",
+          httpStatus: 400,
+          error: "id parameter cannot be empty",
+        });
+      }
+
+      // Check if role exists
       const existing = await prisma.role.findUnique({ where: { id } });
       if (!existing) {
         return standardiseResponse({
@@ -255,20 +267,27 @@ export class RolesService {
         });
       }
 
-      await prisma.role.delete({ where: { id } });
+      const response = await prisma.role.delete({ where: { id } });
       return standardiseResponse<Role>({
         message: `Delete role with ID: ${id}`,
         httpStatus: 200,
-        data: existing,
+        data: response,
       });
     } catch (error) {
+      if (isPrismaNotFoundError(error)) {
+        return standardiseResponse({
+          message: `Role with ID ${id} not found`,
+          httpStatus: 404,
+          error: `No role found with ID ${id}`,
+        });
+      }
       if (isPrismaForeignKeyError(error)) {
         return standardiseResponse({
           message: "Cannot delete role with associated records",
           httpStatus: 400,
+          error: "Role has associated users, or other records",
         });
       }
-
       return standardiseResponse({
         message: `Error deleting role with ID ${id}`,
         httpStatus: 500,

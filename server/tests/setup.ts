@@ -1,6 +1,6 @@
 import { PrismaPg } from "@prisma/adapter-pg";
+import { afterAll, afterEach, beforeAll } from "vitest";
 import { PrismaClient } from "../prisma/generated/client";
-import { beforeAll, afterAll, afterEach } from "vitest";
 
 let prismaClient: PrismaClient;
 
@@ -12,22 +12,7 @@ function createPrismaClient() {
 }
 
 async function cleanTables(prisma: PrismaClient) {
-  const tableNames = [
-    "TaskWatcher",
-    "UserTask",
-    "UserProject",
-    "CommentTask",
-    "TaskLabel",
-    "TimeEntry",
-    "Comment",
-    "Task",
-    "Project",
-    "Label",
-    "Status",
-    "Priority",
-    "Role",
-    "User",
-  ];
+  const tableNames = ["Role", "User"];
 
   for (const table of tableNames) {
     try {
@@ -42,6 +27,7 @@ beforeAll(async () => {
   prismaClient = createPrismaClient();
   await prismaClient.$connect();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (globalThis as any).__testPrisma = prismaClient;
 });
 

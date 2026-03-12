@@ -1,5 +1,5 @@
-import { PrismaClient, User, Role } from "../../prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient, Role, User } from "../../prisma/generated/client";
 
 function createPrismaClient(): PrismaClient {
   const connectionString = `${process.env.DATABASE_URL}`;
@@ -81,22 +81,7 @@ export async function createTestRole(
 export async function cleanDatabase(): Promise<void> {
   const prisma = getTestPrisma();
 
-  const tableNames = [
-    "TaskWatcher",
-    "UserTask",
-    "UserProject",
-    "CommentTask",
-    "TaskLabel",
-    "TimeEntry",
-    "Comment",
-    "Task",
-    "Project",
-    "Label",
-    "Status",
-    "Priority",
-    "Role",
-    "User",
-  ];
+  const tableNames = ["Role", "User"];
 
   for (const table of tableNames) {
     try {
