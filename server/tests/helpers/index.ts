@@ -1,4 +1,4 @@
-import { PrismaClient, User } from "../../prisma/generated/client";
+import { PrismaClient, User, Role } from "../../prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 function createPrismaClient(): PrismaClient {
@@ -7,7 +7,7 @@ function createPrismaClient(): PrismaClient {
   return new PrismaClient({ adapter });
 }
 
-let testPrismaClient: PrismaClient;
+let testPrismaClient: PrismaClient | null = null;
 
 export function getTestPrisma(): PrismaClient {
   if (!testPrismaClient) {
@@ -42,6 +42,39 @@ export async function createTestUser(
 
   return await prisma.user.create({
     data: userData,
+  });
+}
+
+export type CreateTestRoleInput = {
+  name?: string;
+  color?: string;
+  creatorId?: string;
+};
+
+export async function createTestRole(
+  input: CreateTestRoleInput = {},
+): Promise<Role> {
+  const prisma = getTestPrisma();
+
+  const defaultRole = {
+    name: `Role-${Date.now()}-${Math.random()}`,
+    color: "#FF5733",
+  };
+
+  let creatorId = input.creatorId;
+  if (!creatorId) {
+    const creator = await createTestUser();
+    creatorId = creator.id;
+  }
+
+  const roleData = {
+    ...defaultRole,
+    ...input,
+    creatorId,
+  };
+
+  return await prisma.role.create({
+    data: roleData,
   });
 }
 

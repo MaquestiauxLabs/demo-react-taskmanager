@@ -4,6 +4,8 @@ import {
   prisma,
   standardiseResponse,
 } from "../utils";
+import { Role } from "../prisma/generated/client";
+import { StandardResponse } from "../utils/api";
 
 type CreateRoleInput = {
   name?: string;
@@ -22,22 +24,22 @@ const isHexColor = (value: string): boolean => {
 };
 
 export class RolesService {
-  async get() {
+  async get(): Promise<StandardResponse<Role[]>> {
     try {
       const response = await prisma.role.findMany();
       if (!response || response.length === 0) {
-        return standardiseResponse({
+        return standardiseResponse<Role[]>({
           message: "No roles found",
           httpStatus: 404,
         });
       }
-      return standardiseResponse({
+      return standardiseResponse<Role[]>({
         message: "List all roles",
         httpStatus: 200,
         data: response,
       });
     } catch (error) {
-      return standardiseResponse({
+      return standardiseResponse<Role[]>({
         message: "Error fetching roles",
         httpStatus: 500,
         error,
@@ -45,7 +47,7 @@ export class RolesService {
     }
   }
 
-  async create(data: CreateRoleInput) {
+  async create(data: CreateRoleInput): Promise<StandardResponse<Role>> {
     const name = data.name?.trim();
     const color = data.color?.trim();
     const creatorId = data.creatorId?.trim();
@@ -97,7 +99,7 @@ export class RolesService {
           creatorId,
         },
       });
-      return standardiseResponse({
+      return standardiseResponse<Role>({
         message: "Create a role",
         httpStatus: 201,
         data: response,
@@ -125,7 +127,7 @@ export class RolesService {
     }
   }
 
-  async getById(id: string) {
+  async getById(id: string): Promise<StandardResponse<Role>> {
     try {
       const response = await prisma.role.findUnique({ where: { id } });
       if (!response) {
@@ -134,7 +136,7 @@ export class RolesService {
           httpStatus: 404,
         });
       }
-      return standardiseResponse({
+      return standardiseResponse<Role>({
         message: `Get role by ID: ${id}`,
         httpStatus: 200,
         data: response,
@@ -148,7 +150,10 @@ export class RolesService {
     }
   }
 
-  async update(id: string, data: UpdateRoleInput) {
+  async update(
+    id: string,
+    data: UpdateRoleInput,
+  ): Promise<StandardResponse<Role>> {
     const name = data.name?.trim();
     const color = data.color?.trim();
     const creatorId = data.creatorId?.trim();
@@ -219,7 +224,7 @@ export class RolesService {
         where: { id },
         data: updateData,
       });
-      return standardiseResponse({
+      return standardiseResponse<Role>({
         message: `Update role with ID: ${id}`,
         httpStatus: 200,
         data: response,
@@ -240,7 +245,7 @@ export class RolesService {
     }
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<StandardResponse<Role>> {
     try {
       const existing = await prisma.role.findUnique({ where: { id } });
       if (!existing) {
@@ -251,9 +256,10 @@ export class RolesService {
       }
 
       await prisma.role.delete({ where: { id } });
-      return standardiseResponse({
+      return standardiseResponse<Role>({
         message: `Delete role with ID: ${id}`,
         httpStatus: 200,
+        data: existing,
       });
     } catch (error) {
       if (isPrismaForeignKeyError(error)) {

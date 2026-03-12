@@ -31,7 +31,7 @@ async function cleanTables(prisma: PrismaClient) {
 
   for (const table of tableNames) {
     try {
-      await prisma.$executeRawUnsafe(`DELETE FROM "${table}"`);
+      await prisma.$executeRawUnsafe(`TRUNCATE TABLE "${table}" CASCADE`);
     } catch {
       // Table might not exist or have constraints
     }
@@ -43,8 +43,6 @@ beforeAll(async () => {
   await prismaClient.$connect();
 
   (globalThis as any).__testPrisma = prismaClient;
-
-  await cleanTables(prismaClient);
 });
 
 afterAll(async () => {
@@ -56,35 +54,6 @@ afterAll(async () => {
 afterEach(async () => {
   if (prismaClient) {
     await cleanTables(prismaClient);
-  }
-});
-
-afterEach(async () => {
-  if (prismaClient) {
-    const tableNames = [
-      "TaskWatcher",
-      "UserTask",
-      "UserProject",
-      "CommentTask",
-      "TaskLabel",
-      "TimeEntry",
-      "Comment",
-      "Task",
-      "Project",
-      "Label",
-      "Status",
-      "Priority",
-      "Role",
-      "User",
-    ];
-
-    for (const table of tableNames) {
-      try {
-        await prismaClient.$executeRawUnsafe(`DELETE FROM "${table}"`);
-      } catch {
-        // Table might not exist or have constraints
-      }
-    }
   }
 });
 

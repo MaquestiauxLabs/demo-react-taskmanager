@@ -5,12 +5,13 @@ import { PrismaClient } from "../prisma/generated/client";
 const connectionString = `${process.env.DATABASE_URL}`;
 
 const adapter = new PrismaPg({ connectionString });
-const prisma = new PrismaClient({ adapter });
+const defaultPrisma = new PrismaClient({ adapter });
 
 const globalForPrisma = globalThis as unknown as {
   __testPrisma?: PrismaClient;
 };
 
-export const testPrisma = globalForPrisma.__testPrisma || prisma;
+const testPrisma = globalForPrisma.__testPrisma;
 
-export { prisma };
+export const prisma = testPrisma || defaultPrisma;
+export { testPrisma };
