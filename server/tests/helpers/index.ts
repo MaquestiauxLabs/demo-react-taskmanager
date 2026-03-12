@@ -67,9 +67,9 @@ export async function cleanDatabase(): Promise<void> {
 
   for (const table of tableNames) {
     try {
-      await prisma.$executeRawUnsafe(`DELETE FROM "${table}"`);
+      await prisma.$executeRawUnsafe(`TRUNCATE TABLE "${table}" CASCADE`);
     } catch {
-      // Table might not exist or have constraints
+      // Table might not exist
     }
   }
 }

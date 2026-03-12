@@ -59,9 +59,9 @@ describe("UsersService", () => {
       expect(result.httpStatus).toBe(201);
       expect(result.message).toBe("Create a user");
       expect(result.data).toHaveProperty("id");
-      expect(result.data.email).toBe("john@example.com");
-      expect(result.data.givenName).toBe("John");
-      expect(result.data.familyName).toBe("Doe");
+      expect(result.data!.email).toBe("john@example.com");
+      expect(result.data!.givenName).toBe("John");
+      expect(result.data!.familyName).toBe("Doe");
     });
 
     it("should create a user with legacy name format", async () => {
@@ -71,8 +71,8 @@ describe("UsersService", () => {
       });
 
       expect(result.httpStatus).toBe(201);
-      expect(result.data.givenName).toBe("Jane");
-      expect(result.data.familyName).toBe("Smith");
+      expect(result.data!.givenName).toBe("Jane");
+      expect(result.data!.familyName).toBe("Smith");
     });
 
     it("should return 400 when givenName is missing", async () => {
@@ -138,7 +138,7 @@ describe("UsersService", () => {
       });
 
       expect(result.httpStatus).toBe(201);
-      expect(result.data.avatarUrl).toBe("https://example.com/avatar.png");
+      expect(result.data!.avatarUrl).toBe("https://example.com/avatar.png");
     });
   });
 
@@ -149,8 +149,8 @@ describe("UsersService", () => {
       const result = await service.getById(user.id);
 
       expect(result.httpStatus).toBe(200);
-      expect(result.data.id).toBe(user.id);
-      expect(result.data.email).toBe("test@example.com");
+      expect(result.data!.id).toBe(user.id);
+      expect(result.data!.email).toBe("test@example.com");
     });
 
     it("should return 400 when id is empty", async () => {
@@ -178,8 +178,8 @@ describe("UsersService", () => {
       });
 
       expect(result.httpStatus).toBe(200);
-      expect(result.data.givenName).toBe("Updated");
-      expect(result.data.familyName).toBe("Name");
+      expect(result.data!.givenName).toBe("Updated");
+      expect(result.data!.familyName).toBe("Name");
     });
 
     it("should update user email", async () => {
@@ -190,7 +190,7 @@ describe("UsersService", () => {
       });
 
       expect(result.httpStatus).toBe(200);
-      expect(result.data.email).toBe("new@example.com");
+      expect(result.data!.email).toBe("new@example.com");
     });
 
     it("should update user with avatarUrl", async () => {
@@ -204,7 +204,7 @@ describe("UsersService", () => {
       });
 
       expect(result.httpStatus).toBe(200);
-      expect(result.data.avatarUrl).toBe("https://example.com/new-avatar.png");
+      expect(result.data!.avatarUrl).toBe("https://example.com/new-avatar.png");
     });
 
     it("should return 400 when id is empty", async () => {
@@ -267,7 +267,7 @@ describe("UsersService", () => {
       const result = await service.delete(user.id);
 
       expect(result.httpStatus).toBe(200);
-      expect(result.data.id).toBe(user.id);
+      expect(result.data!.id).toBe(user.id);
 
       const deleted = await prisma.user.findUnique({ where: { id: user.id } });
       expect(deleted).toBeNull();
