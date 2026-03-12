@@ -4,6 +4,7 @@ import {
   PrismaClient,
   Priority,
   Role,
+  Status,
   User,
 } from "../../prisma/generated/client";
 
@@ -121,10 +122,43 @@ export async function createTestPriority(
   });
 }
 
+export type CreateTestStatusInput = {
+  name?: string;
+  color?: string;
+  creatorId?: string;
+};
+
+export async function createTestStatus(
+  input: CreateTestStatusInput = {},
+): Promise<Status> {
+  const prisma = getTestPrisma();
+
+  const defaultStatus = {
+    name: `Status-${Date.now()}-${Math.random()}`,
+    color: "#FF5733",
+  };
+
+  let creatorId = input.creatorId;
+  if (!creatorId) {
+    const creator = await createTestUser();
+    creatorId = creator.id;
+  }
+
+  const statusData = {
+    ...defaultStatus,
+    ...input,
+    creatorId,
+  };
+
+  return await prisma.status.create({
+    data: statusData,
+  });
+}
+
 export async function cleanDatabase(): Promise<void> {
   const prisma = getTestPrisma();
 
-  const tableNames = ["Priority", "Role", "User"];
+  const tableNames = ["Status", "Priority", "Role", "User"];
 
   for (const table of tableNames) {
     try {

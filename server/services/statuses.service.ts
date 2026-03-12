@@ -258,6 +258,7 @@ export class StatusesService {
       return standardiseResponse({
         message: `Delete status with ID: ${id}`,
         httpStatus: 200,
+        data: existing,
       });
     } catch (error) {
       return standardiseResponse({

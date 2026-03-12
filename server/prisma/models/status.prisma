@@ -5,7 +5,7 @@ model Status {
   /// Status identifier (CUID).
   id        String    @id @default(cuid())
   /// Status display name.
-  name      String
+  name      String    @unique
   /// Status color (hex code).
   color     String
   /// Owner user identifier (mapped to `ownerId`).
