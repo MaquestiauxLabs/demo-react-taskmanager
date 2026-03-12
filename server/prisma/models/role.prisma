@@ -5,7 +5,7 @@ model Role {
   /// Role identifier (CUID).
   id        String   @id @default(cuid())
   /// Role display name.
-  name      String
+  name      String   @unique
   /// Role color (hex code).
   color     String
   /// Owner user identifier (mapped to `ownerId`).

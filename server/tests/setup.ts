@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { afterAll, afterEach, beforeAll } from "vitest";
 import { PrismaClient } from "../prisma/generated/client";

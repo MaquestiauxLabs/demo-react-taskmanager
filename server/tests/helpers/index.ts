@@ -1,5 +1,10 @@
+import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient, Role, User } from "../../prisma/generated/client";
+
+const globalForPrisma = globalThis as unknown as {
+  __testPrisma?: PrismaClient;
+};
 
 function createPrismaClient(): PrismaClient {
   const connectionString = `${process.env.DATABASE_URL}`;
@@ -11,7 +16,7 @@ let testPrismaClient: PrismaClient | null = null;
 
 export function getTestPrisma(): PrismaClient {
   if (!testPrismaClient) {
-    testPrismaClient = createPrismaClient();
+    testPrismaClient = globalForPrisma.__testPrisma || createPrismaClient();
   }
   return testPrismaClient;
 }
