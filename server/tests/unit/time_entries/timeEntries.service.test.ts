@@ -82,7 +82,7 @@ describe("TimeEntriesService", () => {
         startDate: new Date(),
         duration: 2,
         creator: { connect: { id: user.id } },
-      });
+      } as unknown as Parameters<typeof service.create>[1]);
 
       expect(result.httpStatus).toBe(201);
       expect(result.message).toBe("Create time entry");
@@ -97,7 +97,7 @@ describe("TimeEntriesService", () => {
         startDate: new Date(),
         duration: 2,
         creator: { connect: { id: user.id } },
-      });
+      } as unknown as Parameters<typeof service.create>[1]);
 
       expect(result.httpStatus).toBe(404);
       expect(result.message).toContain("not found");

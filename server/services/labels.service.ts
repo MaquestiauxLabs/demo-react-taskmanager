@@ -1,9 +1,11 @@
+import { Label } from "../prisma/generated/client";
 import {
   isPrismaConflictError,
   isPrismaForeignKeyError,
   prisma,
   standardiseResponse,
 } from "../utils";
+import { StandardResponse } from "../utils/api";
 
 type CreateLabelInput = {
   name?: string;
@@ -22,7 +24,7 @@ const isHexColor = (value: string): boolean => {
 };
 
 export class LabelsService {
-  async get() {
+  async get(): Promise<StandardResponse<Label[] | null>> {
     try {
       const response = await prisma.label.findMany();
       if (!response || response.length === 0) {
@@ -45,7 +47,9 @@ export class LabelsService {
     }
   }
 
-  async create(data: CreateLabelInput) {
+  async create(
+    data: CreateLabelInput,
+  ): Promise<StandardResponse<Label | null>> {
     const name = data.name?.trim();
     const color = data.color?.trim();
     const creatorId = data.creatorId?.trim();
@@ -125,7 +129,7 @@ export class LabelsService {
     }
   }
 
-  async getById(id: string) {
+  async getById(id: string): Promise<StandardResponse<Label | null>> {
     try {
       const response = await prisma.label.findUnique({ where: { id } });
       if (!response) {
@@ -148,7 +152,10 @@ export class LabelsService {
     }
   }
 
-  async update(id: string, data: UpdateLabelInput) {
+  async update(
+    id: string,
+    data: UpdateLabelInput,
+  ): Promise<StandardResponse<Label | null>> {
     const name = data.name?.trim();
     const color = data.color?.trim();
     const creatorId = data.creatorId?.trim();
@@ -244,7 +251,7 @@ export class LabelsService {
     }
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<StandardResponse<Label | null>> {
     try {
       const existing = await prisma.label.findUnique({ where: { id } });
       if (!existing) {

@@ -1,8 +1,10 @@
+import { TimeEntry } from "../prisma/generated/client";
 import {
   TimeEntryCreateInput,
   TimeEntryUpdateInput,
 } from "../prisma/generated/models";
 import { prisma, standardiseResponse } from "../utils";
+import { StandardResponse } from "../utils/api";
 
 const timeEntryInclude = {
   creator: true,
@@ -10,7 +12,9 @@ const timeEntryInclude = {
 };
 
 export class TimeEntriesService {
-  async getByTaskId(taskId: string) {
+  async getByTaskId(
+    taskId: string,
+  ): Promise<StandardResponse<TimeEntry[] | null>> {
     try {
       const response = await prisma.timeEntry.findMany({
         where: { taskId },
@@ -30,7 +34,7 @@ export class TimeEntriesService {
     }
   }
 
-  async getById(id: string) {
+  async getById(id: string): Promise<StandardResponse<TimeEntry | null>> {
     try {
       const response = await prisma.timeEntry.findUnique({
         where: { id },
@@ -56,7 +60,10 @@ export class TimeEntriesService {
     }
   }
 
-  async create(taskId: string, data: TimeEntryCreateInput) {
+  async create(
+    taskId: string,
+    data: TimeEntryCreateInput,
+  ): Promise<StandardResponse<TimeEntry | null>> {
     try {
       const task = await prisma.task.findUnique({ where: { id: taskId } });
       if (!task) {
@@ -101,7 +108,10 @@ export class TimeEntriesService {
     }
   }
 
-  async startTimer(taskId: string, creatorId: string) {
+  async startTimer(
+    taskId: string,
+    creatorId: string,
+  ): Promise<StandardResponse<TimeEntry | null>> {
     try {
       const task = await prisma.task.findUnique({ where: { id: taskId } });
       if (!task) {
@@ -152,7 +162,7 @@ export class TimeEntriesService {
     }
   }
 
-  async stopTimer(id: string) {
+  async stopTimer(id: string): Promise<StandardResponse<TimeEntry | null>> {
     try {
       const timeEntry = await prisma.timeEntry.findUnique({ where: { id } });
       if (!timeEntry) {
@@ -196,7 +206,10 @@ export class TimeEntriesService {
     }
   }
 
-  async update(id: string, data: TimeEntryUpdateInput) {
+  async update(
+    id: string,
+    data: TimeEntryUpdateInput,
+  ): Promise<StandardResponse<TimeEntry | null>> {
     try {
       const timeEntry = await prisma.timeEntry.findUnique({ where: { id } });
       if (!timeEntry) {
@@ -225,7 +238,7 @@ export class TimeEntriesService {
     }
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<StandardResponse<TimeEntry | null>> {
     try {
       const existing = await prisma.timeEntry.findUnique({ where: { id } });
       if (!existing) {
