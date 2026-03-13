@@ -1,3 +1,4 @@
+import { Project } from "../prisma/generated/client";
 import {
   isPrismaConflictError,
   isPrismaForeignKeyError,
@@ -7,6 +8,7 @@ import {
   prisma,
   standardiseResponse,
 } from "../utils";
+import { StandardResponse } from "../utils/api";
 
 type CreateProjectInput = {
   name?: string;
@@ -36,7 +38,7 @@ const projectInclude = {
 };
 
 export class ProjectsService {
-  async get() {
+  async get(): Promise<StandardResponse<Project[] | null>> {
     try {
       const response = await prisma.project.findMany({
         include: projectInclude,
@@ -63,7 +65,9 @@ export class ProjectsService {
     }
   }
 
-  async create(data: CreateProjectInput) {
+  async create(
+    data: CreateProjectInput,
+  ): Promise<StandardResponse<Project | null>> {
     try {
       // Normalize string inputs
       const normalizedData: CreateProjectInput = {
@@ -143,7 +147,7 @@ export class ProjectsService {
     }
   }
 
-  async getById(id: string) {
+  async getById(id: string): Promise<StandardResponse<Project | null>> {
     try {
       // Validate id input
       const normalizedId = id?.trim();
@@ -180,7 +184,10 @@ export class ProjectsService {
     }
   }
 
-  async update(id: string, data: UpdateProjectInput) {
+  async update(
+    id: string,
+    data: UpdateProjectInput,
+  ): Promise<StandardResponse<Project | null>> {
     try {
       // Validate id input
       const normalizedId = id?.trim();
@@ -286,7 +293,7 @@ export class ProjectsService {
     }
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<StandardResponse<Project | null>> {
     try {
       // Validate id input
       const normalizedId = id?.trim();
