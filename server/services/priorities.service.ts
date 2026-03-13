@@ -255,11 +255,11 @@ export class PrioritiesService {
         });
       }
 
-      await prisma.priority.delete({ where: { id } });
+      const response = await prisma.priority.delete({ where: { id } });
       return standardiseResponse({
         message: `Delete priority with ID: ${id}`,
         httpStatus: 200,
-        data: existing,
+        data: response,
       });
     } catch (error) {
       return standardiseResponse({

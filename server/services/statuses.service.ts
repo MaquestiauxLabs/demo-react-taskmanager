@@ -254,11 +254,11 @@ export class StatusesService {
         });
       }
 
-      await prisma.status.delete({ where: { id } });
+      const response = await prisma.status.delete({ where: { id } });
       return standardiseResponse({
         message: `Delete status with ID: ${id}`,
         httpStatus: 200,
-        data: existing,
+        data: response,
       });
     } catch (error) {
       return standardiseResponse({

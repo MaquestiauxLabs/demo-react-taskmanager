@@ -254,10 +254,11 @@ export class LabelsService {
         });
       }
 
-      await prisma.label.delete({ where: { id } });
+      const response = await prisma.label.delete({ where: { id } });
       return standardiseResponse({
         message: `Delete label with ID: ${id}`,
         httpStatus: 200,
+        data: response,
       });
     } catch (error) {
       return standardiseResponse({

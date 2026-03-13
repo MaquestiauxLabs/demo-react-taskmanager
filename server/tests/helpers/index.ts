@@ -2,6 +2,7 @@ import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import {
   PrismaClient,
+  Label,
   Priority,
   Role,
   Status,
@@ -155,10 +156,43 @@ export async function createTestStatus(
   });
 }
 
+export type CreateTestLabelInput = {
+  name?: string;
+  color?: string;
+  creatorId?: string;
+};
+
+export async function createTestLabel(
+  input: CreateTestLabelInput = {},
+): Promise<Label> {
+  const prisma = getTestPrisma();
+
+  const defaultLabel = {
+    name: `Label-${Date.now()}-${Math.random()}`,
+    color: "#FF5733",
+  };
+
+  let creatorId = input.creatorId;
+  if (!creatorId) {
+    const creator = await createTestUser();
+    creatorId = creator.id;
+  }
+
+  const labelData = {
+    ...defaultLabel,
+    ...input,
+    creatorId,
+  };
+
+  return await prisma.label.create({
+    data: labelData,
+  });
+}
+
 export async function cleanDatabase(): Promise<void> {
   const prisma = getTestPrisma();
 
-  const tableNames = ["Status", "Priority", "Role", "User"];
+  const tableNames = ["Label", "Status", "Priority", "Role", "User"];
 
   for (const table of tableNames) {
     try {
