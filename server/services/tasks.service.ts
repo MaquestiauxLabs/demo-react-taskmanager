@@ -1,3 +1,4 @@
+import { Task } from "../prisma/generated/client";
 import {
   isPrismaConflictError,
   isPrismaForeignKeyError,
@@ -7,6 +8,7 @@ import {
   prisma,
   standardiseResponse,
 } from "../utils";
+import { StandardResponse } from "../utils/api";
 
 type CreateTaskInput = {
   title?: string;
@@ -45,7 +47,7 @@ const taskInclude = {
 };
 
 export class TasksService {
-  async get() {
+  async get(): Promise<StandardResponse<Task[] | null>> {
     try {
       const response = await prisma.task.findMany({
         include: taskInclude,
@@ -71,7 +73,7 @@ export class TasksService {
     }
   }
 
-  async create(data: CreateTaskInput) {
+  async create(data: CreateTaskInput): Promise<StandardResponse<Task | null>> {
     const title = data.title?.trim();
     const creatorId = data.creatorId?.trim();
     const description =
@@ -318,7 +320,7 @@ export class TasksService {
     }
   }
 
-  async getById(id: string) {
+  async getById(id: string): Promise<StandardResponse<Task | null>> {
     try {
       const response = await prisma.task.findUnique({
         where: { id },
@@ -344,7 +346,10 @@ export class TasksService {
     }
   }
 
-  async update(id: string, data: UpdateTaskInput) {
+  async update(
+    id: string,
+    data: UpdateTaskInput,
+  ): Promise<StandardResponse<Task | null>> {
     const title = data.title?.trim();
     const creatorId =
       data.creatorId !== undefined ? data.creatorId?.trim() : undefined;
@@ -631,7 +636,7 @@ export class TasksService {
     }
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<StandardResponse<Task | null>> {
     try {
       const existing = await prisma.task.findUnique({ where: { id } });
       if (!existing) {
