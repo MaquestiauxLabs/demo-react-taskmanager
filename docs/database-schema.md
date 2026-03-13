@@ -40,7 +40,7 @@ Properties as follows:
 erDiagram
 "Label" {
   String id PK
-  String name
+  String name UK
   String color
   String ownerId FK
   DateTime createdAt
@@ -48,7 +48,7 @@ erDiagram
 }
 "Priority" {
   String id PK
-  String name
+  String name UK
   String color
   String ownerId FK
   DateTime createdAt
@@ -56,7 +56,7 @@ erDiagram
 }
 "Status" {
   String id PK
-  String name
+  String name UK
   String color
   String ownerId FK
   DateTime createdAt
@@ -214,7 +214,7 @@ Properties as follows:
 erDiagram
 "Role" {
   String id PK
-  String name
+  String name UK
   String color
   String ownerId FK
   DateTime createdAt

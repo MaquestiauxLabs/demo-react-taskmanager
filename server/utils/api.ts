@@ -19,6 +19,8 @@ interface StandardResponse<T = unknown> {
   sorting?: Sorting;
 }
 
+export type { StandardResponse };
+
 interface props<T = unknown> {
   message: string;
   httpStatus: number;

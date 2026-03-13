@@ -1,9 +1,11 @@
+import { Priority } from "../prisma/generated/client";
 import {
   isPrismaConflictError,
   isPrismaForeignKeyError,
   prisma,
   standardiseResponse,
 } from "../utils";
+import { StandardResponse } from "../utils/api";
 
 type CreatePriorityInput = {
   name?: string;
@@ -22,7 +24,7 @@ const isHexColor = (value: string): boolean => {
 };
 
 export class PrioritiesService {
-  async get() {
+  async get(): Promise<StandardResponse<Priority[] | null>> {
     try {
       const response = await prisma.priority.findMany();
       if (!response || response.length === 0) {
@@ -45,7 +47,9 @@ export class PrioritiesService {
     }
   }
 
-  async create(data: CreatePriorityInput) {
+  async create(
+    data: CreatePriorityInput,
+  ): Promise<StandardResponse<Priority | null>> {
     const name = data.name?.trim();
     const color = data.color?.trim();
     const creatorId = data.creatorId?.trim();
@@ -126,7 +130,7 @@ export class PrioritiesService {
     }
   }
 
-  async getById(id: string) {
+  async getById(id: string): Promise<StandardResponse<Priority | null>> {
     try {
       const response = await prisma.priority.findUnique({ where: { id } });
       if (!response) {
@@ -149,7 +153,10 @@ export class PrioritiesService {
     }
   }
 
-  async update(id: string, data: UpdatePriorityInput) {
+  async update(
+    id: string,
+    data: UpdatePriorityInput,
+  ): Promise<StandardResponse<Priority | null>> {
     const name = data.name?.trim();
     const color = data.color?.trim();
     const creatorId = data.creatorId?.trim();
@@ -245,7 +252,7 @@ export class PrioritiesService {
     }
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<StandardResponse<Priority | null>> {
     try {
       const existing = await prisma.priority.findUnique({ where: { id } });
       if (!existing) {
@@ -255,10 +262,11 @@ export class PrioritiesService {
         });
       }
 
-      await prisma.priority.delete({ where: { id } });
+      const response = await prisma.priority.delete({ where: { id } });
       return standardiseResponse({
         message: `Delete priority with ID: ${id}`,
         httpStatus: 200,
+        data: response,
       });
     } catch (error) {
       return standardiseResponse({

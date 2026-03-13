@@ -5,6 +5,8 @@ import {
   prisma,
   standardiseResponse,
 } from "../utils";
+import { User } from "../prisma/generated/client";
+import { StandardResponse } from "../utils/api";
 
 type CreateUserInput = {
   name?: string;
@@ -36,16 +38,16 @@ export class UsersService {
     };
   }
 
-  async get() {
+  async get(): Promise<StandardResponse<User[]>> {
     try {
       const response = await prisma.user.findMany();
       if (!response || response.length === 0) {
-        return standardiseResponse({
+        return standardiseResponse<User[]>({
           message: "No users found",
           httpStatus: 404,
         });
       }
-      return standardiseResponse({
+      return standardiseResponse<User[]>({
         message: "List all users",
         httpStatus: 200,
         data: response,
@@ -59,7 +61,7 @@ export class UsersService {
     }
   }
 
-  async create(data: CreateUserInput) {
+  async create(data: CreateUserInput): Promise<StandardResponse<User>> {
     try {
       const parsedName = this.parseLegacyName(data.name);
 
@@ -113,7 +115,7 @@ export class UsersService {
       };
 
       const response = await prisma.user.create({ data: createData });
-      return standardiseResponse({
+      return standardiseResponse<User>({
         message: "Create a user",
         httpStatus: 201,
         data: response,
@@ -141,7 +143,7 @@ export class UsersService {
     }
   }
 
-  async getById(id: string) {
+  async getById(id: string): Promise<StandardResponse<User>> {
     try {
       // Validate id input
       const normalizedId = id?.trim();
@@ -163,7 +165,7 @@ export class UsersService {
           error: `No user found with ID ${normalizedId}`,
         });
       }
-      return standardiseResponse({
+      return standardiseResponse<User>({
         message: `Get user by ID: ${normalizedId}`,
         httpStatus: 200,
         data: response,
@@ -177,7 +179,10 @@ export class UsersService {
     }
   }
 
-  async update(id: string, data: UpdateUserInput) {
+  async update(
+    id: string,
+    data: UpdateUserInput,
+  ): Promise<StandardResponse<User>> {
     try {
       const parsedName = this.parseLegacyName(data.name);
 
@@ -267,7 +272,7 @@ export class UsersService {
         where: { id: normalizedId },
         data: updateData,
       });
-      return standardiseResponse({
+      return standardiseResponse<User>({
         message: `Update user with ID: ${normalizedId}`,
         httpStatus: 200,
         data: response,
@@ -302,7 +307,7 @@ export class UsersService {
     }
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<StandardResponse<User>> {
     try {
       // Validate id input
       const normalizedId = id?.trim();
@@ -329,7 +334,7 @@ export class UsersService {
       const response = await prisma.user.delete({
         where: { id: normalizedId },
       });
-      return standardiseResponse({
+      return standardiseResponse<User>({
         message: `Delete user with ID: ${normalizedId}`,
         httpStatus: 200,
         data: response,

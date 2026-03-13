@@ -1,9 +1,11 @@
+import { Status } from "../prisma/generated/client";
 import {
   isPrismaConflictError,
   isPrismaForeignKeyError,
   prisma,
   standardiseResponse,
 } from "../utils";
+import { StandardResponse } from "../utils/api";
 
 type CreateStatusInput = {
   name?: string;
@@ -22,7 +24,7 @@ const isHexColor = (value: string): boolean => {
 };
 
 export class StatusesService {
-  async get() {
+  async get(): Promise<StandardResponse<Status[] | null>> {
     try {
       const response = await prisma.status.findMany();
       if (!response || response.length === 0) {
@@ -45,7 +47,9 @@ export class StatusesService {
     }
   }
 
-  async create(data: CreateStatusInput) {
+  async create(
+    data: CreateStatusInput,
+  ): Promise<StandardResponse<Status | null>> {
     const name = data.name?.trim();
     const color = data.color?.trim();
     const creatorId = data.creatorId?.trim();
@@ -125,7 +129,7 @@ export class StatusesService {
     }
   }
 
-  async getById(id: string) {
+  async getById(id: string): Promise<StandardResponse<Status | null>> {
     try {
       const response = await prisma.status.findUnique({ where: { id } });
       if (!response) {
@@ -148,7 +152,10 @@ export class StatusesService {
     }
   }
 
-  async update(id: string, data: UpdateStatusInput) {
+  async update(
+    id: string,
+    data: UpdateStatusInput,
+  ): Promise<StandardResponse<Status | null>> {
     const name = data.name?.trim();
     const color = data.color?.trim();
     const creatorId = data.creatorId?.trim();
@@ -244,7 +251,7 @@ export class StatusesService {
     }
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<StandardResponse<Status | null>> {
     try {
       const existing = await prisma.status.findUnique({ where: { id } });
       if (!existing) {
@@ -254,10 +261,11 @@ export class StatusesService {
         });
       }
 
-      await prisma.status.delete({ where: { id } });
+      const response = await prisma.status.delete({ where: { id } });
       return standardiseResponse({
         message: `Delete status with ID: ${id}`,
         httpStatus: 200,
+        data: response,
       });
     } catch (error) {
       return standardiseResponse({

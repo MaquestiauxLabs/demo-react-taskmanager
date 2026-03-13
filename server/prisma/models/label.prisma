@@ -5,7 +5,7 @@ model Label {
   /// Label identifier (CUID).
   id           String         @id @default(cuid())
   /// Label display name.
-  name         String
+  name         String         @unique
   /// Label color (hex code).
   color        String
   /// Owner user identifier (mapped to `ownerId`).
