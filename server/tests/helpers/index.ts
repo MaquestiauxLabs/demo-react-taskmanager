@@ -6,6 +6,8 @@ import {
   Priority,
   Role,
   Status,
+  Task,
+  TimeEntry,
   User,
 } from "../../prisma/generated/client";
 
@@ -189,10 +191,102 @@ export async function createTestLabel(
   });
 }
 
+export type CreateTestTaskInput = {
+  title?: string;
+  description?: string;
+  creatorId?: string;
+  priorityId?: string | null;
+  statusId?: string | null;
+  projectId?: string | null;
+};
+
+export async function createTestTask(
+  input: CreateTestTaskInput = {},
+): Promise<Task> {
+  const prisma = getTestPrisma();
+
+  const defaultTask = {
+    title: `Task-${Date.now()}-${Math.random()}`,
+  };
+
+  let creatorId = input.creatorId;
+  if (!creatorId) {
+    const creator = await createTestUser();
+    creatorId = creator.id;
+  }
+
+  let statusId = input.statusId;
+  if (!statusId) {
+    const status = await createTestStatus();
+    statusId = status.id;
+  }
+
+  const taskData = {
+    ...defaultTask,
+    ...input,
+    creatorId,
+    statusId,
+  };
+
+  return await prisma.task.create({
+    data: taskData,
+  });
+}
+
+export type CreateTestTimeEntryInput = {
+  taskId?: string;
+  creatorId?: string;
+  startDate?: Date;
+  endDate?: Date | null;
+  duration?: number;
+  description?: string | null;
+};
+
+export async function createTestTimeEntry(
+  input: CreateTestTimeEntryInput = {},
+): Promise<TimeEntry> {
+  const prisma = getTestPrisma();
+
+  const defaultTimeEntry = {
+    startDate: new Date(),
+    duration: 0,
+  };
+
+  let taskId = input.taskId;
+  if (!taskId) {
+    const task = await createTestTask();
+    taskId = task.id;
+  }
+
+  let creatorId = input.creatorId;
+  if (!creatorId) {
+    const creator = await createTestUser();
+    creatorId = creator.id;
+  }
+
+  const timeEntryData = {
+    ...defaultTimeEntry,
+    ...input,
+    taskId,
+    creatorId,
+  };
+
+  return await prisma.timeEntry.create({
+    data: timeEntryData,
+  });
+}
+
 export async function cleanDatabase(): Promise<void> {
   const prisma = getTestPrisma();
 
-  const tableNames = ["Label", "Status", "Priority", "Role", "User"];
+  const tableNames = [
+    "TimeEntry",
+    "Label",
+    "Status",
+    "Priority",
+    "Role",
+    "User",
+  ];
 
   for (const table of tableNames) {
     try {

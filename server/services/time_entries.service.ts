@@ -66,10 +66,24 @@ export class TimeEntriesService {
         });
       }
 
+      const { creatorId, ...restData } = data as TimeEntryCreateInput & {
+        creatorId?: string;
+      };
+      if (creatorId) {
+        const user = await prisma.user.findUnique({ where: { id: creatorId } });
+        if (!user) {
+          return standardiseResponse({
+            message: `User with ID ${creatorId} not found`,
+            httpStatus: 404,
+          });
+        }
+      }
+
       const response = await prisma.timeEntry.create({
         data: {
-          ...data,
+          ...restData,
           task: { connect: { id: taskId } },
+          ...(creatorId && { creator: { connect: { id: creatorId } } }),
         },
         include: timeEntryInclude,
       });
@@ -213,10 +227,19 @@ export class TimeEntriesService {
 
   async delete(id: string) {
     try {
-      await prisma.timeEntry.delete({ where: { id } });
+      const existing = await prisma.timeEntry.findUnique({ where: { id } });
+      if (!existing) {
+        return standardiseResponse({
+          message: `Time entry with ID ${id} not found`,
+          httpStatus: 404,
+        });
+      }
+
+      const response = await prisma.timeEntry.delete({ where: { id } });
       return standardiseResponse({
         message: `Delete time entry with ID: ${id}`,
         httpStatus: 200,
+        data: response,
       });
     } catch (error) {
       return standardiseResponse({
