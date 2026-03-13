@@ -2,8 +2,10 @@ import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import {
   PrismaClient,
+  Comment,
   Label,
   Priority,
+  Project,
   Role,
   Status,
   Task,
@@ -233,6 +235,40 @@ export async function createTestTask(
   });
 }
 
+export type CreateTestProjectInput = {
+  title?: string;
+  description?: string;
+  creatorId?: string;
+  priorityId?: string | null;
+  statusId?: string | null;
+};
+
+export async function createTestProject(
+  input: CreateTestProjectInput = {},
+): Promise<Project> {
+  const prisma = getTestPrisma();
+
+  const defaultProject = {
+    title: `Project-${Date.now()}-${Math.random()}`,
+  };
+
+  let creatorId = input.creatorId;
+  if (!creatorId) {
+    const creator = await createTestUser();
+    creatorId = creator.id;
+  }
+
+  const projectData = {
+    ...defaultProject,
+    ...input,
+    creatorId,
+  };
+
+  return await prisma.project.create({
+    data: projectData,
+  });
+}
+
 export type CreateTestTimeEntryInput = {
   taskId?: string;
   creatorId?: string;
@@ -276,10 +312,69 @@ export async function createTestTimeEntry(
   });
 }
 
+export type CreateTestCommentInput = {
+  content?: string;
+  creatorId?: string;
+  taskId?: string;
+  projectId?: string;
+};
+
+export async function createTestComment(
+  input: CreateTestCommentInput = {},
+): Promise<Comment> {
+  const prisma = getTestPrisma();
+
+  const defaultComment = {
+    content: `Comment-${Date.now()}-${Math.random()}`,
+  };
+
+  let creatorId = input.creatorId;
+  if (!creatorId) {
+    const creator = await createTestUser();
+    creatorId = creator.id;
+  }
+
+  let taskId = input.taskId;
+  const projectId = input.projectId;
+
+  if (!taskId && !projectId) {
+    const task = await createTestTask();
+    taskId = task.id;
+  }
+
+  const comment = await prisma.comment.create({
+    data: {
+      content: input.content || defaultComment.content,
+      creatorId,
+    },
+  });
+
+  if (taskId) {
+    await prisma.commentTask.create({
+      data: {
+        commentId: comment.id,
+        taskId,
+      },
+    });
+  }
+
+  if (projectId) {
+    await prisma.commentProject.create({
+      data: {
+        commentId: comment.id,
+        projectId,
+      },
+    });
+  }
+
+  return comment;
+}
+
 export async function cleanDatabase(): Promise<void> {
   const prisma = getTestPrisma();
 
   const tableNames = [
+    "Comment",
     "TimeEntry",
     "Label",
     "Status",

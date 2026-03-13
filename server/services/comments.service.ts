@@ -1,3 +1,4 @@
+import { Comment } from "../prisma/generated/client";
 import {
   isPrismaConflictError,
   isPrismaForeignKeyError,
@@ -5,6 +6,7 @@ import {
   prisma,
   standardiseResponse,
 } from "../utils";
+import { StandardResponse } from "../utils/api";
 
 type CreateCommentInput = {
   content?: string;
@@ -35,7 +37,9 @@ const commentInclude = {
 };
 
 export class CommentsService {
-  async getByTaskId(taskId: string) {
+  async getByTaskId(
+    taskId: string,
+  ): Promise<StandardResponse<Comment[] | null>> {
     const normalizedTaskId = taskId.trim();
 
     if (!normalizedTaskId) {
@@ -88,7 +92,9 @@ export class CommentsService {
     }
   }
 
-  async getByProjectId(projectId: string) {
+  async getByProjectId(
+    projectId: string,
+  ): Promise<StandardResponse<Comment[] | null>> {
     const normalizedProjectId = projectId.trim();
 
     if (!normalizedProjectId) {
@@ -141,7 +147,9 @@ export class CommentsService {
     }
   }
 
-  async create(data: CreateCommentInput) {
+  async create(
+    data: CreateCommentInput,
+  ): Promise<StandardResponse<Comment | null>> {
     const content = data.content?.trim();
     const creatorId = data.creatorId?.trim();
     const taskId = data.taskId?.trim();
@@ -274,7 +282,7 @@ export class CommentsService {
     }
   }
 
-  async getById(id: string) {
+  async getById(id: string): Promise<StandardResponse<Comment | null>> {
     const normalizedId = id.trim();
 
     if (!normalizedId) {
@@ -311,7 +319,10 @@ export class CommentsService {
     }
   }
 
-  async update(id: string, data: UpdateCommentInput) {
+  async update(
+    id: string,
+    data: UpdateCommentInput,
+  ): Promise<StandardResponse<Comment | null>> {
     const normalizedId = id.trim();
     const content = data.content?.trim();
     const creatorId = data.creatorId?.trim();
@@ -504,7 +515,7 @@ export class CommentsService {
     }
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<StandardResponse<Comment | null>> {
     const normalizedId = id.trim();
 
     if (!normalizedId) {
