@@ -508,6 +508,122 @@
       "description": ""
     },
     {
+      "name": "PROJECT::ARCHIVE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/projects/cmluvtkqs0000h4kha60dco03/archive",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "rank": "aza",
+      "id": "5ae53f43-f1cc-4d47-bb89-d748852786e6",
+      "description": ""
+    },
+    {
+      "name": "PROJECT::UNARCHIVE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/projects/cmluvtkqs0000h4kha60dco03/unarchive",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "rank": "azb",
+      "id": "5ae53f43-f1cc-4d47-bb89-d748852786e7",
+      "description": ""
+    },
+    {
+      "name": "PROJECT::ASSIGNEE::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/projects/cmluvtkqs0000h4kha60dco03/assignee",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"userId\":\"cmltid5ap000062khle5t5weh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "rank": "azc",
+      "id": "5ae53f43-f1cc-4d47-bb89-d748852786e8",
+      "description": ""
+    },
+    {
+      "name": "PROJECT::ASSIGNEE::DELETE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/projects/cmluvtkqs0000h4kha60dco03/assignee",
+          "method": "DELETE",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"userId\":\"cmltid5ap000062khle5t5weh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "86e4a183-c8b6-462d-bf34-37d8bbfae4ff",
+      "rank": "azd",
+      "id": "5ae53f43-f1cc-4d47-bb89-d748852786e9",
+      "description": ""
+    },
+    {
       "name": "COMMENTS",
       "type": "collection",
       "data": {
@@ -1292,6 +1408,397 @@
       "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
       "rank": "ay",
       "id": "923aa5cf-4fd3-4d28-af54-b2e642db4efc",
+      "description": ""
+    },
+    {
+      "name": "TASK::ARCHIVE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/archive",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "rank": "aza",
+      "id": "923aa5cf-4fd3-4d28-af54-b2e642db4efd",
+      "description": ""
+    },
+    {
+      "name": "TASK::UNARCHIVE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/unarchive",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "rank": "azb",
+      "id": "923aa5cf-4fd3-4d28-af54-b2e642db4efe",
+      "description": ""
+    },
+    {
+      "name": "TASK::ASSIGNEE::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/assignee",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"userId\":\"cmltid5ap000062khle5t5weh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "rank": "azc",
+      "id": "923aa5cf-4fd3-4d28-af54-b2e642db4eff",
+      "description": ""
+    },
+    {
+      "name": "TASK::ASSIGNEE::DELETE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/assignee",
+          "method": "DELETE",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"userId\":\"cmltid5ap000062khle5t5weh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "rank": "azd",
+      "id": "923aa5cf-4fd3-4d28-af54-b2e642db4efg",
+      "description": ""
+    },
+    {
+      "name": "TASK::WATCHERS::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/watchers",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"userId\":\"cmltid5ap000062khle5t5weh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "rank": "aze",
+      "id": "923aa5cf-4fd3-4d28-af54-b2e642db4efh",
+      "description": ""
+    },
+    {
+      "name": "TASK::WATCHERS::DELETE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/watchers",
+          "method": "DELETE",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"userId\":\"cmltid5ap000062khle5t5weh\"\n}",
+          "contentType": "application/json"
+        },
+        "response": null,
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        }
+      },
+      "deleted": false,
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "rank": "azf",
+      "id": "923aa5cf-4fd3-4d28-af54-b2e642db4efi",
+      "description": ""
+    },
+    {
+      "name": "TIME_ENTRIES",
+      "type": "collection",
+      "data": {
+        "variables": {},
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "variablesOrder": []
+      },
+      "deleted": false,
+      "collectionId": "65eddc03-a794-40d5-86a2-faf9b471fbc1",
+      "id": "f8f0d105-b08e-4899-8e93-f1207231ff90",
+      "description": ""
+    },
+    {
+      "name": "TASK_TIME_ENTRIES::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/time-entries",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "contentType": "text/plain"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "f8f0d105-b08e-4899-8e93-f1207231ff90",
+      "rank": "baa",
+      "id": "b5b532ac-cf5e-4f07-a147-75a22f8f5f3a",
+      "description": ""
+    },
+    {
+      "name": "TASK_TIME_ENTRIES::POST",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/time-entries",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"duration\":3600,\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\"\n}",
+          "contentType": "application/json"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "f8f0d105-b08e-4899-8e93-f1207231ff90",
+      "rank": "bab",
+      "id": "ff8524de-cf42-44d4-b6ef-72704f6ed6f5",
+      "description": ""
+    },
+    {
+      "name": "TASK_TIME_ENTRIES::START",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/time-entries/start",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"creatorId\":\"cmltid5ap000062khle5t5weh\"\n}",
+          "contentType": "application/json"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "f8f0d105-b08e-4899-8e93-f1207231ff90",
+      "rank": "bac",
+      "id": "ff8524de-cf42-44d4-b6ef-72704f6ed6f6",
+      "description": ""
+    },
+    {
+      "name": "TIME_ENTRY::GET",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/time-entries/cmm0m8rr1000ifdkh8o8f83wi",
+          "method": "GET",
+          "headers": [],
+          "queryParams": [],
+          "contentType": "text/plain"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "f8f0d105-b08e-4899-8e93-f1207231ff90",
+      "rank": "bad",
+      "id": "ff8524de-cf42-44d4-b6ef-72704f6ed6f7",
+      "description": ""
+    },
+    {
+      "name": "TIME_ENTRY::PUT",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/time-entries/cmm0m8rr1000ifdkh8o8f83wi",
+          "method": "PUT",
+          "headers": [],
+          "queryParams": [],
+          "body": "{\n  \"duration\":7200\n}",
+          "contentType": "application/json"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "f8f0d105-b08e-4899-8e93-f1207231ff90",
+      "rank": "bae",
+      "id": "ff8524de-cf42-44d4-b6ef-72704f6ed6f8",
+      "description": ""
+    },
+    {
+      "name": "TIME_ENTRY::STOP",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/time-entries/cmm0m8rr1000ifdkh8o8f83wi/stop",
+          "method": "POST",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "application/json"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "f8f0d105-b08e-4899-8e93-f1207231ff90",
+      "rank": "baf",
+      "id": "ff8524de-cf42-44d4-b6ef-72704f6ed6f9",
+      "description": ""
+    },
+    {
+      "name": "TIME_ENTRY::DELETE",
+      "type": "api",
+      "data": {
+        "type": "http",
+        "request": {
+          "url": "{{BASE_URL}}/tasks/cmm0kaq5z000wfdkh092y1v8i/time-entries/cmm0m8rr1000ifdkh8o8f83wi",
+          "method": "DELETE",
+          "headers": [],
+          "queryParams": [],
+          "body": "",
+          "contentType": "text/plain"
+        },
+        "scripts": {
+          "preRequest": "",
+          "postResponse": ""
+        },
+        "auth": {
+          "currentAuthType": "INHERIT",
+          "authConfigStore": {}
+        },
+        "response": null
+      },
+      "deleted": false,
+      "collectionId": "f8f0d105-b08e-4899-8e93-f1207231ff90",
+      "rank": "bag",
+      "id": "ff8524de-cf42-44d4-b6ef-72704f6ed6fa",
       "description": ""
     },
     {
