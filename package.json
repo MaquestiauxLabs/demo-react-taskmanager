@@ -1,6 +1,6 @@
 {
   "name": "demo-react-taskmanager",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "description": "The task manager",
   "keywords": [
     "react",
@@ -21,6 +21,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "version": "node scripts/update-version.js",
     "db:start": "docker compose -f ./database/docker-compose.yml up -d",
     "db:stop": "docker compose -f ./database/docker-compose.yml down",
     "db:logs": "docker compose -f ./database/docker-compose.yml logs -f db",

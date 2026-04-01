@@ -14,6 +14,7 @@ import {
   usersRouter,
 } from "./routes";
 import { logMessage } from "./utils";
+import { SWAGGER_INFO } from "./configs/swagger";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -45,11 +46,7 @@ app.use("/api/roles", rolesRouter);
 const swaggerOptions: swaggerJsdoc.Options = {
   definition: {
     openapi: "3.0.0",
-    info: {
-      title: "Task Manager API",
-      version: "1.0.0",
-      description: "API for React Task Manager",
-    },
+    info: SWAGGER_INFO,
     servers: [
       {
         url: "http://localhost:3000",
