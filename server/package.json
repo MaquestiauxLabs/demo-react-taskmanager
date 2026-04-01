@@ -56,14 +56,17 @@
     "prisma:studio": "prisma studio",
     "prisma:sync": "prisma format && prisma validate && prisma generate && prisma db push",
     "prisma:migrate:sync": "prisma format && prisma validate && prisma migrate dev",
-    "prisma:maintenance": "prisma format && prisma validate && prisma generate && prisma migrate deploy"
+    "prisma:maintenance": "prisma format && prisma validate && prisma generate && prisma migrate deploy",
+    "swagger": "node -e \"console.log('Swagger UI available at http://localhost:3000/api-docs')\""
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.4.0",
     "@prisma/client": "^7.4.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",
-    "pg": "^8.18.0"
+    "pg": "^8.18.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",
@@ -72,6 +75,8 @@
     "@types/node": "^25.2.3",
     "@types/pg": "^8.16.0",
     "@types/supertest": "^7.2.0",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "@vitest/coverage-v8": "^4.0.18",
     "@vitest/ui": "^4.0.18",
     "dotenv": "^17.3.1",
@@ -83,6 +88,8 @@
     "prisma-markdown": "^4.0.0",
     "prisma-zod-generator": "^2.1.4",
     "supertest": "^7.2.2",
+    "swagger-ui-express": "^5.0.1",
+    "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.44.1",

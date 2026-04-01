@@ -1,5 +1,7 @@
 import cors from "cors";
 import express from "express";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 import { errorHandler } from "./middlewares";
 import {
   commentsRouter,
@@ -39,6 +41,27 @@ app.use("/api/labels", labelsRouter);
 app.use("/api/statuses", statusesRouter);
 app.use("/api/priorities", prioritiesRouter);
 app.use("/api/roles", rolesRouter);
+
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Task Manager API",
+      version: "1.0.0",
+      description: "API for React Task Manager",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+    ],
+  },
+  apis: ["./routes/*.ts"],
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // The error handler MUST be the last middleware added
 app.use(errorHandler);
