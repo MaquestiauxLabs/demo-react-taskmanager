@@ -42,7 +42,7 @@ app.use("/api/statuses", statusesRouter);
 app.use("/api/priorities", prioritiesRouter);
 app.use("/api/roles", rolesRouter);
 
-const swaggerOptions = {
+const swaggerOptions: swaggerJsdoc.Options = {
   definition: {
     openapi: "3.0.0",
     info: {
@@ -61,7 +61,13 @@ const swaggerOptions = {
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customSiteTitle: "Task Manager API Documentation",
+  }),
+);
 
 // The error handler MUST be the last middleware added
 app.use(errorHandler);
