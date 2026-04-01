@@ -1,6 +1,15 @@
 {
   "recommendations": [
     "prisma.prisma",
-    "mermaidchart.vscode-mermaid-chart"
+    "mermaidchart.vscode-mermaid-chart",
+    "github.vscode-pull-request-github",
+    "github.vscode-github-actions",
+    "formulahendry.auto-rename-tag",
+    "vivaxy.vscode-conventional-commits",
+    "mhutchie.git-graph",
+    "davidanson.vscode-markdownlint",
+    "vitest.explorer",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss"
   ]
 }
