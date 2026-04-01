@@ -25,8 +25,11 @@
     "schema": "./server/prisma"
   },
   "scripts": {
+    "predev": "npm run prisma:generate",
     "dev": "tsx watch server.ts",
+    "prebuild": "npm run prisma:generate",
     "build": "tsc --noEmit false",
+    "prestart": "npm run prisma:generate",
     "start": "node dist/server.js",
     "db:start": "docker compose -f ../database/docker-compose.yml up -d",
     "db:stop": "docker compose -f ../database/docker-compose.yml down",
@@ -40,6 +43,7 @@
     "db:test:start": "docker compose -f ../database/docker-compose.test.yml up -d",
     "db:test:stop": "docker compose -f ../database/docker-compose.test.yml down",
     "db:test:reset": "npm run db:test:stop && npm run db:test:start && npm run prisma:push",
+    "pretest": "npm run prisma:generate",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.ts\"",
