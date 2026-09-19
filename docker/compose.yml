@@ -1,0 +1,43 @@
+services:
+  tasks-manager-postgres:
+    image: docker.io/library/postgres:17-alpine
+    container_name: tasks-manager-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: tasks_manager
+      POSTGRES_PASSWORD: tasks_manager
+      POSTGRES_DB: tasks_manager_test
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - tasks-manager-postgres_data:/var/lib/postgresql/data:Z
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro,Z
+
+  tasks-manager-keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: tasks-manager-sso
+    command: start-dev
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_HOSTNAME=localhost
+      - KC_HTTP_ENABLED=true
+    ports:
+      - "8888:8080"
+    healthcheck:
+      # Keycloak minimal image lacks curl; use bash TCP socket check instead
+      test:
+        [
+          "CMD-SHELL",
+          "exec 3<>/dev/tcp/127.0.0.1/8080 && echo -e 'GET /health/live HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  tasks-manager-postgres_data:
