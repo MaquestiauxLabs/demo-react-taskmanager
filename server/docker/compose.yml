@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: docker.io/library/postgres:17-alpine
+    container_name: tasks-manager-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: tasks_manager
+      POSTGRES_PASSWORD: tasks_manager
+      POSTGRES_DB: tasks_manager_test
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+volumes:
+  postgres_data:
